@@ -55,6 +55,65 @@ function AppMockup() {
   );
 }
 
+function Statement({ title, body }: { title: string; body: string }) {
+  return (
+    <section className="mx-auto max-w-3xl px-4 py-24 text-center sm:px-6 sm:py-36">
+      <motion.h2
+        {...reveal}
+        className="bg-linear-to-br from-fg to-accent bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-6xl"
+      >
+        {title}
+      </motion.h2>
+      <motion.p {...reveal} className="mt-7 text-lg text-muted sm:text-xl">
+        {body}
+      </motion.p>
+    </section>
+  );
+}
+
+function SplitStatement({
+  emoji,
+  title,
+  body,
+  flip = false,
+}: {
+  emoji: string;
+  title: string;
+  body: string;
+  flip?: boolean;
+}) {
+  return (
+    <section className="mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-24">
+      <div
+        className={`flex flex-col items-center gap-10 sm:gap-16 ${
+          flip ? "sm:flex-row-reverse" : "sm:flex-row"
+        }`}
+      >
+        <motion.div
+          {...reveal}
+          className="flex size-36 shrink-0 items-center justify-center rounded-[2.5rem] border border-line bg-linear-to-br from-accent/25 to-surface text-6xl shadow-[0_16px_64px_-24px_var(--accent)] backdrop-blur sm:size-48 sm:text-7xl"
+        >
+          {emoji}
+        </motion.div>
+        <div className={`text-center ${flip ? "sm:text-right" : "sm:text-left"}`}>
+          <motion.h2
+            {...reveal}
+            className="text-3xl font-bold tracking-tight sm:text-5xl"
+          >
+            {title}
+          </motion.h2>
+          <motion.p
+            {...reveal}
+            className="mt-5 text-lg leading-relaxed text-muted"
+          >
+            {body}
+          </motion.p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function MindnoteShowcase() {
   const t = useTranslations("mindnote");
   const heroRef = useRef<HTMLDivElement>(null);
@@ -121,19 +180,27 @@ export function MindnoteShowcase() {
         <AppMockup />
       </motion.section>
 
-      <section className="mx-auto max-w-3xl px-4 py-28 text-center sm:px-6 sm:py-40">
-        <motion.h2
-          {...reveal}
-          className="bg-linear-to-br from-fg to-accent bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-6xl"
-        >
-          {t("statementTitle")}
-        </motion.h2>
-        <motion.p {...reveal} className="mt-7 text-lg text-muted sm:text-xl">
-          {t("statementBody")}
-        </motion.p>
-      </section>
+      <Statement title={t("slogan1Title")} body={t("slogan1Body")} />
+      <Statement title={t("statementTitle")} body={t("statementBody")} />
 
-      <section className="mx-auto max-w-6xl px-4 pb-28 sm:px-6">
+      <SplitStatement
+        emoji="🕸️"
+        title={t("graphTitle")}
+        body={t("graphBody")}
+      />
+      <SplitStatement
+        emoji="⚡"
+        title={t("perfTitle")}
+        body={t("perfBody")}
+        flip
+      />
+      <SplitStatement
+        emoji="🤝"
+        title={t("teamsTitle")}
+        body={t("teamsBody")}
+      />
+
+      <section className="mx-auto max-w-6xl px-4 py-12 pb-28 sm:px-6">
         <div className="grid gap-6 sm:grid-cols-2">
           {features.map((feature, i) => (
             <motion.div
@@ -152,7 +219,48 @@ export function MindnoteShowcase() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-3xl px-4 pb-32 text-center sm:px-6">
+      <Statement title={t("privacyTitle")} body={t("privacyBody")} />
+      <SplitStatement
+        emoji="📱"
+        title={t("everywhereTitle")}
+        body={t("everywhereBody")}
+        flip
+      />
+
+      <section className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 sm:py-24">
+        <motion.p
+          {...reveal}
+          className="text-sm font-semibold tracking-[0.3em] text-accent uppercase"
+        >
+          {t("chipsTitle")}
+        </motion.p>
+        <motion.div
+          {...reveal}
+          className="mt-8 flex flex-wrap items-center justify-center gap-3"
+        >
+          {(
+            [
+              "chip1",
+              "chip2",
+              "chip3",
+              "chip4",
+              "chip5",
+              "chip6",
+              "chip7",
+              "chip8",
+            ] as const
+          ).map((key) => (
+            <span
+              key={key}
+              className="rounded-full border border-line bg-surface/60 px-4 py-2 text-sm backdrop-blur"
+            >
+              {t(key)}
+            </span>
+          ))}
+        </motion.div>
+      </section>
+
+      <section className="mx-auto max-w-3xl px-4 py-16 pb-32 text-center sm:px-6">
         <motion.h2
           {...reveal}
           className="text-3xl font-bold tracking-tight sm:text-5xl"

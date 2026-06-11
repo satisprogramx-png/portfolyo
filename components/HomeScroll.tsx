@@ -74,6 +74,27 @@ function HeroSection() {
   );
 }
 
+/* Bölümlerde öne çıkan gerçek projeler */
+const FEATURED: Partial<
+  Record<
+    (typeof CATEGORIES)[number],
+    { nameKey: string; linkKey: string; href: string; external: boolean }
+  >
+> = {
+  web: {
+    nameKey: "webProject",
+    linkKey: "webProjectLink",
+    href: "/work/mindnote",
+    external: false,
+  },
+  motion: {
+    nameKey: "motionProject",
+    linkKey: "motionProjectLink",
+    href: "https://bimola.vercel.app",
+    external: true,
+  },
+};
+
 function CategorySection({
   category,
   index,
@@ -89,6 +110,7 @@ function CategorySection({
     offset: ["start end", "end start"],
   });
   const y = useTransform(scrollYProgress, [0, 1], [60, -60]);
+  const featured = FEATURED[category];
 
   return (
     <section
@@ -123,6 +145,37 @@ function CategorySection({
         >
           {tHome(`${category}Tagline`)}
         </motion.p>
+        {featured && (
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-120px" }}
+            transition={{ duration: 0.7, delay: 0.28 }}
+            className="mx-auto mt-10 inline-flex flex-col items-center gap-3 rounded-2xl border border-line bg-surface/60 px-6 py-5 backdrop-blur sm:flex-row sm:gap-5"
+          >
+            <span className="font-medium">{tHome(featured.nameKey)}</span>
+            {featured.external ? (
+              <a
+                href={featured.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group text-accent"
+              >
+                {tHome(featured.linkKey)}
+                <span className="ml-1.5 inline-block transition-transform group-hover:translate-x-1">
+                  ↗
+                </span>
+              </a>
+            ) : (
+              <Link href={featured.href} className="group text-accent">
+                {tHome(featured.linkKey)}
+                <span className="ml-1.5 inline-block transition-transform group-hover:translate-x-1">
+                  →
+                </span>
+              </Link>
+            )}
+          </motion.div>
+        )}
       </motion.div>
     </section>
   );

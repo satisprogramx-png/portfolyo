@@ -32,6 +32,20 @@ export const FALLBACK_PROJECTS: Project[] = [
     sort_order: 0,
   },
   {
+    id: "0b",
+    slug: "bimola",
+    title_tr: "Bimola — Web Sitesi",
+    title_en: "Bimola — Website",
+    description_tr:
+      "Vercel üzerinde yayınlanan hızlı, modern ve mobil uyumlu web sitesi. (bimola.vercel.app)",
+    description_en:
+      "A fast, modern and mobile-friendly website deployed on Vercel. (bimola.vercel.app)",
+    category: "motion",
+    year: 2026,
+    tags: ["Next.js", "Vercel", "Tailwind CSS"],
+    sort_order: 1,
+  },
+  {
     id: "1",
     slug: "nova-commerce",
     title_tr: "Nova E-Ticaret Platformu",
