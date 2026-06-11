@@ -11,6 +11,9 @@ import { CategoryChips } from "./CategoryChips";
 // Ayrı tanıtım sayfası olan projeler
 const CASE_PAGES: Record<string, string> = {
   mindnote: "/work/mindnote",
+  "diyetisyen-modulu": "/work/diyetisyen-modulu",
+  "fizyoterapist-modulu": "/work/fizyoterapist-modulu",
+  bimola: "/work/bimola",
 };
 
 export function WorkGrid({ projects }: { projects: Project[] }) {

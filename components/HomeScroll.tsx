@@ -78,14 +78,37 @@ function HeroSection() {
 const SHOWCASES: Partial<
   Record<
     (typeof CATEGORIES)[number],
-    Array<{ nameKey: string; descKey: string }>
+    Array<{ emoji: string; nameKey: string; sloganKey: string; descKey: string }>
   >
 > = {
   web: [
-    { nameKey: "webShowcase1Name", descKey: "webShowcase1Desc" },
-    { nameKey: "webShowcase2Name", descKey: "webShowcase2Desc" },
+    {
+      emoji: "🧠",
+      nameKey: "webShowcase1Name",
+      sloganKey: "webShowcase1Slogan",
+      descKey: "webShowcase1Desc",
+    },
+    {
+      emoji: "🥗",
+      nameKey: "webShowcase2Name",
+      sloganKey: "webShowcase2Slogan",
+      descKey: "webShowcase2Desc",
+    },
+    {
+      emoji: "🤸",
+      nameKey: "webShowcase3Name",
+      sloganKey: "webShowcase3Slogan",
+      descKey: "webShowcase3Desc",
+    },
   ],
-  motion: [{ nameKey: "motionShowcase1Name", descKey: "motionShowcase1Desc" }],
+  motion: [
+    {
+      emoji: "🌐",
+      nameKey: "motionShowcase1Name",
+      sloganKey: "motionShowcase1Slogan",
+      descKey: "motionShowcase1Desc",
+    },
+  ],
 };
 
 function CategorySection({
@@ -139,7 +162,7 @@ function CategorySection({
           {tHome(`${category}Tagline`)}
         </motion.p>
         {showcases && (
-          <div className="mx-auto mt-12 grid max-w-2xl gap-4 sm:grid-cols-[repeat(auto-fit,minmax(0,1fr))]">
+          <div className="mx-auto mt-12 grid max-w-4xl gap-4 sm:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))]">
             {showcases.map((item, i) => (
               <motion.div
                 key={item.nameKey}
@@ -147,10 +170,16 @@ function CategorySection({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-120px" }}
                 transition={{ duration: 0.7, delay: 0.28 + 0.1 * i }}
-                className="rounded-2xl border border-line bg-surface/60 px-6 py-5 text-center backdrop-blur"
+                className="rounded-2xl border border-line bg-surface/60 px-6 py-6 text-center backdrop-blur"
               >
-                <p className="font-semibold text-accent">
+                <span className="mx-auto flex size-14 items-center justify-center rounded-2xl border border-line bg-linear-to-br from-accent/25 to-surface text-3xl shadow-[0_8px_32px_-12px_var(--accent)]">
+                  {item.emoji}
+                </span>
+                <p className="mt-4 font-semibold text-accent">
                   {tHome(item.nameKey)}
+                </p>
+                <p className="mt-1 text-sm font-medium">
+                  {tHome(item.sloganKey)}
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-muted">
                   {tHome(item.descKey)}

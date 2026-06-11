@@ -46,6 +46,20 @@ export const FALLBACK_PROJECTS: Project[] = [
     sort_order: 2,
   },
   {
+    id: "0d",
+    slug: "fizyoterapist-modulu",
+    title_tr: "Fizyoterapist Modülü",
+    title_en: "Physiotherapist Module",
+    description_tr:
+      "Egzersiz programları, seans takibi ve ilerleme notları sunan klinik modülü; diyetisyen paneliyle entegre çalışır.",
+    description_en:
+      "A clinic module for exercise programmes, session tracking and progress notes — integrated with the dietitian panel.",
+    category: "web",
+    year: 2026,
+    tags: ["Next.js", "Supabase", "TypeScript"],
+    sort_order: 3,
+  },
+  {
     id: "0b",
     slug: "bimola",
     title_tr: "Bimola — Web Sitesi",
