@@ -5,9 +5,11 @@
     "contact": "Contact"
   },
   "hero": {
+    "badge": "Available for new projects",
     "title": "From idea to product, on every screen.",
     "subtitle": "Web, mobile, brand, AI and motion design. Pick a category and the whole site adapts to you.",
-    "cta": "See Work"
+    "cta": "See Work",
+    "ctaSecondary": "Get in Touch"
   },
   "categories": {
     "web": "Web",

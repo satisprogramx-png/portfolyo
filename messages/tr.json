@@ -5,9 +5,11 @@
     "contact": "İletişim"
   },
   "hero": {
+    "badge": "Yeni projelere açığım",
     "title": "Fikirden ürüne, her ekranda.",
     "subtitle": "Web, mobil, marka, yapay zekâ ve hareket tasarımı. Bir kategori seç, site sana uyum sağlasın.",
-    "cta": "İşleri Gör"
+    "cta": "İşleri Gör",
+    "ctaSecondary": "İletişime Geç"
   },
   "categories": {
     "web": "Web",

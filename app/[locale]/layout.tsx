@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
+import { Space_Grotesk } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Header } from "@/components/Header";
+import { Background } from "@/components/Background";
 import "../globals.css";
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-sans",
+});
 
 export const metadata: Metadata = {
   title: "Portfolyo",
@@ -26,14 +33,23 @@ export default async function LocaleLayout({
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
+  const t = await getTranslations("footer");
 
   return (
     <html lang={locale} data-theme="default">
-      <body className="min-h-dvh antialiased">
+      <body
+        className={`${spaceGrotesk.variable} min-h-dvh font-sans antialiased`}
+      >
         <NextIntlClientProvider>
           <ThemeProvider>
+            <Background />
             <Header />
             <main>{children}</main>
+            <footer className="border-t border-line/60 py-8">
+              <p className="mx-auto max-w-6xl px-4 text-sm text-muted sm:px-6">
+                © {new Date().getFullYear()} portfolyo. {t("rights")}
+              </p>
+            </footer>
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>

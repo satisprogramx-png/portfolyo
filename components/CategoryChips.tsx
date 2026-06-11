@@ -35,17 +35,17 @@ export function CategoryChips({ selected, onSelect, showAll = false }: Props) {
         <motion.button
           key={item}
           type="button"
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.05 * i, duration: 0.4 }}
-          whileHover={{ scale: 1.06 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.07, y: -2 }}
+          whileTap={{ scale: 0.94 }}
           onClick={() => handleClick(item)}
           aria-pressed={isActive(item)}
-          className={`rounded-full border px-4 py-2 text-sm font-medium sm:px-5 sm:text-base ${
+          className={`rounded-full border px-4 py-2 text-sm font-medium backdrop-blur sm:px-5 sm:text-base ${
             isActive(item)
-              ? "border-accent bg-accent text-accent-fg"
-              : "border-line bg-surface text-fg hover:border-accent"
+              ? "border-accent bg-accent text-accent-fg shadow-[0_0_28px_-8px_var(--accent)]"
+              : "border-line bg-surface/60 text-fg hover:border-accent hover:text-accent"
           }`}
         >
           {t(item)}

@@ -15,3 +15,65 @@ body {
   background-color: var(--bg);
   color: var(--fg);
 }
+
+/* Aurora arka plan — tema accent'inden türetilir, reduced-motion'da sabit durur */
+.aurora {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  will-change: transform;
+}
+
+.aurora-1 {
+  width: 42rem;
+  height: 42rem;
+  top: -12rem;
+  left: -12rem;
+}
+
+.aurora-2 {
+  width: 38rem;
+  height: 38rem;
+  right: -10rem;
+  bottom: -14rem;
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  opacity: 0.16;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 35%, black 25%, transparent 80%);
+}
+
+@keyframes aurora-drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(5rem, 3rem, 0) scale(1.18);
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .aurora-1 {
+    animation: aurora-drift 16s ease-in-out infinite alternate;
+  }
+  .aurora-2 {
+    animation: aurora-drift 22s ease-in-out infinite alternate-reverse;
+  }
+  .pulse-dot {
+    animation: pulse-dot 2.4s ease-in-out infinite;
+  }
+}
