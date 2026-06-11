@@ -23,13 +23,27 @@ export const FALLBACK_PROJECTS: Project[] = [
     title_tr: "MindNote — Akıllı Not Uygulaması",
     title_en: "MindNote — Smart Note App",
     description_tr:
-      "Blok tabanlı editör, notlar arası bağlantı, çalışma alanları ve davet kodlu takım çalışması sunan Notion benzeri not uygulaması. (mindnote.tech)",
+      "Blok tabanlı editör, bağlantılı notlar, takımlar ve yapay zekâ asistanı (özetleme, öneri, notlardan yanıt) sunan Notion benzeri not uygulaması. (mindnote.tech)",
     description_en:
-      "A Notion-style note app with a block-based editor, linked notes, workspaces and invite-based team collaboration. (mindnote.tech)",
+      "A Notion-style note app with a block editor, linked notes, teams and an AI assistant that summarises, suggests and answers from your notes. (mindnote.tech)",
+    category: "web",
+    year: 2026,
+    tags: ["Next.js", "Supabase", "AI"],
+    sort_order: 0,
+  },
+  {
+    id: "0c",
+    slug: "diyetisyen-modulu",
+    title_tr: "Diyetisyen Modülü",
+    title_en: "Dietitian Module",
+    description_tr:
+      "Danışan takibi, beslenme planları ve randevu yönetimi sunan klinik paneli; içinde fizyoterapist modülü de bulunur.",
+    description_en:
+      "A clinic panel for client tracking, nutrition plans and appointment management — with a built-in physiotherapist module.",
     category: "web",
     year: 2026,
     tags: ["Next.js", "Supabase", "TypeScript"],
-    sort_order: 0,
+    sort_order: 2,
   },
   {
     id: "0b",

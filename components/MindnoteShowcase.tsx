@@ -199,6 +199,12 @@ export function MindnoteShowcase() {
         title={t("teamsTitle")}
         body={t("teamsBody")}
       />
+      <SplitStatement
+        emoji="✨"
+        title={t("aiTitle")}
+        body={t("aiBody")}
+        flip
+      />
 
       <section className="mx-auto max-w-6xl px-4 py-12 pb-28 sm:px-6">
         <div className="grid gap-6 sm:grid-cols-2">
@@ -248,6 +254,7 @@ export function MindnoteShowcase() {
               "chip6",
               "chip7",
               "chip8",
+              "chip9",
             ] as const
           ).map((key) => (
             <span

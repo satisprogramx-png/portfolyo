@@ -74,25 +74,18 @@ function HeroSection() {
   );
 }
 
-/* Bölümlerde öne çıkan gerçek projeler */
-const FEATURED: Partial<
+/* Bölümlerde satır içi tanıtılan gerçek projeler (link yok) */
+const SHOWCASES: Partial<
   Record<
     (typeof CATEGORIES)[number],
-    { nameKey: string; linkKey: string; href: string; external: boolean }
+    Array<{ nameKey: string; descKey: string }>
   >
 > = {
-  web: {
-    nameKey: "webProject",
-    linkKey: "webProjectLink",
-    href: "/work/mindnote",
-    external: false,
-  },
-  motion: {
-    nameKey: "motionProject",
-    linkKey: "motionProjectLink",
-    href: "https://bimola.vercel.app",
-    external: true,
-  },
+  web: [
+    { nameKey: "webShowcase1Name", descKey: "webShowcase1Desc" },
+    { nameKey: "webShowcase2Name", descKey: "webShowcase2Desc" },
+  ],
+  motion: [{ nameKey: "motionShowcase1Name", descKey: "motionShowcase1Desc" }],
 };
 
 function CategorySection({
@@ -110,7 +103,7 @@ function CategorySection({
     offset: ["start end", "end start"],
   });
   const y = useTransform(scrollYProgress, [0, 1], [60, -60]);
-  const featured = FEATURED[category];
+  const showcases = SHOWCASES[category];
 
   return (
     <section
@@ -145,36 +138,26 @@ function CategorySection({
         >
           {tHome(`${category}Tagline`)}
         </motion.p>
-        {featured && (
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-120px" }}
-            transition={{ duration: 0.7, delay: 0.28 }}
-            className="mx-auto mt-10 inline-flex flex-col items-center gap-3 rounded-2xl border border-line bg-surface/60 px-6 py-5 backdrop-blur sm:flex-row sm:gap-5"
-          >
-            <span className="font-medium">{tHome(featured.nameKey)}</span>
-            {featured.external ? (
-              <a
-                href={featured.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group text-accent"
+        {showcases && (
+          <div className="mx-auto mt-12 grid max-w-2xl gap-4 sm:grid-cols-[repeat(auto-fit,minmax(0,1fr))]">
+            {showcases.map((item, i) => (
+              <motion.div
+                key={item.nameKey}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-120px" }}
+                transition={{ duration: 0.7, delay: 0.28 + 0.1 * i }}
+                className="rounded-2xl border border-line bg-surface/60 px-6 py-5 text-center backdrop-blur"
               >
-                {tHome(featured.linkKey)}
-                <span className="ml-1.5 inline-block transition-transform group-hover:translate-x-1">
-                  ↗
-                </span>
-              </a>
-            ) : (
-              <Link href={featured.href} className="group text-accent">
-                {tHome(featured.linkKey)}
-                <span className="ml-1.5 inline-block transition-transform group-hover:translate-x-1">
-                  →
-                </span>
-              </Link>
-            )}
-          </motion.div>
+                <p className="font-semibold text-accent">
+                  {tHome(item.nameKey)}
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-muted">
+                  {tHome(item.descKey)}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         )}
       </motion.div>
     </section>
