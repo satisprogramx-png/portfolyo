@@ -1,0 +1,43 @@
+{
+  "nav": {
+    "home": "Ana Sayfa",
+    "work": "İşler",
+    "contact": "İletişim"
+  },
+  "hero": {
+    "title": "Fikirden ürüne, her ekranda.",
+    "subtitle": "Web, mobil, marka, yapay zekâ ve hareket tasarımı. Bir kategori seç, site sana uyum sağlasın.",
+    "cta": "İşleri Gör"
+  },
+  "categories": {
+    "web": "Web",
+    "mobile": "Mobil",
+    "brand": "Marka",
+    "ai": "Yapay Zekâ",
+    "motion": "Hareket",
+    "all": "Tümü"
+  },
+  "work": {
+    "title": "İşler",
+    "subtitle": "Seçili projeler. Kategoriye göre filtrele — tema seninle birlikte değişir.",
+    "empty": "Bu kategoride henüz proje yok.",
+    "year": "Yıl"
+  },
+  "contact": {
+    "title": "İletişim",
+    "subtitle": "Bir proje mi var? Yaz, en kısa sürede dönüş yapayım.",
+    "name": "İsim",
+    "email": "E-posta",
+    "message": "Mesaj",
+    "send": "Gönder",
+    "sending": "Gönderiliyor…",
+    "success": "Mesajın ulaştı, teşekkürler!",
+    "error": "Bir şeyler ters gitti. Lütfen tekrar dene."
+  },
+  "footer": {
+    "rights": "Tüm hakları saklıdır."
+  },
+  "language": {
+    "switch": "Dil değiştir"
+  }
+}

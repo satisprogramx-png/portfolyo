@@ -1,0 +1,43 @@
+{
+  "nav": {
+    "home": "Home",
+    "work": "Work",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "From idea to product, on every screen.",
+    "subtitle": "Web, mobile, brand, AI and motion design. Pick a category and the whole site adapts to you.",
+    "cta": "See Work"
+  },
+  "categories": {
+    "web": "Web",
+    "mobile": "Mobile",
+    "brand": "Brand",
+    "ai": "AI",
+    "motion": "Motion",
+    "all": "All"
+  },
+  "work": {
+    "title": "Work",
+    "subtitle": "Selected projects. Filter by category — the theme morphs with you.",
+    "empty": "No projects in this category yet.",
+    "year": "Year"
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Got a project? Drop a line and I'll get back to you shortly.",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send",
+    "sending": "Sending…",
+    "success": "Your message is in. Thanks!",
+    "error": "Something went wrong. Please try again."
+  },
+  "footer": {
+    "rights": "All rights reserved."
+  },
+  "language": {
+    "switch": "Switch language"
+  }
+}

@@ -1,0 +1,17 @@
+@import "tailwindcss";
+@import "./themes.css";
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-surface: var(--surface);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-line: var(--line);
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--fg);
+}
