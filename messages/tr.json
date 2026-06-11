@@ -7,9 +7,19 @@
   "hero": {
     "badge": "Yeni projelere açığım",
     "title": "Fikirden ürüne, her ekranda.",
-    "subtitle": "Web, mobil, marka, yapay zekâ ve hareket tasarımı. Bir kategori seç, site sana uyum sağlasın.",
-    "cta": "İşleri Gör",
-    "ctaSecondary": "İletişime Geç"
+    "subtitle": "Web, mobil, marka, yapay zekâ ve hareket tasarımı. Kaydırın — site sizinle birlikte dönüşsün.",
+    "scrollHint": "Keşfetmek için kaydırın"
+  },
+  "home": {
+    "webTagline": "Hızlı, erişilebilir ve ölçeklenebilir web deneyimleri.",
+    "mobileTagline": "Cebe sığan, akıcı ürünler.",
+    "brandTagline": "Akılda kalan kimlikler, tutarlı tasarım sistemleri.",
+    "aiTagline": "Veriden değere — akıllı, kaynak gösteren arayüzler.",
+    "motionTagline": "Hikâyeyi harekete döken tasarım.",
+    "outroTitle": "Birlikte çalışalım.",
+    "outroBody": "Aklınızdaki ürünü konuşalım; fikirden yayına birlikte taşıyalım.",
+    "outroWork": "İşleri gör",
+    "outroContact": "İletişime geç"
   },
   "categories": {
     "web": "Web",

@@ -29,7 +29,7 @@
 
 ## 4. Sayfalar
 
-- `/` (hero): tam ekran başlık + 5 kategori chip'i.
+- `/` (hero): Apple tarzı scrollytelling — tam ekran hero + her kategori için tam ekran bölüm; bölüme kaydırınca tema otomatik morph eder (`components/HomeScroll.tsx`). Buton/chip yok.
 - `/work`: projeler Supabase'den; kategori filtresi aynı zamanda temayı değiştirir.
 - `/contact`: form → server action → `leads` tablosuna insert.
 

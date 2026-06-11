@@ -7,9 +7,19 @@
   "hero": {
     "badge": "Available for new projects",
     "title": "From idea to product, on every screen.",
-    "subtitle": "Web, mobile, brand, AI and motion design. Pick a category and the whole site adapts to you.",
-    "cta": "See Work",
-    "ctaSecondary": "Get in Touch"
+    "subtitle": "Web, mobile, brand, AI and motion design. Scroll — and the site transforms with you.",
+    "scrollHint": "Scroll to explore"
+  },
+  "home": {
+    "webTagline": "Fast, accessible and scalable web experiences.",
+    "mobileTagline": "Fluid products that fit in your pocket.",
+    "brandTagline": "Memorable identities, consistent design systems.",
+    "aiTagline": "From data to value — smart interfaces that cite their sources.",
+    "motionTagline": "Design that turns stories into motion.",
+    "outroTitle": "Let's work together.",
+    "outroBody": "Tell me about the product on your mind; let's take it from idea to launch.",
+    "outroWork": "See work",
+    "outroContact": "Get in touch"
   },
   "categories": {
     "web": "Web",
