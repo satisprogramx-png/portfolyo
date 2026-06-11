@@ -18,6 +18,20 @@ export type Project = {
 // Migration'daki seed ile birebir aynıdır (supabase/migrations/0001_init.sql).
 export const FALLBACK_PROJECTS: Project[] = [
   {
+    id: "0",
+    slug: "mindnote",
+    title_tr: "MindNote — Akıllı Not Uygulaması",
+    title_en: "MindNote — Smart Note App",
+    description_tr:
+      "Blok tabanlı editör, notlar arası bağlantı, çalışma alanları ve davet kodlu takım çalışması sunan Notion benzeri not uygulaması. (mindnote.tech)",
+    description_en:
+      "A Notion-style note app with a block-based editor, linked notes, workspaces and invite-based team collaboration. (mindnote.tech)",
+    category: "web",
+    year: 2026,
+    tags: ["Next.js", "Supabase", "TypeScript"],
+    sort_order: 0,
+  },
+  {
     id: "1",
     slug: "nova-commerce",
     title_tr: "Nova E-Ticaret Platformu",
