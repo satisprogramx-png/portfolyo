@@ -3,9 +3,15 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import type { Project } from "@/lib/projects";
 import type { Category } from "@/lib/themes";
 import { CategoryChips } from "./CategoryChips";
+
+// Ayrı tanıtım sayfası olan projeler
+const CASE_PAGES: Record<string, string> = {
+  mindnote: "/work/mindnote",
+};
 
 export function WorkGrid({ projects }: { projects: Project[] }) {
   const locale = useLocale();
@@ -29,17 +35,9 @@ export function WorkGrid({ projects }: { projects: Project[] }) {
             {filtered.map((project) => {
               const title =
                 locale === "tr" ? project.title_tr : project.title_en;
-              return (
-                <motion.li
-                  key={project.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.95, y: 16 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.35 }}
-                  whileHover={{ y: -6 }}
-                  className="group relative overflow-hidden rounded-3xl border border-line bg-surface/70 backdrop-blur hover:border-accent/60 hover:shadow-[0_8px_48px_-16px_var(--accent)]"
-                >
+              const caseHref = CASE_PAGES[project.slug];
+              const card = (
+                <>
                   <div className="relative flex h-40 items-end overflow-hidden bg-linear-to-br from-accent/25 via-surface to-surface px-6 pb-4 sm:h-48">
                     <span
                       aria-hidden
@@ -73,7 +71,35 @@ export function WorkGrid({ projects }: { projects: Project[] }) {
                         </span>
                       ))}
                     </div>
+                    {caseHref && (
+                      <p className="mt-5 text-sm font-medium text-accent">
+                        {t("viewCase")}
+                        <span className="ml-1.5 inline-block transition-transform group-hover:translate-x-1">
+                          →
+                        </span>
+                      </p>
+                    )}
                   </div>
+                </>
+              );
+              return (
+                <motion.li
+                  key={project.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.95, y: 16 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.35 }}
+                  whileHover={{ y: -6 }}
+                  className="group relative overflow-hidden rounded-3xl border border-line bg-surface/70 backdrop-blur hover:border-accent/60 hover:shadow-[0_8px_48px_-16px_var(--accent)]"
+                >
+                  {caseHref ? (
+                    <Link href={caseHref} className="block">
+                      {card}
+                    </Link>
+                  ) : (
+                    card
+                  )}
                 </motion.li>
               );
             })}
