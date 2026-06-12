@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   motion,
   useInView,
@@ -451,6 +451,17 @@ function AiChatMockup() {
 
 function EkiciVideoWall() {
   const tHome = useTranslations("home");
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [muted, setMuted] = useState(true);
+
+  const toggleSound = () => {
+    const next = !muted;
+    setMuted(next);
+    iframeRef.current?.contentWindow?.postMessage(
+      JSON.stringify({ method: "setVolume", value: next ? 0 : 1 }),
+      "https://player.vimeo.com",
+    );
+  };
 
   return (
     <div className="mt-24">
@@ -487,6 +498,7 @@ function EkiciVideoWall() {
       >
         <div className="pointer-events-none aspect-video">
           <iframe
+            ref={iframeRef}
             src="https://player.vimeo.com/video/1200880545?background=1&autoplay=1&loop=1&muted=1&app_id=58479"
             className="h-full w-full"
             allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
@@ -498,6 +510,16 @@ function EkiciVideoWall() {
           aria-hidden
           className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-linear-to-t from-bg/40 to-transparent"
         />
+        <button
+          type="button"
+          onClick={toggleSound}
+          aria-pressed={!muted}
+          aria-label={muted ? tHome("videoUnmute") : tHome("videoMute")}
+          className="absolute right-4 bottom-4 flex items-center gap-2 rounded-full border border-line bg-bg/70 px-4 py-2 text-sm font-medium backdrop-blur hover:border-accent hover:text-accent"
+        >
+          <span aria-hidden>{muted ? "🔇" : "🔊"}</span>
+          {muted ? tHome("videoUnmute") : tHome("videoMute")}
+        </button>
       </motion.div>
     </div>
   );

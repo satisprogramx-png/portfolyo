@@ -50,6 +50,8 @@
     "aiShowcase1F1": "AI-generated footage",
     "aiShowcase1F2": "Cinematic editing",
     "aiShowcase1F3": "Construction promo",
+    "videoUnmute": "Unmute",
+    "videoMute": "Mute",
     "aiMockQ": "Can you summarise yesterday's meeting notes?",
     "aiMockA": "Three decisions: launch moved to May 12, budget approved, the design team is growing.",
     "aiMockSource": "Source: notes/meeting-2026-06",
