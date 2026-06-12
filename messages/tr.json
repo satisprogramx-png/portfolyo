@@ -1,7 +1,7 @@
 {
   "nav": {
     "home": "Ana Sayfa",
-    "work": "İşler",
+    "work": "Projeler",
     "contact": "İletişim"
   },
   "hero": {
@@ -30,7 +30,7 @@
     "motionShowcase1Desc": "Saniyeler içinde açılan, mobil uyumlu, modern bir vitrin sitesi.",
     "outroTitle": "Birlikte çalışalım.",
     "outroBody": "Aklınızdaki ürünü konuşalım; fikirden yayına birlikte taşıyalım.",
-    "outroWork": "İşleri gör",
+    "outroWork": "Projeleri incele",
     "outroContact": "İletişime geç"
   },
   "categories": {
@@ -42,7 +42,7 @@
     "all": "Tümü"
   },
   "work": {
-    "title": "İşler",
+    "title": "Projeler",
     "subtitle": "Seçili projeler. Kategoriye göre filtrele — tema seninle birlikte değişir.",
     "empty": "Bu kategoride henüz proje yok.",
     "year": "Yıl",
@@ -95,7 +95,7 @@
     "ctaTitle": "Denemeye hazır mısınız?",
     "ctaBody": "MindNote tarayıcınızda çalışır. Kayıt olun, ilk notunuzu saniyeler içinde oluşturun.",
     "ctaButton": "mindnote.tech'i aç",
-    "backToWork": "Tüm işlere dön"
+    "backToWork": "Tüm projelere dön"
   },
   "diyetisyen": {
     "eyebrow": "Diyetisyen Modülü",
@@ -120,7 +120,7 @@
     "ctaTitle": "Kliniğiniz için konuşalım.",
     "ctaBody": "Diyetisyen Modülü'nü kendi iş akışınıza göre uyarlayalım.",
     "ctaButton": "İletişime geç",
-    "backToWork": "Tüm işlere dön"
+    "backToWork": "Tüm projelere dön"
   },
   "fizyoterapist": {
     "eyebrow": "Fizyoterapist Modülü",
@@ -145,7 +145,7 @@
     "ctaTitle": "Kliniğiniz için konuşalım.",
     "ctaBody": "Fizyoterapist Modülü'nü kendi iş akışınıza göre uyarlayalım.",
     "ctaButton": "İletişime geç",
-    "backToWork": "Tüm işlere dön"
+    "backToWork": "Tüm projelere dön"
   },
   "bimola": {
     "eyebrow": "Bimola",
@@ -166,7 +166,7 @@
     "ctaTitle": "Canlıda görün.",
     "ctaBody": "Bimola yayında — kendi gözlerinizle inceleyin.",
     "ctaButton": "bimola.vercel.app'i aç",
-    "backToWork": "Tüm işlere dön"
+    "backToWork": "Tüm projelere dön"
   },
   "contact": {
     "title": "İletişim",

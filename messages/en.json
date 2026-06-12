@@ -1,7 +1,7 @@
 {
   "nav": {
     "home": "Home",
-    "work": "Work",
+    "work": "Projects",
     "contact": "Contact"
   },
   "hero": {
@@ -30,7 +30,7 @@
     "motionShowcase1Desc": "A modern, mobile-friendly showcase site that loads in a blink.",
     "outroTitle": "Let's work together.",
     "outroBody": "Tell me about the product on your mind; let's take it from idea to launch.",
-    "outroWork": "See work",
+    "outroWork": "Explore projects",
     "outroContact": "Get in touch"
   },
   "categories": {
@@ -42,7 +42,7 @@
     "all": "All"
   },
   "work": {
-    "title": "Work",
+    "title": "Projects",
     "subtitle": "Selected projects. Filter by category — the theme morphs with you.",
     "empty": "No projects in this category yet.",
     "year": "Year",
@@ -95,7 +95,7 @@
     "ctaTitle": "Ready to try it?",
     "ctaBody": "MindNote runs in your browser. Sign up and create your first note in seconds.",
     "ctaButton": "Open mindnote.tech",
-    "backToWork": "Back to all work"
+    "backToWork": "Back to all projects"
   },
   "diyetisyen": {
     "eyebrow": "Dietitian Module",
@@ -120,7 +120,7 @@
     "ctaTitle": "Let's talk about your clinic.",
     "ctaBody": "Let's tailor the Dietitian Module to your own workflow.",
     "ctaButton": "Get in touch",
-    "backToWork": "Back to all work"
+    "backToWork": "Back to all projects"
   },
   "fizyoterapist": {
     "eyebrow": "Physiotherapist Module",
@@ -145,7 +145,7 @@
     "ctaTitle": "Let's talk about your clinic.",
     "ctaBody": "Let's tailor the Physiotherapist Module to your own workflow.",
     "ctaButton": "Get in touch",
-    "backToWork": "Back to all work"
+    "backToWork": "Back to all projects"
   },
   "bimola": {
     "eyebrow": "Bimola",
@@ -166,7 +166,7 @@
     "ctaTitle": "See it live.",
     "ctaBody": "Bimola is online — explore it with your own eyes.",
     "ctaButton": "Open bimola.vercel.app",
-    "backToWork": "Back to all work"
+    "backToWork": "Back to all projects"
   },
   "contact": {
     "title": "Contact",
