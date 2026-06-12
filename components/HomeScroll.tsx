@@ -458,9 +458,8 @@ function EkiciVideoWall() {
     target: ref,
     offset: ["start end", "center center"],
   });
-  const rotateX = useTransform(scrollYProgress, [0, 1], [30, 0]);
-  const scale = useTransform(scrollYProgress, [0, 1], [0.82, 1]);
-  const opacity = useTransform(scrollYProgress, [0, 0.4], [0.4, 1]);
+  const rotateX = useTransform(scrollYProgress, [0, 1], [24, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [0.88, 1]);
 
   return (
     <div ref={ref} className="mt-24">
@@ -487,31 +486,28 @@ function EkiciVideoWall() {
           )}
         </div>
       </motion.div>
-      <div style={{ perspective: 1400 }} className="mt-14">
-        <motion.div
-          style={
-            reduced
-              ? undefined
-              : { rotateX, scale, opacity, transformStyle: "preserve-3d" }
-          }
-          className="relative mx-auto w-full max-w-6xl overflow-hidden rounded-[2rem] border border-line bg-surface/80 shadow-[0_48px_120px_-32px_var(--accent)]"
-        >
-          <div className="pointer-events-none aspect-video">
-            <iframe
-              src="https://player.vimeo.com/video/1200880545?background=1&autoplay=1&loop=1&muted=1&app_id=58479"
-              className="h-full w-full"
-              loading="lazy"
-              allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-              referrerPolicy="strict-origin-when-cross-origin"
-              title="Ekici Residence"
-            />
-          </div>
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 rounded-[2rem] bg-linear-to-t from-bg/40 via-transparent to-transparent"
+      <motion.div
+        style={
+          reduced
+            ? undefined
+            : { rotateX, scale, transformPerspective: 1200 }
+        }
+        className="relative mx-auto mt-14 w-full max-w-6xl overflow-hidden rounded-[2rem] border border-line bg-surface/80 shadow-[0_48px_120px_-32px_var(--accent)] will-change-transform"
+      >
+        <div className="pointer-events-none aspect-video">
+          <iframe
+            src="https://player.vimeo.com/video/1200880545?background=1&autoplay=1&loop=1&muted=1&app_id=58479"
+            className="h-full w-full"
+            allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+            referrerPolicy="strict-origin-when-cross-origin"
+            title="Ekici Residence"
           />
-        </motion.div>
-      </div>
+        </div>
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-linear-to-t from-bg/40 to-transparent"
+        />
+      </motion.div>
     </div>
   );
 }
