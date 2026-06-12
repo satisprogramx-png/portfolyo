@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useRef, type ReactNode } from "react";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  useInView,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { type Theme } from "@/lib/themes";
@@ -444,18 +450,67 @@ function AiChatMockup() {
   );
 }
 
-function EkiciVideoVisual() {
+function EkiciVideoWall() {
+  const tHome = useTranslations("home");
+  const ref = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "center center"],
+  });
+  const rotateX = useTransform(scrollYProgress, [0, 1], [30, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [0.82, 1]);
+  const opacity = useTransform(scrollYProgress, [0, 0.4], [0.4, 1]);
+
   return (
-    <div className="overflow-hidden rounded-3xl border border-line bg-surface/80 shadow-[0_24px_80px_-24px_var(--accent)] backdrop-blur">
-      <div className="pointer-events-none aspect-video">
-        <iframe
-          src="https://player.vimeo.com/video/1200880545?background=1&autoplay=1&loop=1&muted=1&app_id=58479"
-          className="h-full w-full"
-          loading="lazy"
-          allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-          referrerPolicy="strict-origin-when-cross-origin"
-          title="Ekici Residence"
-        />
+    <div ref={ref} className="mt-24">
+      <motion.div {...inViewReveal} className="mx-auto max-w-2xl text-center">
+        <p className="text-sm font-semibold tracking-[0.25em] text-accent uppercase">
+          {tHome("aiShowcase1Name")}
+        </p>
+        <h3 className="mt-4 text-3xl font-bold tracking-tight sm:text-5xl">
+          {tHome("aiShowcase1Slogan")}
+        </h3>
+        <p className="mt-5 text-lg leading-relaxed text-muted">
+          {tHome("aiShowcase1Desc")}
+        </p>
+        <div className="mt-6 flex flex-wrap justify-center gap-2">
+          {(["aiShowcase1F1", "aiShowcase1F2", "aiShowcase1F3"] as const).map(
+            (key) => (
+              <span
+                key={key}
+                className="rounded-full border border-line bg-surface/60 px-3.5 py-1.5 text-sm text-muted backdrop-blur"
+              >
+                {tHome(key)}
+              </span>
+            ),
+          )}
+        </div>
+      </motion.div>
+      <div style={{ perspective: 1400 }} className="mt-14">
+        <motion.div
+          style={
+            reduced
+              ? undefined
+              : { rotateX, scale, opacity, transformStyle: "preserve-3d" }
+          }
+          className="relative mx-auto w-full max-w-6xl overflow-hidden rounded-[2rem] border border-line bg-surface/80 shadow-[0_48px_120px_-32px_var(--accent)]"
+        >
+          <div className="pointer-events-none aspect-video">
+            <iframe
+              src="https://player.vimeo.com/video/1200880545?background=1&autoplay=1&loop=1&muted=1&app_id=58479"
+              className="h-full w-full"
+              loading="lazy"
+              allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+              referrerPolicy="strict-origin-when-cross-origin"
+              title="Ekici Residence"
+            />
+          </div>
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 rounded-[2rem] bg-linear-to-t from-bg/40 via-transparent to-transparent"
+          />
+        </motion.div>
       </div>
     </div>
   );
@@ -559,7 +614,7 @@ function MockupSection({
   return (
     <section
       ref={ref}
-      className="mx-auto flex min-h-dvh max-w-5xl flex-col justify-center px-4 py-28 sm:px-6"
+      className="mx-auto flex min-h-dvh max-w-6xl flex-col justify-center px-4 py-28 sm:px-6"
     >
       <SectionHeader index={index} title={title} tagline={tagline} />
       {children}
@@ -643,18 +698,7 @@ export function HomeScroll() {
         tagline={tHome("aiTagline")}
       >
         <AiChatMockup />
-        <ProjectFeature
-          name={tHome("aiShowcase1Name")}
-          slogan={tHome("aiShowcase1Slogan")}
-          desc={tHome("aiShowcase1Desc")}
-          features={[
-            tHome("aiShowcase1F1"),
-            tHome("aiShowcase1F2"),
-            tHome("aiShowcase1F3"),
-          ]}
-          visual={<EkiciVideoVisual />}
-          flip
-        />
+        <EkiciVideoWall />
       </MockupSection>
       <WebsiteSection index={4} />
       <OutroSection />
