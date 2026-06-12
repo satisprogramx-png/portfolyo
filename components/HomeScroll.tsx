@@ -4,7 +4,6 @@ import { useEffect, useRef, type ReactNode } from "react";
 import {
   motion,
   useInView,
-  useReducedMotion,
   useScroll,
   useTransform,
 } from "framer-motion";
@@ -452,17 +451,9 @@ function AiChatMockup() {
 
 function EkiciVideoWall() {
   const tHome = useTranslations("home");
-  const ref = useRef<HTMLDivElement>(null);
-  const reduced = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "center center"],
-  });
-  const rotateX = useTransform(scrollYProgress, [0, 1], [24, 0]);
-  const scale = useTransform(scrollYProgress, [0, 1], [0.88, 1]);
 
   return (
-    <div ref={ref} className="mt-24">
+    <div className="mt-24">
       <motion.div {...inViewReveal} className="mx-auto max-w-2xl text-center">
         <p className="text-sm font-semibold tracking-[0.25em] text-accent uppercase">
           {tHome("aiShowcase1Name")}
@@ -487,12 +478,12 @@ function EkiciVideoWall() {
         </div>
       </motion.div>
       <motion.div
-        style={
-          reduced
-            ? undefined
-            : { rotateX, scale, transformPerspective: 1200 }
-        }
-        className="relative mx-auto mt-14 w-full max-w-6xl overflow-hidden rounded-[2rem] border border-line bg-surface/80 shadow-[0_48px_120px_-32px_var(--accent)] will-change-transform"
+        initial={{ opacity: 0, rotateX: 18, scale: 0.92, y: 60 }}
+        whileInView={{ opacity: 1, rotateX: 0, scale: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.9, ease: "easeOut" }}
+        style={{ transformPerspective: 1200 }}
+        className="relative mx-auto mt-14 w-full max-w-6xl overflow-hidden rounded-[2rem] border border-line bg-surface/80 shadow-[0_48px_120px_-32px_var(--accent)]"
       >
         <div className="pointer-events-none aspect-video">
           <iframe
