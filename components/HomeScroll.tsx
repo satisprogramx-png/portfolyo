@@ -120,12 +120,14 @@ function ProjectFeature({
   name,
   slogan,
   desc,
+  features,
   visual,
   flip = false,
 }: {
   name: string;
   slogan: string;
   desc: string;
+  features: string[];
   visual: ReactNode;
   flip?: boolean;
 }) {
@@ -146,6 +148,20 @@ function ProjectFeature({
           {slogan}
         </h3>
         <p className="mt-5 text-lg leading-relaxed text-muted">{desc}</p>
+        <div
+          className={`mt-6 flex flex-wrap gap-2 justify-center ${
+            flip ? "sm:justify-end" : "sm:justify-start"
+          }`}
+        >
+          {features.map((feature) => (
+            <span
+              key={feature}
+              className="rounded-full border border-line bg-surface/60 px-3.5 py-1.5 text-sm text-muted backdrop-blur"
+            >
+              {feature}
+            </span>
+          ))}
+        </div>
       </motion.div>
       <motion.div
         initial={{ opacity: 0, y: 60, scale: 0.95 }}
@@ -166,8 +182,21 @@ function MindnoteVisual() {
   const t = useTranslations("mindnote");
   return (
     <BrowserFrame url="mindnote.tech">
-      <div className="p-5 text-left text-sm">
-        <p className="font-semibold">📄 {t("mockupNote")}</p>
+      <div className="flex text-left text-sm">
+        <div className="hidden w-28 shrink-0 border-r border-line/60 p-3 text-xs sm:block">
+          <p className="font-medium tracking-wide text-muted uppercase">
+            {t("mockupSidebar")}
+          </p>
+          <ul className="mt-2.5 space-y-1.5">
+            <li className="rounded-md bg-accent/15 px-2 py-1 text-accent">
+              📁 Product
+            </li>
+            <li className="px-2 py-1 text-muted">🧠 Research</li>
+            <li className="px-2 py-1 text-muted">👥 Team</li>
+          </ul>
+        </div>
+        <div className="flex-1 p-5">
+          <p className="font-semibold">📄 {t("mockupNote")}</p>
         <div className="mt-4 space-y-2.5 text-muted">
           <p className="rounded-lg border border-line/60 bg-bg/50 px-3 py-2">
             {t("mockupBlock1")}
@@ -175,9 +204,10 @@ function MindnoteVisual() {
           <p className="rounded-lg border border-accent/40 bg-accent/10 px-3 py-2 text-accent">
             🔗 {t("mockupBlock2")}
           </p>
-          <p className="rounded-lg border border-line/60 bg-bg/50 px-3 py-2">
-            ✨ {t("mockupBlock3")}
-          </p>
+            <p className="rounded-lg border border-line/60 bg-bg/50 px-3 py-2">
+              ✨ {t("mockupBlock3")}
+            </p>
+          </div>
         </div>
       </div>
     </BrowserFrame>
@@ -186,11 +216,28 @@ function MindnoteVisual() {
 
 function DiyetisyenVisual() {
   const t = useTranslations("diyetisyen");
+  const tHome = useTranslations("home");
+  const stats = [
+    { value: "24", labelKey: "statClients" },
+    { value: "8", labelKey: "statAppts" },
+    { value: "12", labelKey: "statPlans" },
+  ] as const;
   return (
     <BrowserFrame url="diyetisyen-paneli">
       <div className="p-5 text-left text-sm">
-        <p className="font-semibold">🗂️ {t("mockupTitle")}</p>
-        <div className="mt-4 space-y-2.5 text-muted">
+        <div className="grid grid-cols-3 gap-2.5 text-center">
+          {stats.map((stat) => (
+            <div
+              key={stat.labelKey}
+              className="rounded-xl border border-line/60 bg-bg/50 px-2 py-2.5"
+            >
+              <p className="text-lg font-bold text-accent">{stat.value}</p>
+              <p className="text-xs text-muted">{tHome(stat.labelKey)}</p>
+            </div>
+          ))}
+        </div>
+        <p className="mt-4 font-semibold">🗂️ {t("mockupTitle")}</p>
+        <div className="mt-3 space-y-2.5 text-muted">
           <p className="rounded-lg border border-line/60 bg-bg/50 px-3 py-2">
             🥗 {t("mockupBlock1")}
           </p>
@@ -337,6 +384,16 @@ function BrandBoardMockup() {
           <p className="text-sm text-muted">{t("brandMock3")}</p>
         </div>
       </div>
+      <div className="col-span-2 flex items-center gap-5 rounded-3xl border border-line bg-surface/70 px-8 py-6 backdrop-blur">
+        <div className="h-24 w-40 shrink-0 rounded-xl border border-line/60 bg-linear-to-br from-accent/20 to-bg/60 p-3 text-left">
+          <span className="flex size-6 items-center justify-center rounded-md bg-accent text-xs font-bold text-accent-fg">
+            A
+          </span>
+          <span className="mt-2.5 block h-1.5 w-2/3 rounded-full bg-line" />
+          <span className="mt-1.5 block h-1.5 w-1/2 rounded-full bg-line/60" />
+        </div>
+        <p className="text-sm text-muted">{t("brandMock4")}</p>
+      </div>
     </motion.div>
   );
 }
@@ -363,6 +420,24 @@ function AiChatMockup() {
           {t("aiMockSource")}
         </span>
       </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: 14 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 1 }}
+        className="ml-auto w-fit max-w-[85%] rounded-2xl rounded-br-sm bg-accent px-4 py-2.5 text-left text-sm text-accent-fg"
+      >
+        {t("aiMockQ2")}
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: 14 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 1.5 }}
+        className="w-fit max-w-[85%] rounded-2xl rounded-bl-sm border border-line bg-bg/60 px-4 py-2.5 text-left text-sm"
+      >
+        ✨ {t("aiMockA2")}
+      </motion.div>
     </motion.div>
   );
 }
@@ -385,12 +460,22 @@ function WebSection({ index }: { index: number }) {
         name={tHome("webShowcase1Name")}
         slogan={tHome("webShowcase1Slogan")}
         desc={tHome("webShowcase1Desc")}
+        features={[
+          tHome("webShowcase1F1"),
+          tHome("webShowcase1F2"),
+          tHome("webShowcase1F3"),
+        ]}
         visual={<MindnoteVisual />}
       />
       <ProjectFeature
         name={tHome("webShowcase2Name")}
         slogan={tHome("webShowcase2Slogan")}
         desc={tHome("webShowcase2Desc")}
+        features={[
+          tHome("webShowcase2F1"),
+          tHome("webShowcase2F2"),
+          tHome("webShowcase2F3"),
+        ]}
         visual={<DiyetisyenVisual />}
         flip
       />
@@ -398,6 +483,11 @@ function WebSection({ index }: { index: number }) {
         name={tHome("webShowcase3Name")}
         slogan={tHome("webShowcase3Slogan")}
         desc={tHome("webShowcase3Desc")}
+        features={[
+          tHome("webShowcase3F1"),
+          tHome("webShowcase3F2"),
+          tHome("webShowcase3F3"),
+        ]}
         visual={<FizyoterapistVisual />}
       />
     </section>
@@ -420,6 +510,11 @@ function WebsiteSection({ index }: { index: number }) {
         name={tHome("motionShowcase1Name")}
         slogan={tHome("motionShowcase1Slogan")}
         desc={tHome("motionShowcase1Desc")}
+        features={[
+          tHome("motionShowcase1F1"),
+          tHome("motionShowcase1F2"),
+          tHome("motionShowcase1F3"),
+        ]}
         visual={<BimolaVisual />}
         flip
       />
