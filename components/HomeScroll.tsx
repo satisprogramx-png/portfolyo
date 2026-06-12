@@ -447,12 +447,12 @@ function AiChatMockup() {
 function EkiciVideoVisual() {
   return (
     <div className="overflow-hidden rounded-3xl border border-line bg-surface/80 shadow-[0_24px_80px_-24px_var(--accent)] backdrop-blur">
-      <div className="aspect-video">
+      <div className="pointer-events-none aspect-video">
         <iframe
-          src="https://player.vimeo.com/video/1200880545?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479"
+          src="https://player.vimeo.com/video/1200880545?background=1&autoplay=1&loop=1&muted=1&app_id=58479"
           className="h-full w-full"
           loading="lazy"
-          allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+          allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
           referrerPolicy="strict-origin-when-cross-origin"
           title="Ekici Residence"
         />
