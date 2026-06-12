@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { CATEGORIES, type Theme } from "@/lib/themes";
+import { type Theme } from "@/lib/themes";
 import { useTheme } from "./ThemeProvider";
+import { BrowserFrame } from "./showcase";
 
 /* Bölüm görünüme girince tüm site temasını o kategoriye morph eder */
 function useThemeOnView(theme: Theme) {
@@ -19,6 +20,13 @@ function useThemeOnView(theme: Theme) {
 
   return ref;
 }
+
+const inViewReveal = {
+  initial: { opacity: 0, y: 40 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-100px" },
+  transition: { duration: 0.7, ease: "easeOut" as const },
+};
 
 function HeroSection() {
   const t = useTranslations("hero");
@@ -74,121 +82,373 @@ function HeroSection() {
   );
 }
 
-/* Bölümlerde satır içi tanıtılan gerçek projeler (link yok) */
-const SHOWCASES: Partial<
-  Record<
-    (typeof CATEGORIES)[number],
-    Array<{ emoji: string; nameKey: string; sloganKey: string; descKey: string }>
-  >
-> = {
-  web: [
-    {
-      emoji: "🧠",
-      nameKey: "webShowcase1Name",
-      sloganKey: "webShowcase1Slogan",
-      descKey: "webShowcase1Desc",
-    },
-    {
-      emoji: "🥗",
-      nameKey: "webShowcase2Name",
-      sloganKey: "webShowcase2Slogan",
-      descKey: "webShowcase2Desc",
-    },
-    {
-      emoji: "🤸",
-      nameKey: "webShowcase3Name",
-      sloganKey: "webShowcase3Slogan",
-      descKey: "webShowcase3Desc",
-    },
-  ],
-  motion: [
-    {
-      emoji: "🌐",
-      nameKey: "motionShowcase1Name",
-      sloganKey: "motionShowcase1Slogan",
-      descKey: "motionShowcase1Desc",
-    },
-  ],
-};
-
-function CategorySection({
-  category,
+function SectionHeader({
   index,
+  title,
+  tagline,
 }: {
-  category: (typeof CATEGORIES)[number];
   index: number;
+  title: string;
+  tagline: string;
 }) {
+  return (
+    <div className="text-center">
+      <motion.p
+        {...inViewReveal}
+        className="text-sm font-semibold tracking-[0.35em] text-accent uppercase"
+      >
+        {String(index + 1).padStart(2, "0")}
+      </motion.p>
+      <motion.h2
+        {...inViewReveal}
+        className="mt-5 bg-linear-to-b from-fg to-accent bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-8xl"
+      >
+        {title}
+      </motion.h2>
+      <motion.p
+        {...inViewReveal}
+        className="mx-auto mt-6 max-w-md text-lg text-muted sm:text-xl"
+      >
+        {tagline}
+      </motion.p>
+    </div>
+  );
+}
+
+/* Gerçek proje: büyük slogan + mockup görseli, sırayla sağlı sollu */
+function ProjectFeature({
+  name,
+  slogan,
+  desc,
+  visual,
+  flip = false,
+}: {
+  name: string;
+  slogan: string;
+  desc: string;
+  visual: ReactNode;
+  flip?: boolean;
+}) {
+  return (
+    <div
+      className={`mt-20 flex flex-col items-center gap-10 sm:gap-16 ${
+        flip ? "sm:flex-row-reverse" : "sm:flex-row"
+      }`}
+    >
+      <motion.div
+        {...inViewReveal}
+        className={`flex-1 text-center ${flip ? "sm:text-right" : "sm:text-left"}`}
+      >
+        <p className="text-sm font-semibold tracking-[0.25em] text-accent uppercase">
+          {name}
+        </p>
+        <h3 className="mt-4 text-3xl font-bold tracking-tight sm:text-5xl">
+          {slogan}
+        </h3>
+        <p className="mt-5 text-lg leading-relaxed text-muted">{desc}</p>
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: 60, scale: 0.95 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="w-full max-w-md flex-1"
+      >
+        {visual}
+      </motion.div>
+    </div>
+  );
+}
+
+/* ---- Proje mockup görselleri ---- */
+
+function MindnoteVisual() {
+  const t = useTranslations("mindnote");
+  return (
+    <BrowserFrame url="mindnote.tech">
+      <div className="p-5 text-left text-sm">
+        <p className="font-semibold">📄 {t("mockupNote")}</p>
+        <div className="mt-4 space-y-2.5 text-muted">
+          <p className="rounded-lg border border-line/60 bg-bg/50 px-3 py-2">
+            {t("mockupBlock1")}
+          </p>
+          <p className="rounded-lg border border-accent/40 bg-accent/10 px-3 py-2 text-accent">
+            🔗 {t("mockupBlock2")}
+          </p>
+          <p className="rounded-lg border border-line/60 bg-bg/50 px-3 py-2">
+            ✨ {t("mockupBlock3")}
+          </p>
+        </div>
+      </div>
+    </BrowserFrame>
+  );
+}
+
+function DiyetisyenVisual() {
+  const t = useTranslations("diyetisyen");
+  return (
+    <BrowserFrame url="diyetisyen-paneli">
+      <div className="p-5 text-left text-sm">
+        <p className="font-semibold">🗂️ {t("mockupTitle")}</p>
+        <div className="mt-4 space-y-2.5 text-muted">
+          <p className="rounded-lg border border-line/60 bg-bg/50 px-3 py-2">
+            🥗 {t("mockupBlock1")}
+          </p>
+          <p className="rounded-lg border border-accent/40 bg-accent/10 px-3 py-2 text-accent">
+            📅 {t("mockupBlock2")}
+          </p>
+          <p className="rounded-lg border border-line/60 bg-bg/50 px-3 py-2">
+            🤸 {t("mockupBlock3")}
+          </p>
+        </div>
+      </div>
+    </BrowserFrame>
+  );
+}
+
+function FizyoterapistVisual() {
+  const t = useTranslations("fizyoterapist");
+  return (
+    <BrowserFrame url="fizyoterapist-paneli">
+      <div className="p-5 text-left text-sm">
+        <p className="font-semibold">🗂️ {t("mockupTitle")}</p>
+        <div className="mt-4 space-y-3 text-muted">
+          <p>🏋️ {t("mockupBlock1")}</p>
+          <div className="h-2 overflow-hidden rounded-full bg-bg/60">
+            <motion.span
+              initial={{ width: "10%" }}
+              whileInView={{ width: "70%" }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
+              className="block h-full rounded-full bg-accent"
+            />
+          </div>
+          <p className="rounded-lg border border-accent/40 bg-accent/10 px-3 py-2 text-accent">
+            📈 {t("mockupBlock3")}
+          </p>
+        </div>
+      </div>
+    </BrowserFrame>
+  );
+}
+
+function BimolaVisual() {
+  const t = useTranslations("bimola");
+  return (
+    <BrowserFrame url="bimola.vercel.app">
+      <div className="px-6 py-8 text-center">
+        <div className="mx-auto flex max-w-xs items-center justify-center gap-2">
+          <span className="h-1.5 w-12 rounded-full bg-accent/60" />
+          <span className="h-1.5 w-8 rounded-full bg-line" />
+          <span className="h-1.5 w-8 rounded-full bg-line" />
+        </div>
+        <p className="mt-7 bg-linear-to-br from-fg to-accent bg-clip-text text-2xl font-bold tracking-tight text-transparent">
+          {t("mockupHeadline")}
+        </p>
+        <p className="mt-2 text-xs text-muted">{t("mockupSub")}</p>
+        <div className="mt-7 grid grid-cols-3 gap-3">
+          {[0, 1, 2].map((i) => (
+            <div
+              key={i}
+              className="rounded-xl border border-line/60 bg-bg/50 p-3"
+            >
+              <span className="block size-7 rounded-lg bg-accent/20" />
+              <span className="mt-2.5 block h-1.5 w-3/4 rounded-full bg-line" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </BrowserFrame>
+  );
+}
+
+/* ---- Proje olmayan kategoriler için mockup sunumları ---- */
+
+function PhoneMockup() {
+  const t = useTranslations("home");
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 60, rotate: -3 }}
+      whileInView={{ opacity: 1, y: 0, rotate: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+      className="mx-auto mt-16 w-64 rounded-[2.8rem] border border-line bg-surface/80 p-3 shadow-[0_24px_80px_-24px_var(--accent)] backdrop-blur"
+    >
+      <div className="rounded-[2.2rem] border border-line/60 bg-bg/60 px-4 pt-3 pb-6">
+        <div className="mx-auto h-1.5 w-16 rounded-full bg-line" />
+        <p className="mt-5 text-left text-sm font-semibold">
+          💪 {t("mobileMockApp")}
+        </p>
+        <div className="mt-4 space-y-2.5 text-left text-xs text-muted">
+          <p className="rounded-xl border border-accent/40 bg-accent/10 px-3 py-2.5 text-accent">
+            {t("mobileMock1")}
+          </p>
+          <p className="rounded-xl border border-line/60 bg-surface/60 px-3 py-2.5">
+            👟 {t("mobileMock2")}
+          </p>
+          <p className="rounded-xl border border-line/60 bg-surface/60 px-3 py-2.5">
+            💧 {t("mobileMock3")}
+          </p>
+        </div>
+        <div className="mt-5 flex items-end justify-between gap-1.5">
+          {[40, 70, 55, 90, 65, 80, 50].map((h, i) => (
+            <motion.span
+              key={i}
+              initial={{ height: 6 }}
+              whileInView={{ height: (h / 100) * 56 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.3 + i * 0.06 }}
+              className="w-full rounded-full bg-accent/60"
+            />
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function BrandBoardMockup() {
+  const t = useTranslations("home");
+  return (
+    <motion.div
+      {...inViewReveal}
+      className="mx-auto mt-16 grid w-full max-w-lg grid-cols-2 gap-4"
+    >
+      <div className="flex aspect-square flex-col items-center justify-center rounded-3xl border border-line bg-surface/70 backdrop-blur">
+        <span className="flex size-16 items-center justify-center rounded-2xl bg-linear-to-br from-accent to-accent/40 text-2xl font-bold text-accent-fg">
+          A
+        </span>
+        <p className="mt-4 text-sm text-muted">{t("brandMock1")}</p>
+      </div>
+      <div className="flex aspect-square flex-col items-center justify-center gap-3 rounded-3xl border border-line bg-surface/70 backdrop-blur">
+        <div className="flex gap-2">
+          <span className="size-8 rounded-full bg-accent" />
+          <span className="size-8 rounded-full bg-accent/60" />
+          <span className="size-8 rounded-full bg-accent/30" />
+        </div>
+        <p className="text-sm text-muted">{t("brandMock2")}</p>
+      </div>
+      <div className="col-span-2 flex items-center justify-between rounded-3xl border border-line bg-surface/70 px-8 py-6 backdrop-blur">
+        <p className="bg-linear-to-br from-fg to-accent bg-clip-text text-5xl font-bold text-transparent">
+          Aa
+        </p>
+        <div className="text-right">
+          <p className="text-xl font-semibold">{t("brandMockName")}</p>
+          <p className="text-sm text-muted">{t("brandMock3")}</p>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function AiChatMockup() {
+  const t = useTranslations("home");
+  return (
+    <motion.div
+      {...inViewReveal}
+      className="mx-auto mt-16 w-full max-w-md space-y-3 rounded-3xl border border-line bg-surface/70 p-6 backdrop-blur"
+    >
+      <div className="ml-auto w-fit max-w-[85%] rounded-2xl rounded-br-sm bg-accent px-4 py-2.5 text-left text-sm text-accent-fg">
+        {t("aiMockQ")}
+      </div>
+      <motion.div
+        initial={{ opacity: 0, y: 14 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.5 }}
+        className="w-fit max-w-[85%] rounded-2xl rounded-bl-sm border border-line bg-bg/60 px-4 py-2.5 text-left text-sm"
+      >
+        ✨ {t("aiMockA")}
+        <span className="mt-2 block w-fit rounded-full border border-accent/40 bg-accent/10 px-2.5 py-0.5 text-xs text-accent">
+          {t("aiMockSource")}
+        </span>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+/* ---- Bölümler ---- */
+
+function WebSection({ index }: { index: number }) {
   const tCat = useTranslations("categories");
   const tHome = useTranslations("home");
-  const ref = useThemeOnView(category);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-  const y = useTransform(scrollYProgress, [0, 1], [60, -60]);
-  const showcases = SHOWCASES[category];
+  const ref = useThemeOnView("web");
+
+  return (
+    <section ref={ref} className="mx-auto max-w-5xl px-4 py-28 sm:px-6 sm:py-36">
+      <SectionHeader
+        index={index}
+        title={tCat("web")}
+        tagline={tHome("webTagline")}
+      />
+      <ProjectFeature
+        name={tHome("webShowcase1Name")}
+        slogan={tHome("webShowcase1Slogan")}
+        desc={tHome("webShowcase1Desc")}
+        visual={<MindnoteVisual />}
+      />
+      <ProjectFeature
+        name={tHome("webShowcase2Name")}
+        slogan={tHome("webShowcase2Slogan")}
+        desc={tHome("webShowcase2Desc")}
+        visual={<DiyetisyenVisual />}
+        flip
+      />
+      <ProjectFeature
+        name={tHome("webShowcase3Name")}
+        slogan={tHome("webShowcase3Slogan")}
+        desc={tHome("webShowcase3Desc")}
+        visual={<FizyoterapistVisual />}
+      />
+    </section>
+  );
+}
+
+function WebsiteSection({ index }: { index: number }) {
+  const tCat = useTranslations("categories");
+  const tHome = useTranslations("home");
+  const ref = useThemeOnView("motion");
+
+  return (
+    <section ref={ref} className="mx-auto max-w-5xl px-4 py-28 sm:px-6 sm:py-36">
+      <SectionHeader
+        index={index}
+        title={tCat("motion")}
+        tagline={tHome("motionTagline")}
+      />
+      <ProjectFeature
+        name={tHome("motionShowcase1Name")}
+        slogan={tHome("motionShowcase1Slogan")}
+        desc={tHome("motionShowcase1Desc")}
+        visual={<BimolaVisual />}
+        flip
+      />
+    </section>
+  );
+}
+
+function MockupSection({
+  index,
+  theme,
+  title,
+  tagline,
+  children,
+}: {
+  index: number;
+  theme: Theme;
+  title: string;
+  tagline: string;
+  children: ReactNode;
+}) {
+  const ref = useThemeOnView(theme);
 
   return (
     <section
       ref={ref}
-      className="flex min-h-dvh flex-col items-center justify-center px-4 text-center sm:px-6"
+      className="mx-auto flex min-h-dvh max-w-5xl flex-col justify-center px-4 py-28 sm:px-6"
     >
-      <motion.div style={{ y }}>
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: "-120px" }}
-          transition={{ duration: 0.6 }}
-          className="text-sm font-semibold tracking-[0.35em] text-accent uppercase"
-        >
-          {String(index + 1).padStart(2, "0")}
-        </motion.p>
-        <motion.h2
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-120px" }}
-          transition={{ duration: 0.7, delay: 0.08 }}
-          className="mt-5 bg-linear-to-b from-fg to-accent bg-clip-text text-6xl font-bold tracking-tight text-transparent sm:text-9xl"
-        >
-          {tCat(category)}
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-120px" }}
-          transition={{ duration: 0.7, delay: 0.18 }}
-          className="mx-auto mt-7 max-w-md text-lg text-muted sm:text-xl"
-        >
-          {tHome(`${category}Tagline`)}
-        </motion.p>
-        {showcases && (
-          <div className="mx-auto mt-12 grid max-w-4xl gap-4 sm:grid-cols-[repeat(auto-fit,minmax(14rem,1fr))]">
-            {showcases.map((item, i) => (
-              <motion.div
-                key={item.nameKey}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-120px" }}
-                transition={{ duration: 0.7, delay: 0.28 + 0.1 * i }}
-                className="rounded-2xl border border-line bg-surface/60 px-6 py-6 text-center backdrop-blur"
-              >
-                <span className="mx-auto flex size-14 items-center justify-center rounded-2xl border border-line bg-linear-to-br from-accent/25 to-surface text-3xl shadow-[0_8px_32px_-12px_var(--accent)]">
-                  {item.emoji}
-                </span>
-                <p className="mt-4 font-semibold text-accent">
-                  {tHome(item.nameKey)}
-                </p>
-                <p className="mt-1 text-sm font-medium">
-                  {tHome(item.sloganKey)}
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-muted">
-                  {tHome(item.descKey)}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        )}
-      </motion.div>
+      <SectionHeader index={index} title={title} tagline={tagline} />
+      {children}
     </section>
   );
 }
@@ -203,28 +463,16 @@ function OutroSection() {
       className="flex min-h-dvh flex-col items-center justify-center px-4 text-center sm:px-6"
     >
       <motion.h2
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-120px" }}
-        transition={{ duration: 0.7 }}
+        {...inViewReveal}
         className="bg-linear-to-br from-fg to-accent bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-7xl"
       >
         {t("outroTitle")}
       </motion.h2>
-      <motion.p
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-120px" }}
-        transition={{ duration: 0.7, delay: 0.12 }}
-        className="mt-6 max-w-md text-muted sm:text-lg"
-      >
+      <motion.p {...inViewReveal} className="mt-6 max-w-md text-muted sm:text-lg">
         {t("outroBody")}
       </motion.p>
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-120px" }}
-        transition={{ duration: 0.7, delay: 0.24 }}
+        {...inViewReveal}
         className="mt-10 flex items-center gap-8 text-lg font-medium"
       >
         <Link
@@ -251,12 +499,38 @@ function OutroSection() {
 }
 
 export function HomeScroll() {
+  const tCat = useTranslations("categories");
+  const tHome = useTranslations("home");
+
   return (
     <div>
       <HeroSection />
-      {CATEGORIES.map((category, i) => (
-        <CategorySection key={category} category={category} index={i} />
-      ))}
+      <WebSection index={0} />
+      <MockupSection
+        index={1}
+        theme="mobile"
+        title={tCat("mobile")}
+        tagline={tHome("mobileTagline")}
+      >
+        <PhoneMockup />
+      </MockupSection>
+      <MockupSection
+        index={2}
+        theme="brand"
+        title={tCat("brand")}
+        tagline={tHome("brandTagline")}
+      >
+        <BrandBoardMockup />
+      </MockupSection>
+      <MockupSection
+        index={3}
+        theme="ai"
+        title={tCat("ai")}
+        tagline={tHome("aiTagline")}
+      >
+        <AiChatMockup />
+      </MockupSection>
+      <WebsiteSection index={4} />
       <OutroSection />
     </div>
   );
