@@ -12,32 +12,43 @@ import {
   reveal,
 } from "./showcase";
 
-function SiteMockup() {
+function BlogMockup() {
   const t = useTranslations("bimola");
   return (
     <BrowserFrame url={t("mockupNav")}>
-      <div className="px-8 py-10 text-center sm:px-14 sm:py-14">
-        <div className="mx-auto flex max-w-md items-center justify-center gap-2">
-          <span className="h-2 w-16 rounded-full bg-accent/60" />
-          <span className="h-2 w-10 rounded-full bg-line" />
-          <span className="h-2 w-10 rounded-full bg-line" />
-          <span className="h-2 w-10 rounded-full bg-line" />
+      <div className="p-5 text-left text-sm sm:p-8">
+        <div className="flex flex-wrap gap-2 text-xs">
+          <span className="rounded-full bg-accent px-3 py-1 font-medium text-accent-fg">
+            {t("mockCat1")}
+          </span>
+          <span className="rounded-full border border-line px-3 py-1 text-muted">
+            {t("mockCat2")}
+          </span>
+          <span className="rounded-full border border-line px-3 py-1 text-muted">
+            {t("mockCat3")}
+          </span>
         </div>
-        <p className="mt-10 bg-linear-to-br from-fg to-accent bg-clip-text text-3xl font-bold tracking-tight text-transparent sm:text-4xl">
-          {t("mockupHeadline")}
-        </p>
-        <p className="mt-3 text-sm text-muted sm:text-base">{t("mockupSub")}</p>
-        <div className="mt-10 grid gap-4 sm:grid-cols-3">
-          {[0, 1, 2].map((i) => (
-            <div
-              key={i}
-              className="rounded-2xl border border-line/60 bg-bg/50 p-5"
-            >
-              <span className="block h-10 w-10 rounded-xl bg-accent/20" />
-              <span className="mt-4 block h-2 w-3/4 rounded-full bg-line" />
-              <span className="mt-2 block h-2 w-1/2 rounded-full bg-line/60" />
+        <div className="mt-4 rounded-2xl border border-line/60 bg-linear-to-br from-accent/20 to-bg/60 p-5 sm:p-6">
+          <p className="text-base leading-snug font-bold sm:text-xl">
+            {t("mockFeatured")}
+          </p>
+          <p className="mt-2 text-xs text-accent">{t("mockMeta")}</p>
+        </div>
+        <div className="mt-3 space-y-2.5 text-muted">
+          <div className="flex items-center gap-3 rounded-xl border border-line/60 bg-bg/50 px-4 py-3">
+            <span className="size-9 shrink-0 rounded-lg bg-accent/20" />
+            <div>
+              <p className="text-xs font-medium text-fg">{t("mockPost2")}</p>
+              <p className="mt-0.5 text-xs">{t("mockMeta2")}</p>
             </div>
-          ))}
+          </div>
+          <div className="flex items-center gap-3 rounded-xl border border-line/60 bg-bg/50 px-4 py-3">
+            <span className="size-9 shrink-0 rounded-lg bg-accent/20" />
+            <div>
+              <p className="text-xs font-medium text-fg">{t("mockPost3")}</p>
+              <p className="mt-0.5 text-xs">{t("mockMeta3")}</p>
+            </div>
+          </div>
         </div>
       </div>
     </BrowserFrame>
@@ -56,16 +67,20 @@ export function BimolaShowcase() {
         scrollHint={t("scrollHint")}
       />
       <MockupSlot>
-        <SiteMockup />
+        <BlogMockup />
       </MockupSlot>
 
       <Statement title={t("statement1Title")} body={t("statement1Body")} />
 
-      <SplitStatement emoji="⚡" title={t("speedTitle")} body={t("speedBody")} />
       <SplitStatement
-        emoji="📱"
-        title={t("responsiveTitle")}
-        body={t("responsiveBody")}
+        emoji="🩺"
+        title={t("topicsTitle")}
+        body={t("topicsBody")}
+      />
+      <SplitStatement
+        emoji="🗓️"
+        title={t("weeklyTitle")}
+        body={t("weeklyBody")}
         flip
       />
       <SplitStatement

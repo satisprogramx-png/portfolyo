@@ -283,26 +283,28 @@ function BimolaVisual() {
   const t = useTranslations("bimola");
   return (
     <BrowserFrame url="bimola.vercel.app">
-      <div className="px-6 py-8 text-center">
-        <div className="mx-auto flex max-w-xs items-center justify-center gap-2">
-          <span className="h-1.5 w-12 rounded-full bg-accent/60" />
-          <span className="h-1.5 w-8 rounded-full bg-line" />
-          <span className="h-1.5 w-8 rounded-full bg-line" />
+      <div className="p-5 text-left text-sm">
+        <div className="flex flex-wrap gap-1.5 text-xs">
+          <span className="rounded-full bg-accent px-2.5 py-0.5 font-medium text-accent-fg">
+            {t("mockCat1")}
+          </span>
+          <span className="rounded-full border border-line px-2.5 py-0.5 text-muted">
+            {t("mockCat2")}
+          </span>
+          <span className="rounded-full border border-line px-2.5 py-0.5 text-muted">
+            {t("mockCat3")}
+          </span>
         </div>
-        <p className="mt-7 bg-linear-to-br from-fg to-accent bg-clip-text text-2xl font-bold tracking-tight text-transparent">
-          {t("mockupHeadline")}
-        </p>
-        <p className="mt-2 text-xs text-muted">{t("mockupSub")}</p>
-        <div className="mt-7 grid grid-cols-3 gap-3">
-          {[0, 1, 2].map((i) => (
-            <div
-              key={i}
-              className="rounded-xl border border-line/60 bg-bg/50 p-3"
-            >
-              <span className="block size-7 rounded-lg bg-accent/20" />
-              <span className="mt-2.5 block h-1.5 w-3/4 rounded-full bg-line" />
-            </div>
-          ))}
+        <div className="mt-3 rounded-xl border border-line/60 bg-linear-to-br from-accent/20 to-bg/60 p-4">
+          <p className="leading-snug font-bold">{t("mockFeatured")}</p>
+          <p className="mt-1.5 text-xs text-accent">{t("mockMeta")}</p>
+        </div>
+        <div className="mt-2.5 flex items-center gap-3 rounded-xl border border-line/60 bg-bg/50 px-3.5 py-2.5 text-muted">
+          <span className="size-8 shrink-0 rounded-lg bg-accent/20" />
+          <div>
+            <p className="text-xs font-medium text-fg">{t("mockPost2")}</p>
+            <p className="mt-0.5 text-xs">{t("mockMeta2")}</p>
+          </div>
         </div>
       </div>
     </BrowserFrame>

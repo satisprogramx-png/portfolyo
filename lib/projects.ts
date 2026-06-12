@@ -62,15 +62,15 @@ export const FALLBACK_PROJECTS: Project[] = [
   {
     id: "0b",
     slug: "bimola",
-    title_tr: "Bimola — Web Sitesi",
-    title_en: "Bimola — Website",
+    title_tr: "Bi'Mola Zamanı — Sağlık Blogu",
+    title_en: "Bi'Mola Zamanı — Health Blog",
     description_tr:
-      "Vercel üzerinde yayınlanan hızlı, modern ve mobil uyumlu web sitesi. (bimola.vercel.app)",
+      "Beslenme, sağlık ve iş sağlığı üzerine haftalık, bilimsel kaynaklı yazılar yayımlayan kişisel blog. (bimola.vercel.app)",
     description_en:
-      "A fast, modern and mobile-friendly website deployed on Vercel. (bimola.vercel.app)",
+      "A personal blog publishing weekly, science-backed articles on nutrition, health and workplace health. (bimola.vercel.app)",
     category: "motion",
     year: 2026,
-    tags: ["Next.js", "Vercel", "Tailwind CSS"],
+    tags: ["Blog", "Sağlık", "Vercel"],
     sort_order: 1,
   },
   {
