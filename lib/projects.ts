@@ -116,6 +116,20 @@ export const FALLBACK_PROJECTS: Project[] = [
     sort_order: 3,
   },
   {
+    id: "0e",
+    slug: "ekici-residence",
+    title_tr: "Ekici Residence — AI Tanıtım Filmi",
+    title_en: "Ekici Residence — AI Promo Film",
+    description_tr:
+      "Yapay zekâ ile üretilmiş konut projesi tanıtım filmi; sinematik kurgu ve AI görüntü üretimi.",
+    description_en:
+      "An AI-generated promo film for a residential project; cinematic editing with AI-generated footage.",
+    category: "ai",
+    year: 2026,
+    tags: ["AI Video", "Tanıtım", "Vimeo"],
+    sort_order: 4,
+  },
+  {
     id: "4",
     slug: "lumen-ai-assistant",
     title_tr: "Lumen Yapay Zekâ Asistanı",
@@ -127,7 +141,7 @@ export const FALLBACK_PROJECTS: Project[] = [
     category: "ai",
     year: 2025,
     tags: ["Claude", "RAG", "Vector Search"],
-    sort_order: 4,
+    sort_order: 6,
   },
 ];
 
