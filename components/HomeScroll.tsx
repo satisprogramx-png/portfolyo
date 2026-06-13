@@ -489,12 +489,16 @@ function EkiciVideoWall() {
         </div>
       </motion.div>
       <motion.div
-        initial={{ opacity: 0, rotateX: 18, scale: 0.92, y: 60 }}
+        initial={{ opacity: 0, rotateX: -16, scale: 1.06, y: -50 }}
         whileInView={{ opacity: 1, rotateX: 0, scale: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.9, ease: "easeOut" }}
-        style={{ transformPerspective: 1200 }}
-        className="relative mx-auto mt-14 w-full max-w-6xl overflow-hidden rounded-[2rem] border border-line bg-surface/80 shadow-[0_48px_120px_-32px_var(--accent)]"
+        style={{
+          transformPerspective: 1200,
+          boxShadow:
+            "inset 0 22px 50px -14px var(--bg), inset 0 -8px 30px -16px var(--bg)",
+        }}
+        className="relative mx-auto mt-14 w-full max-w-6xl overflow-hidden rounded-[2rem] border border-line bg-surface/80"
       >
         <div className="pointer-events-none aspect-video">
           <iframe
@@ -506,6 +510,10 @@ function EkiciVideoWall() {
             title="Ekici Residence"
           />
         </div>
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-linear-to-b from-bg/55 to-transparent"
+        />
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-linear-to-t from-bg/40 to-transparent"
