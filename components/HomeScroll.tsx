@@ -2,13 +2,14 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
+  AnimatePresence,
   motion,
   useInView,
   useScroll,
   useTransform,
 } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
 import { type Theme } from "@/lib/themes";
 import { useTheme } from "./ThemeProvider";
 import { BrowserFrame } from "./showcase";
@@ -118,6 +119,154 @@ function SectionHeader({
         {tagline}
       </motion.p>
     </div>
+  );
+}
+
+/* Google Labs tarzı proje kartı destesi + tıklayınca sayfa geçiş perdesi */
+type DeckCard = {
+  theme: Theme;
+  emoji: string;
+  name: string;
+  slogan: string;
+  href: string;
+};
+
+function ProjectDeck() {
+  const tHome = useTranslations("home");
+  const tWork = useTranslations("work");
+  const router = useRouter();
+  const ref = useThemeOnView("default");
+  const [exiting, setExiting] = useState<DeckCard | null>(null);
+
+  const cards: DeckCard[] = [
+    {
+      theme: "web",
+      emoji: "🧠",
+      name: tHome("webShowcase1Name"),
+      slogan: tHome("webShowcase1Slogan"),
+      href: "/work/mindnote",
+    },
+    {
+      theme: "web",
+      emoji: "🥗",
+      name: tHome("webShowcase2Name"),
+      slogan: tHome("webShowcase2Slogan"),
+      href: "/work/diyetisyen-modulu",
+    },
+    {
+      theme: "web",
+      emoji: "🤸",
+      name: tHome("webShowcase3Name"),
+      slogan: tHome("webShowcase3Slogan"),
+      href: "/work/fizyoterapist-modulu",
+    },
+    {
+      theme: "ai",
+      emoji: "🎬",
+      name: tHome("aiShowcase1Name"),
+      slogan: tHome("aiShowcase1Slogan"),
+      href: "/work/ekici-residence",
+    },
+    {
+      theme: "motion",
+      emoji: "🌐",
+      name: tHome("motionShowcase1Name"),
+      slogan: tHome("motionShowcase1Slogan"),
+      href: "/work/bimola",
+    },
+  ];
+
+  const select = (card: DeckCard) => {
+    if (exiting) return;
+    setExiting(card);
+    window.setTimeout(() => router.push(card.href), 650);
+  };
+
+  return (
+    <section
+      ref={ref}
+      className="mx-auto flex min-h-dvh max-w-6xl flex-col justify-center px-4 py-28 sm:px-6"
+    >
+      <div className="text-center">
+        <motion.h2
+          {...inViewReveal}
+          className="bg-linear-to-b from-fg to-accent bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-7xl"
+        >
+          {tHome("deckTitle")}
+        </motion.h2>
+        <motion.p
+          {...inViewReveal}
+          className="mx-auto mt-6 max-w-md text-lg text-muted sm:text-xl"
+        >
+          {tHome("deckTagline")}
+        </motion.p>
+      </div>
+      <div className="mt-16 flex flex-wrap items-center justify-center gap-5 sm:gap-6">
+        {cards.map((card, i) => {
+          const tilt = (i - (cards.length - 1) / 2) * 4;
+          return (
+            <motion.button
+              key={card.href}
+              type="button"
+              data-theme={card.theme}
+              onClick={() => select(card)}
+              initial={{ opacity: 0, y: 40, rotate: tilt }}
+              whileInView={{ opacity: 1, y: 0, rotate: tilt }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.6, delay: 0.08 * i }}
+              whileHover={{ rotate: 0, y: -12, scale: 1.04, zIndex: 10 }}
+              className="group relative flex w-60 flex-col overflow-hidden rounded-3xl border border-line bg-surface text-left shadow-[0_20px_60px_-24px_var(--bg)]"
+            >
+              <div className="flex h-36 items-center justify-center bg-linear-to-br from-accent/35 via-surface to-surface text-5xl">
+                {card.emoji}
+              </div>
+              <div className="flex flex-1 flex-col p-5">
+                <p className="text-base font-semibold tracking-tight text-fg">
+                  {card.name}
+                </p>
+                <p className="mt-1.5 text-sm text-muted">{card.slogan}</p>
+                <span className="mt-4 text-sm font-medium text-accent">
+                  {tWork("viewCase")}
+                  <span className="ml-1.5 inline-block transition-transform group-hover:translate-x-1">
+                    →
+                  </span>
+                </span>
+              </div>
+            </motion.button>
+          );
+        })}
+      </div>
+
+      <AnimatePresence>
+        {exiting && (
+          <motion.div
+            data-theme={exiting.theme}
+            initial={{ clipPath: "circle(0% at 50% 60%)" }}
+            animate={{ clipPath: "circle(150% at 50% 60%)" }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-bg"
+          >
+            <motion.span
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.4 }}
+              className="text-6xl"
+            >
+              {exiting.emoji}
+            </motion.span>
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.28, duration: 0.4 }}
+              className="mt-5 bg-linear-to-br from-fg to-accent bg-clip-text text-3xl font-bold tracking-tight text-transparent sm:text-5xl"
+            >
+              {exiting.name}
+            </motion.p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </section>
   );
 }
 
@@ -714,6 +863,7 @@ export function HomeScroll() {
   return (
     <div>
       <HeroSection />
+      <ProjectDeck />
       <WebSection index={0} />
       <MockupSection
         index={1}
