@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { Project } from "@/lib/projects";
-import type { Category } from "@/lib/themes";
+import { CATEGORIES, type Category } from "@/lib/themes";
 import { CategoryChips } from "./CategoryChips";
 
 // Ayrı tanıtım sayfası olan projeler
@@ -27,9 +27,19 @@ export function WorkGrid({ projects }: { projects: Project[] }) {
       ? projects
       : projects.filter((p) => p.category === selected);
 
+  // Yalnızca en az bir projesi olan kategorileri filtre olarak göster
+  const availableCategories = CATEGORIES.filter((c) =>
+    projects.some((p) => p.category === c),
+  );
+
   return (
     <div className="space-y-12">
-      <CategoryChips showAll selected={selected} onSelect={setSelected} />
+      <CategoryChips
+        showAll
+        categories={availableCategories}
+        selected={selected}
+        onSelect={setSelected}
+      />
       {filtered.length === 0 ? (
         <p className="text-center text-muted">{t("empty")}</p>
       ) : (

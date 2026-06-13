@@ -9,9 +9,15 @@ type Props = {
   selected?: Category | "all";
   onSelect?: (category: Category | "all") => void;
   showAll?: boolean;
+  categories?: readonly Category[];
 };
 
-export function CategoryChips({ selected, onSelect, showAll = false }: Props) {
+export function CategoryChips({
+  selected,
+  onSelect,
+  showAll = false,
+  categories = CATEGORIES,
+}: Props) {
   const t = useTranslations("categories");
   const { theme, setTheme } = useTheme();
 
@@ -21,8 +27,8 @@ export function CategoryChips({ selected, onSelect, showAll = false }: Props) {
   };
 
   const items: Array<Category | "all"> = showAll
-    ? ["all", ...CATEGORIES]
-    : [...CATEGORIES];
+    ? ["all", ...categories]
+    : [...categories];
 
   const isActive = (item: Category | "all") =>
     selected !== undefined

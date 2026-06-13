@@ -102,20 +102,6 @@ export const FALLBACK_PROJECTS: Project[] = [
     sort_order: 2,
   },
   {
-    id: "3",
-    slug: "atlas-rebrand",
-    title_tr: "Atlas Marka Yenileme",
-    title_en: "Atlas Rebrand",
-    description_tr:
-      "Logo, tipografi ve tasarım sisteminden oluşan uçtan uca marka kimliği.",
-    description_en:
-      "End-to-end brand identity: logo, typography and a full design system.",
-    category: "brand",
-    year: 2024,
-    tags: ["Identity", "Design System"],
-    sort_order: 3,
-  },
-  {
     id: "0e",
     slug: "ekici-residence",
     title_tr: "Ekici Residence — AI Tanıtım Filmi",

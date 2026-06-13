@@ -361,50 +361,6 @@ function PhoneMockup() {
   );
 }
 
-function BrandBoardMockup() {
-  const t = useTranslations("home");
-  return (
-    <motion.div
-      {...inViewReveal}
-      className="mx-auto mt-16 grid w-full max-w-lg grid-cols-2 gap-4"
-    >
-      <div className="flex aspect-square flex-col items-center justify-center rounded-3xl border border-line bg-surface/70 backdrop-blur">
-        <span className="flex size-16 items-center justify-center rounded-2xl bg-linear-to-br from-accent to-accent/40 text-2xl font-bold text-accent-fg">
-          A
-        </span>
-        <p className="mt-4 text-sm text-muted">{t("brandMock1")}</p>
-      </div>
-      <div className="flex aspect-square flex-col items-center justify-center gap-3 rounded-3xl border border-line bg-surface/70 backdrop-blur">
-        <div className="flex gap-2">
-          <span className="size-8 rounded-full bg-accent" />
-          <span className="size-8 rounded-full bg-accent/60" />
-          <span className="size-8 rounded-full bg-accent/30" />
-        </div>
-        <p className="text-sm text-muted">{t("brandMock2")}</p>
-      </div>
-      <div className="col-span-2 flex items-center justify-between rounded-3xl border border-line bg-surface/70 px-8 py-6 backdrop-blur">
-        <p className="bg-linear-to-br from-fg to-accent bg-clip-text text-5xl font-bold text-transparent">
-          Aa
-        </p>
-        <div className="text-right">
-          <p className="text-xl font-semibold">{t("brandMockName")}</p>
-          <p className="text-sm text-muted">{t("brandMock3")}</p>
-        </div>
-      </div>
-      <div className="col-span-2 flex items-center gap-5 rounded-3xl border border-line bg-surface/70 px-8 py-6 backdrop-blur">
-        <div className="h-24 w-40 shrink-0 rounded-xl border border-line/60 bg-linear-to-br from-accent/20 to-bg/60 p-3 text-left">
-          <span className="flex size-6 items-center justify-center rounded-md bg-accent text-xs font-bold text-accent-fg">
-            A
-          </span>
-          <span className="mt-2.5 block h-1.5 w-2/3 rounded-full bg-line" />
-          <span className="mt-1.5 block h-1.5 w-1/2 rounded-full bg-line/60" />
-        </div>
-        <p className="text-sm text-muted">{t("brandMock4")}</p>
-      </div>
-    </motion.div>
-  );
-}
-
 function AiChatMockup() {
   const t = useTranslations("home");
   return (
@@ -537,13 +493,6 @@ function EkiciVideoWall() {
             {muted ? tHome("videoUnmute") : tHome("videoMute")}
           </button>
         </div>
-        {/* TV alt dekor şeridi: marka + güç LED'i */}
-        <div className="mt-3 flex items-center justify-between px-3 sm:mt-4">
-          <span className="text-xs font-semibold tracking-[0.35em] text-muted uppercase">
-            {tHome("aiShowcase1Name")}
-          </span>
-          <span className="pulse-dot inline-block size-2 rounded-full bg-accent" />
-        </div>
       </motion.div>
     </div>
   );
@@ -597,6 +546,53 @@ function WebSection({ index }: { index: number }) {
         ]}
         visual={<FizyoterapistVisual />}
       />
+    </section>
+  );
+}
+
+function EducationSection({ index }: { index: number }) {
+  const tHome = useTranslations("home");
+  const ref = useThemeOnView("ai");
+
+  const items = [
+    { emoji: "🎬", titleKey: "edu1Title", descKey: "edu1Desc" },
+    { emoji: "🌍", titleKey: "edu2Title", descKey: "edu2Desc" },
+    { emoji: "👄", titleKey: "edu3Title", descKey: "edu3Desc" },
+    { emoji: "✨", titleKey: "edu4Title", descKey: "edu4Desc" },
+    { emoji: "🚀", titleKey: "edu5Title", descKey: "edu5Desc" },
+    { emoji: "💻", titleKey: "edu6Title", descKey: "edu6Desc" },
+    { emoji: "🏗️", titleKey: "edu7Title", descKey: "edu7Desc" },
+  ] as const;
+
+  return (
+    <section ref={ref} className="mx-auto max-w-6xl px-4 py-28 sm:px-6 sm:py-36">
+      <SectionHeader
+        index={index}
+        title={tHome("eduTitle")}
+        tagline={tHome("eduTagline")}
+      />
+      <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {items.map((item, i) => (
+          <motion.div
+            key={item.titleKey}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, delay: 0.05 * i }}
+            className="rounded-3xl border border-line bg-surface/60 p-7 backdrop-blur hover:border-accent/60"
+          >
+            <span className="flex size-14 items-center justify-center rounded-2xl bg-linear-to-br from-accent/25 to-surface text-3xl shadow-[0_8px_32px_-12px_var(--accent)]">
+              {item.emoji}
+            </span>
+            <h3 className="mt-5 text-xl font-semibold tracking-tight">
+              {tHome(item.titleKey)}
+            </h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted">
+              {tHome(item.descKey)}
+            </p>
+          </motion.div>
+        ))}
+      </div>
     </section>
   );
 }
@@ -718,14 +714,6 @@ export function HomeScroll() {
       </MockupSection>
       <MockupSection
         index={2}
-        theme="brand"
-        title={tCat("brand")}
-        tagline={tHome("brandTagline")}
-      >
-        <BrandBoardMockup />
-      </MockupSection>
-      <MockupSection
-        index={3}
         theme="ai"
         title={tCat("ai")}
         tagline={tHome("aiTagline")}
@@ -733,6 +721,7 @@ export function HomeScroll() {
         <AiChatMockup />
         <EkiciVideoWall />
       </MockupSection>
+      <EducationSection index={3} />
       <WebsiteSection index={4} />
       <OutroSection />
     </div>
