@@ -489,45 +489,61 @@ function EkiciVideoWall() {
         </div>
       </motion.div>
       <motion.div
-        initial={{ opacity: 0, rotateX: -16, scale: 1.06, y: -50 }}
+        initial={{ opacity: 0, rotateX: -18, scale: 1.08, y: -60 }}
         whileInView={{ opacity: 1, rotateX: 0, scale: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.9, ease: "easeOut" }}
+        transition={{ duration: 1, ease: "easeOut" }}
         style={{
           transformPerspective: 1200,
           boxShadow:
-            "inset 0 22px 50px -14px var(--bg), inset 0 -8px 30px -16px var(--bg)",
+            "0 40px 90px -30px var(--bg), 0 1px 0 1px color-mix(in oklab, var(--fg) 8%, transparent)",
         }}
-        className="relative mx-auto mt-14 w-full max-w-6xl overflow-hidden rounded-[2rem] border border-line bg-surface/80"
+        className="relative mx-auto mt-14 w-full max-w-6xl rounded-[2.4rem] border border-line bg-linear-to-b from-surface to-bg p-3 sm:p-5"
       >
-        <div className="pointer-events-none aspect-video">
-          <iframe
-            ref={iframeRef}
-            src="https://player.vimeo.com/video/1200880545?background=1&autoplay=1&loop=1&muted=1&app_id=58479"
-            className="h-full w-full"
-            allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
-            referrerPolicy="strict-origin-when-cross-origin"
-            title="Ekici Residence"
-          />
-        </div>
+        {/* Çukur ekran — zemine gömülü etki */}
         <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-linear-to-b from-bg/55 to-transparent"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-linear-to-t from-bg/40 to-transparent"
-        />
-        <button
-          type="button"
-          onClick={toggleSound}
-          aria-pressed={!muted}
-          aria-label={muted ? tHome("videoUnmute") : tHome("videoMute")}
-          className="absolute right-4 bottom-4 flex items-center gap-2 rounded-full border border-line bg-bg/70 px-4 py-2 text-sm font-medium backdrop-blur hover:border-accent hover:text-accent"
+          style={{
+            boxShadow:
+              "inset 0 34px 70px -12px var(--bg), inset 0 -16px 44px -16px var(--bg), inset 0 0 0 1px var(--line)",
+          }}
+          className="relative overflow-hidden rounded-[1.6rem] bg-bg"
         >
-          <span aria-hidden>{muted ? "🔇" : "🔊"}</span>
-          {muted ? tHome("videoUnmute") : tHome("videoMute")}
-        </button>
+          <div className="pointer-events-none aspect-video">
+            <iframe
+              ref={iframeRef}
+              src="https://player.vimeo.com/video/1200880545?background=1&autoplay=1&loop=1&muted=1&app_id=58479"
+              className="h-full w-full"
+              allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+              referrerPolicy="strict-origin-when-cross-origin"
+              title="Ekici Residence"
+            />
+          </div>
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-linear-to-b from-bg/70 to-transparent"
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-linear-to-t from-bg/55 to-transparent"
+          />
+          <button
+            type="button"
+            onClick={toggleSound}
+            aria-pressed={!muted}
+            aria-label={muted ? tHome("videoUnmute") : tHome("videoMute")}
+            className="absolute right-4 bottom-4 flex items-center gap-2 rounded-full border border-line bg-bg/70 px-4 py-2 text-sm font-medium backdrop-blur hover:border-accent hover:text-accent"
+          >
+            <span aria-hidden>{muted ? "🔇" : "🔊"}</span>
+            {muted ? tHome("videoUnmute") : tHome("videoMute")}
+          </button>
+        </div>
+        {/* TV alt dekor şeridi: marka + güç LED'i */}
+        <div className="mt-3 flex items-center justify-between px-3 sm:mt-4">
+          <span className="text-xs font-semibold tracking-[0.35em] text-muted uppercase">
+            {tHome("aiShowcase1Name")}
+          </span>
+          <span className="pulse-dot inline-block size-2 rounded-full bg-accent" />
+        </div>
       </motion.div>
     </div>
   );
