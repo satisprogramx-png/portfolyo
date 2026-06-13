@@ -13,6 +13,7 @@ const CASE_PAGES: Record<string, string> = {
   mindnote: "/work/mindnote",
   "diyetisyen-modulu": "/work/diyetisyen-modulu",
   "fizyoterapist-modulu": "/work/fizyoterapist-modulu",
+  "ekici-residence": "/work/ekici-residence",
   bimola: "/work/bimola",
 };
 

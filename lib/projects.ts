@@ -15,7 +15,6 @@ export type Project = {
 };
 
 // Supabase yapılandırılmadığında kullanılan yedek veri.
-// Migration'daki seed ile birebir aynıdır (supabase/migrations/0001_init.sql).
 export const FALLBACK_PROJECTS: Project[] = [
   {
     id: "0",
@@ -43,7 +42,7 @@ export const FALLBACK_PROJECTS: Project[] = [
     category: "web",
     year: 2026,
     tags: ["Next.js", "Supabase", "TypeScript"],
-    sort_order: 2,
+    sort_order: 1,
   },
   {
     id: "0d",
@@ -57,48 +56,6 @@ export const FALLBACK_PROJECTS: Project[] = [
     category: "web",
     year: 2026,
     tags: ["Next.js", "Supabase", "TypeScript"],
-    sort_order: 3,
-  },
-  {
-    id: "0b",
-    slug: "bimola",
-    title_tr: "Bi'Mola Zamanı — Sağlık Blogu",
-    title_en: "Bi'Mola Zamanı — Health Blog",
-    description_tr:
-      "Beslenme, sağlık ve iş sağlığı üzerine haftalık, bilimsel kaynaklı yazılar yayımlayan kişisel blog. (bimola.vercel.app)",
-    description_en:
-      "A personal blog publishing weekly, science-backed articles on nutrition, health and workplace health. (bimola.vercel.app)",
-    category: "motion",
-    year: 2026,
-    tags: ["Blog", "Sağlık", "Vercel"],
-    sort_order: 1,
-  },
-  {
-    id: "1",
-    slug: "nova-commerce",
-    title_tr: "Nova E-Ticaret Platformu",
-    title_en: "Nova Commerce Platform",
-    description_tr:
-      "Headless mimaride, saniyenin altında açılan çok dilli e-ticaret deneyimi.",
-    description_en:
-      "A multilingual headless commerce experience with sub-second page loads.",
-    category: "web",
-    year: 2025,
-    tags: ["Next.js", "Stripe", "Supabase"],
-    sort_order: 1,
-  },
-  {
-    id: "2",
-    slug: "pulse-fitness",
-    title_tr: "Pulse Fitness Uygulaması",
-    title_en: "Pulse Fitness App",
-    description_tr:
-      "Kişiselleştirilmiş antrenman planları sunan iOS ve Android uygulaması.",
-    description_en:
-      "An iOS and Android app delivering personalised training plans.",
-    category: "mobile",
-    year: 2024,
-    tags: ["React Native", "HealthKit"],
     sort_order: 2,
   },
   {
@@ -113,21 +70,21 @@ export const FALLBACK_PROJECTS: Project[] = [
     category: "ai",
     year: 2026,
     tags: ["AI Video", "Tanıtım", "Vimeo"],
-    sort_order: 4,
+    sort_order: 3,
   },
   {
-    id: "4",
-    slug: "lumen-ai-assistant",
-    title_tr: "Lumen Yapay Zekâ Asistanı",
-    title_en: "Lumen AI Assistant",
+    id: "0b",
+    slug: "bimola",
+    title_tr: "Bi'Mola Zamanı — Sağlık Blogu",
+    title_en: "Bi'Mola Zamanı — Health Blog",
     description_tr:
-      "Şirket içi dokümanlar üzerinde çalışan, kaynak gösteren RAG tabanlı asistan.",
+      "Beslenme, sağlık ve iş sağlığı üzerine haftalık, bilimsel kaynaklı yazılar yayımlayan kişisel blog. (bimola.vercel.app)",
     description_en:
-      "A RAG-based assistant over internal docs with cited answers.",
-    category: "ai",
-    year: 2025,
-    tags: ["Claude", "RAG", "Vector Search"],
-    sort_order: 6,
+      "A personal blog publishing weekly, science-backed articles on nutrition, health and workplace health. (bimola.vercel.app)",
+    category: "motion",
+    year: 2026,
+    tags: ["Blog", "Sağlık", "Vercel"],
+    sort_order: 4,
   },
 ];
 

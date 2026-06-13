@@ -127,6 +127,8 @@ function ProjectFeature({
   desc,
   features,
   visual,
+  href,
+  ctaLabel,
   flip = false,
 }: {
   name: string;
@@ -134,6 +136,8 @@ function ProjectFeature({
   desc: string;
   features: string[];
   visual: ReactNode;
+  href: string;
+  ctaLabel: string;
   flip?: boolean;
 }) {
   return (
@@ -167,16 +171,31 @@ function ProjectFeature({
             </span>
           ))}
         </div>
+        <Link
+          href={href}
+          className="group mt-7 inline-block text-sm font-medium text-accent"
+        >
+          {ctaLabel}
+          <span className="ml-1.5 inline-block transition-transform group-hover:translate-x-1">
+            →
+          </span>
+        </Link>
       </motion.div>
-      <motion.div
-        initial={{ opacity: 0, y: 60, scale: 0.95 }}
-        whileInView={{ opacity: 1, y: 0, scale: 1 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+      <Link
+        href={href}
         className="w-full max-w-md flex-1"
+        aria-label={slogan}
       >
-        {visual}
-      </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 60, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="transition-transform hover:scale-[1.02]"
+        >
+          {visual}
+        </motion.div>
+      </Link>
     </div>
   );
 }
@@ -407,6 +426,7 @@ function AiChatMockup() {
 
 function EkiciVideoWall() {
   const tHome = useTranslations("home");
+  const tWork = useTranslations("work");
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [muted, setMuted] = useState(true);
 
@@ -443,6 +463,15 @@ function EkiciVideoWall() {
             ),
           )}
         </div>
+        <Link
+          href="/work/ekici-residence"
+          className="group mt-7 inline-block text-sm font-medium text-accent"
+        >
+          {tWork("viewCase")}
+          <span className="ml-1.5 inline-block transition-transform group-hover:translate-x-1">
+            →
+          </span>
+        </Link>
       </motion.div>
       <motion.div
         initial={{ opacity: 0, rotateX: -18, scale: 1.08, y: -60 }}
@@ -503,6 +532,7 @@ function EkiciVideoWall() {
 function WebSection({ index }: { index: number }) {
   const tCat = useTranslations("categories");
   const tHome = useTranslations("home");
+  const tWork = useTranslations("work");
   const ref = useThemeOnView("web");
 
   return (
@@ -522,6 +552,8 @@ function WebSection({ index }: { index: number }) {
           tHome("webShowcase1F3"),
         ]}
         visual={<MindnoteVisual />}
+        href="/work/mindnote"
+        ctaLabel={tWork("viewCase")}
       />
       <ProjectFeature
         name={tHome("webShowcase2Name")}
@@ -533,6 +565,8 @@ function WebSection({ index }: { index: number }) {
           tHome("webShowcase2F3"),
         ]}
         visual={<DiyetisyenVisual />}
+        href="/work/diyetisyen-modulu"
+        ctaLabel={tWork("viewCase")}
         flip
       />
       <ProjectFeature
@@ -545,6 +579,8 @@ function WebSection({ index }: { index: number }) {
           tHome("webShowcase3F3"),
         ]}
         visual={<FizyoterapistVisual />}
+        href="/work/fizyoterapist-modulu"
+        ctaLabel={tWork("viewCase")}
       />
     </section>
   );
@@ -600,6 +636,7 @@ function EducationSection({ index }: { index: number }) {
 function WebsiteSection({ index }: { index: number }) {
   const tCat = useTranslations("categories");
   const tHome = useTranslations("home");
+  const tWork = useTranslations("work");
   const ref = useThemeOnView("motion");
 
   return (
@@ -619,6 +656,8 @@ function WebsiteSection({ index }: { index: number }) {
           tHome("motionShowcase1F3"),
         ]}
         visual={<BimolaVisual />}
+        href="/work/bimola"
+        ctaLabel={tWork("viewCase")}
         flip
       />
     </section>

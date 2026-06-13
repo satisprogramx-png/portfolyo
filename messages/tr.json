@@ -194,6 +194,26 @@
     "ctaButton": "İletişime geç",
     "backToWork": "Tüm projelere dön"
   },
+  "ekici": {
+    "eyebrow": "Ekici Residence",
+    "heroTitle": "Beton dökülmeden önce, hayalini izleyin.",
+    "heroSubtitle": "Yapay zekâ ile üretilmiş konut projesi tanıtım filmi.",
+    "scrollHint": "Keşfetmek için kaydırın",
+    "videoUnmute": "Sesi aç",
+    "videoMute": "Sesi kapat",
+    "statement1Title": "Proje bitmeden satış başlasın.",
+    "statement1Body": "Henüz inşaat aşamasındaki bir projeyi, yapay zekâ ile üretilmiş sinematik bir tanıtım filmine dönüştürdük. Alıcı, daireyi gerçek olmadan içinde geziyor.",
+    "aiTitle": "Tamamen yapay zekâ üretimi.",
+    "aiBody": "Görüntüler kameradan değil, yapay zekâdan. Dış cephe, peyzaj ve atmosfer; tek bir tuğla dizilmeden, sinematik kalite ile üretildi.",
+    "editTitle": "Sinematik kurgu ve ritim.",
+    "editBody": "Üretilen sahneler; müzik, geçiş ve tempoyla profesyonel bir tanıtım filmine dönüştü. Markanın hissini birkaç saniyede veren bir akış.",
+    "useTitle": "Satış ofisinin yeni vitrini.",
+    "useBody": "Web sitesinde, sosyal medyada ve satış görüşmelerinde kullanılabilen, projeyi henüz yokken bile somutlaştıran güçlü bir araç.",
+    "ctaTitle": "Projenizi filme dönüştürelim.",
+    "ctaBody": "Konut, ofis ya da AVM — yapay zekâ ile tanıtım filminizi üretelim.",
+    "ctaButton": "İletişime geç",
+    "backToWork": "Tüm projelere dön"
+  },
   "bimola": {
     "eyebrow": "Bi'Mola Zamanı",
     "heroTitle": "Bir mola ver. Oku. Keşfet.",
