@@ -19,6 +19,20 @@ const SERVICES: Service[] = [
 
 const N = SERVICES.length;
 
+// Duman bulutları — ekrana yayılan yumuşak puflar
+const PUFFS = [
+  { x: "12%", y: "62%", size: 60, delay: 0, drift: -40 },
+  { x: "78%", y: "58%", size: 66, delay: 0.04, drift: 50 },
+  { x: "32%", y: "40%", size: 54, delay: 0.08, drift: -30 },
+  { x: "62%", y: "38%", size: 58, delay: 0.06, drift: 35 },
+  { x: "48%", y: "72%", size: 70, delay: 0, drift: 0 },
+  { x: "22%", y: "82%", size: 52, delay: 0.12, drift: -25 },
+  { x: "84%", y: "84%", size: 56, delay: 0.1, drift: 30 },
+  { x: "50%", y: "50%", size: 80, delay: 0, drift: 0 },
+  { x: "8%", y: "30%", size: 50, delay: 0.14, drift: -45 },
+  { x: "90%", y: "28%", size: 50, delay: 0.14, drift: 45 },
+];
+
 export function HomeCarousel() {
   const t = useTranslations("services");
   const tc = useTranslations("carousel");
@@ -44,7 +58,7 @@ export function HomeCarousel() {
   const select = (s: Service) => {
     if (exiting) return;
     setExiting(s);
-    window.setTimeout(() => router.push(s.href), 650);
+    window.setTimeout(() => router.push(s.href), 900);
   };
 
   useEffect(() => {
@@ -157,25 +171,65 @@ export function HomeCarousel() {
         {exiting && (
           <motion.div
             data-theme={exiting.theme}
-            initial={{ clipPath: "circle(0% at 50% 55%)" }}
-            animate={{ clipPath: "circle(150% at 50% 55%)" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-bg"
+            transition={{ duration: 0.35, ease: "easeOut" }}
+            className="pointer-events-none fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden"
           >
+            {/* Duman bulutları */}
+            {PUFFS.map((p, i) => (
+              <motion.span
+                key={i}
+                aria-hidden
+                initial={{ opacity: 0, scale: 0.2, x: 0, y: 20 }}
+                animate={{
+                  opacity: [0, 0.85, 0.95],
+                  scale: [0.2, 1.4, 2.2],
+                  x: p.drift,
+                  y: [20, -10, -30],
+                }}
+                transition={{
+                  duration: 0.85,
+                  delay: p.delay,
+                  ease: "easeOut",
+                  times: [0, 0.5, 1],
+                }}
+                style={{
+                  left: p.x,
+                  top: p.y,
+                  width: `${p.size}vmax`,
+                  height: `${p.size}vmax`,
+                  background:
+                    "radial-gradient(circle at 50% 50%, var(--surface) 0%, color-mix(in oklch, var(--accent) 30%, var(--bg)) 35%, transparent 70%)",
+                  filter: "blur(40px)",
+                }}
+                className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full"
+              />
+            ))}
+
+            {/* Dumanı yoğunlaştıran arka katman */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.7, delay: 0.25, ease: "easeIn" }}
+              className="absolute inset-0 bg-bg"
+            />
+
+            {/* Hizmet başlığı dumanın içinden belirir */}
             <motion.span
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2, duration: 0.4 }}
-              className="text-6xl"
+              initial={{ opacity: 0, scale: 0.8, filter: "blur(12px)" }}
+              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+              transition={{ delay: 0.45, duration: 0.45 }}
+              className="relative text-6xl"
             >
               {exiting.emoji}
             </motion.span>
             <motion.p
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.28, duration: 0.4 }}
-              className="mt-5 bg-linear-to-br from-fg to-accent bg-clip-text text-3xl font-bold tracking-tight text-transparent sm:text-5xl"
+              initial={{ opacity: 0, y: 14, filter: "blur(10px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ delay: 0.55, duration: 0.45 }}
+              className="relative mt-5 bg-linear-to-br from-fg to-accent bg-clip-text text-3xl font-bold tracking-tight text-transparent sm:text-5xl"
             >
               {t(`${exiting.key}.title`)}
             </motion.p>
