@@ -15,6 +15,7 @@ function VimeoPlayer({
   title: string;
 }) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [playing, setPlaying] = useState(true);
 
   const src = `${embed}${embed.includes("?") ? "&" : "?"}controls=0&autoplay=1&dnt=1`;
@@ -24,6 +25,16 @@ function VimeoPlayer({
       JSON.stringify(value === undefined ? { method } : { method, value }),
       "*",
     );
+  };
+
+  const toggleFullscreen = () => {
+    const el = containerRef.current;
+    if (!el) return;
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      el.requestFullscreen?.();
+    }
   };
 
   useEffect(() => {
@@ -57,6 +68,7 @@ function VimeoPlayer({
 
   return (
     <div
+      ref={containerRef}
       className={`group relative overflow-hidden rounded-xl bg-black shadow-[inset_0_2px_12px_rgba(0,0,0,0.6)] ${
         portrait
           ? "mx-auto aspect-[9/16] h-[80svh] w-auto max-w-full sm:h-[85svh]"
@@ -89,6 +101,18 @@ function VimeoPlayer({
         >
           {playing ? "❚❚" : "▶"}
         </span>
+      </button>
+      {/* Tam ekrana büyüt */}
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleFullscreen();
+        }}
+        aria-label="Tam ekran"
+        className="absolute right-3 bottom-3 z-10 flex size-10 items-center justify-center rounded-full border border-white/40 bg-black/50 text-lg text-white backdrop-blur transition-colors hover:bg-black/70"
+      >
+        ⛶
       </button>
     </div>
   );
