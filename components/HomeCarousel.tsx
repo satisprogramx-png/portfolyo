@@ -356,7 +356,7 @@ export function HomeCarousel() {
 
         <div
           className="relative mt-8 flex h-[28rem] w-full max-w-6xl touch-pan-y items-center justify-center"
-          style={{ perspective: 1800 }}
+          style={{ perspective: 2600 }}
           onTouchStart={(e) => onSwipeStart(e.touches[0].clientX)}
           onTouchEnd={(e) => onSwipeEnd(e.changedTouches[0].clientX)}
           onPointerDown={(e) => {
@@ -386,9 +386,9 @@ export function HomeCarousel() {
                 aria-label={t(`${s.key}.title`)}
                 animate={{
                   x: off * spread,
-                  scale: isCenter ? 1 : abs === 1 ? 0.82 : 0.62,
-                  opacity: visible ? (isCenter ? 1 : abs === 1 ? 0.65 : 0.3) : 0,
-                  rotateY: off * -18,
+                  scale: isCenter ? 1 : abs === 1 ? 0.9 : 0.8,
+                  opacity: visible ? (isCenter ? 1 : abs === 1 ? 0.72 : 0.4) : 0,
+                  rotateY: off * -8,
                   zIndex: 30 - abs * 10,
                 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
