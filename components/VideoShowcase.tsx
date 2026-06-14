@@ -63,14 +63,21 @@ export function VideoShowcase({
           >
             {heroTitle}
           </motion.h1>
-          <motion.p
+          <motion.button
+            type="button"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.4, duration: 0.8 }}
-            className="mt-8 rounded-full bg-white/15 px-4 py-1.5 text-sm text-white backdrop-blur"
+            onClick={() =>
+              window.scrollTo({
+                top: window.innerHeight - 56,
+                behavior: "smooth",
+              })
+            }
+            className="mt-8 rounded-full bg-white/15 px-4 py-1.5 text-sm text-white backdrop-blur transition-colors hover:bg-white/25"
           >
             Kaydırın ↓
-          </motion.p>
+          </motion.button>
         </div>
       </section>
 
