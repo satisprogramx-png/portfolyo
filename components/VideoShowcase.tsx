@@ -18,6 +18,8 @@ export type ShowcaseSection = { slogan: string; body: string };
 
 export type LocalizedContent = {
   heroTitle: string;
+  heroLeft?: string;
+  heroRight?: string;
   sections: ShowcaseSection[];
   closingTitle?: string;
   closingBody?: string;
@@ -55,6 +57,46 @@ export function VideoShowcase({ theme, video, tr, en }: VideoShowcaseProps) {
           <source src={video} type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-linear-to-t from-bg/70 via-transparent to-transparent" />
+
+        {/* Hero yan etiketleri (sol / sağ) */}
+        {(c.heroLeft || c.heroRight) && (
+          <div className="pointer-events-none absolute inset-x-0 top-1/2 flex -translate-y-1/2 items-center justify-between px-4 sm:px-10">
+            {c.heroLeft ? (
+              <motion.div
+                initial={{ opacity: 0, x: -24 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.7, duration: 0.8, ease: "easeOut" }}
+                className="max-w-[42%] rounded-2xl border border-white/20 bg-black/30 px-3 py-2.5 text-left backdrop-blur-md sm:px-5 sm:py-4"
+              >
+                <span className="block text-[10px] font-semibold tracking-[0.25em] text-white/60 uppercase sm:text-xs">
+                  01
+                </span>
+                <span className="mt-1 block text-base font-bold leading-tight text-white sm:text-2xl">
+                  {c.heroLeft}
+                </span>
+              </motion.div>
+            ) : (
+              <span />
+            )}
+            {c.heroRight ? (
+              <motion.div
+                initial={{ opacity: 0, x: 24 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.85, duration: 0.8, ease: "easeOut" }}
+                className="max-w-[42%] rounded-2xl border border-white/20 bg-black/30 px-3 py-2.5 text-right backdrop-blur-md sm:px-5 sm:py-4"
+              >
+                <span className="block text-[10px] font-semibold tracking-[0.25em] text-white/60 uppercase sm:text-xs">
+                  02
+                </span>
+                <span className="mt-1 block text-base font-bold leading-tight text-white sm:text-2xl">
+                  {c.heroRight}
+                </span>
+              </motion.div>
+            ) : (
+              <span />
+            )}
+          </div>
+        )}
 
         <div className="absolute inset-x-0 bottom-0 flex flex-col items-center px-4 pb-16 text-center sm:pb-20">
           <motion.h1

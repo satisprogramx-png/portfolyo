@@ -9,6 +9,8 @@ export function TourShowcase() {
       video="/video/360-sanal-tur-bg.mp4"
       tr={{
         heroTitle: "Mekânınızı 360° keşfedilebilir kılın.",
+        heroLeft: "AI ile video tour",
+        heroRight: "Hotpoint ile tour",
         sections: [
           {
             slogan: "Gelmeden gezdirin.",
@@ -32,6 +34,8 @@ export function TourShowcase() {
       }}
       en={{
         heroTitle: "Make your space explorable in 360°.",
+        heroLeft: "AI video tour",
+        heroRight: "Hotpoint tour",
         sections: [
           {
             slogan: "Let them tour before they arrive.",
