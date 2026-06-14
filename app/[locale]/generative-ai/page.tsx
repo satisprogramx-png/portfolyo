@@ -1,6 +1,5 @@
 import { setRequestLocale } from "next-intl/server";
-import { getProjects } from "@/lib/projects";
-import { ServiceShowcase } from "@/components/ServiceShowcase";
+import { GenerativeAiShowcase } from "@/components/GenerativeAiShowcase";
 
 export default async function GenAiPage({
   params,
@@ -9,16 +8,6 @@ export default async function GenAiPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const projects = await getProjects();
-  const related = projects.filter((p) => p.slug === "ekici-residence");
 
-  return (
-    <ServiceShowcase
-      serviceKey="genai"
-      emoji="✨"
-      theme="ai"
-      related={related}
-      bgVideo="/video/generative-ai-bg.mp4"
-    />
-  );
+  return <GenerativeAiShowcase />;
 }
