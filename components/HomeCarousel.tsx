@@ -55,7 +55,7 @@ const BLOCK_COLS = 8;
 const BLOCK_ROWS = 5;
 const BLOCK_DELAYS = Array.from(
   { length: BLOCK_COLS * BLOCK_ROWS },
-  () => rand(0, 0.5),
+  () => rand(0, 0.9),
 );
 
 // Stripes (mobil) — dikey perde çubukları
@@ -81,8 +81,8 @@ function FxLayer({ fx }: { fx: Fx }) {
               y: [20, -10, -30],
             }}
             transition={{
-              duration: 0.85,
-              delay: p.delay,
+              duration: 1.4,
+              delay: p.delay * 1.6,
               ease: "easeOut",
               times: [0, 0.5, 1],
             }}
@@ -100,7 +100,7 @@ function FxLayer({ fx }: { fx: Fx }) {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.7, delay: 0.25, ease: "easeIn" }}
+          transition={{ duration: 1.1, delay: 0.6, ease: "easeIn" }}
           className="absolute inset-0 bg-bg"
         />
       </>
@@ -113,9 +113,9 @@ function FxLayer({ fx }: { fx: Fx }) {
       <>
         <motion.div
           aria-hidden
-          initial={{ rotate: -200, scale: 0.3, opacity: 0 }}
-          animate={{ rotate: 0, scale: 1.6, opacity: 1 }}
-          transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ rotate: -320, scale: 0.2, opacity: 0 }}
+          animate={{ rotate: 0, scale: 1.7, opacity: 1 }}
+          transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
           style={{
             background:
               "conic-gradient(from 0deg at 50% 50%, var(--bg), var(--surface), color-mix(in oklch, var(--accent) 55%, var(--bg)), var(--surface), var(--bg))",
@@ -125,7 +125,7 @@ function FxLayer({ fx }: { fx: Fx }) {
         <motion.div
           initial={{ clipPath: "circle(0% at 50% 50%)" }}
           animate={{ clipPath: "circle(150% at 50% 50%)" }}
-          transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 1.1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
           className="absolute inset-0 bg-bg"
         />
       </>
@@ -141,10 +141,10 @@ function FxLayer({ fx }: { fx: Fx }) {
             key={i}
             aria-hidden
             initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: [0, 1, 0.9], scale: [0, 1.3, 1] }}
+            animate={{ opacity: [0, 1, 0.9], scale: [0, 1.4, 1] }}
             transition={{
-              duration: 0.7,
-              delay: s.delay,
+              duration: 1.2,
+              delay: s.delay * 1.8,
               ease: "easeOut",
               times: [0, 0.6, 1],
             }}
@@ -162,7 +162,7 @@ function FxLayer({ fx }: { fx: Fx }) {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.35, ease: "easeIn" }}
+          transition={{ duration: 0.9, delay: 0.85, ease: "easeIn" }}
           className="absolute inset-0 bg-bg"
         />
       </>
@@ -183,9 +183,9 @@ function FxLayer({ fx }: { fx: Fx }) {
           <motion.div
             key={i}
             aria-hidden
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.35, delay: d, ease: "easeOut" }}
+            initial={{ scale: 0, opacity: 0, rotate: -25 }}
+            animate={{ scale: 1, opacity: 1, rotate: 0 }}
+            transition={{ duration: 0.55, delay: d, ease: "easeOut" }}
             style={{ transformOrigin: "center" }}
             className="bg-bg ring-1 ring-accent/10"
           />
@@ -204,8 +204,8 @@ function FxLayer({ fx }: { fx: Fx }) {
           initial={{ scaleY: 0 }}
           animate={{ scaleY: 1 }}
           transition={{
-            duration: 0.5,
-            delay: i * 0.04,
+            duration: 0.8,
+            delay: i * 0.08,
             ease: [0.22, 1, 0.36, 1],
           }}
           style={{ transformOrigin: i % 2 === 0 ? "top" : "bottom" }}
@@ -241,7 +241,7 @@ export function HomeCarousel() {
   const select = (s: Service) => {
     if (exiting) return;
     setExiting(s);
-    window.setTimeout(() => router.push(s.href), 1500);
+    window.setTimeout(() => router.push(s.href), 2400);
   };
 
   useEffect(() => {
@@ -367,7 +367,7 @@ export function HomeCarousel() {
             <motion.span
               initial={{ opacity: 0, scale: 0.8, filter: "blur(12px)" }}
               animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-              transition={{ delay: 0.45, duration: 0.45 }}
+              transition={{ delay: 1.25, duration: 0.5 }}
               className="relative text-6xl"
             >
               {exiting.emoji}
@@ -375,7 +375,7 @@ export function HomeCarousel() {
             <motion.p
               initial={{ opacity: 0, y: 14, filter: "blur(10px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ delay: 0.55, duration: 0.45 }}
+              transition={{ delay: 1.4, duration: 0.5 }}
               className="relative mt-5 bg-linear-to-br from-fg to-accent bg-clip-text text-3xl font-bold tracking-tight text-transparent sm:text-5xl"
             >
               {t(`${exiting.key}.title`)}
