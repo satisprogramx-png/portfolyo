@@ -29,7 +29,7 @@ export function HomeCarousel() {
   const [exiting, setExiting] = useState<Service | null>(null);
 
   useEffect(() => {
-    const onResize = () => setSpread(window.innerWidth < 640 ? 150 : 250);
+    const onResize = () => setSpread(window.innerWidth < 640 ? 180 : 340);
     onResize();
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
@@ -69,8 +69,8 @@ export function HomeCarousel() {
         </motion.p>
 
         <div
-          className="relative mt-10 flex h-[22rem] w-full max-w-5xl items-center justify-center"
-          style={{ perspective: 1600 }}
+          className="relative mt-8 flex h-[28rem] w-full max-w-6xl items-center justify-center"
+          style={{ perspective: 1800 }}
         >
           {SERVICES.map((s, i) => {
             let off = i - active;
@@ -96,20 +96,20 @@ export function HomeCarousel() {
                 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                 style={{ pointerEvents: visible ? "auto" : "none" }}
-                className="absolute h-[21rem] w-72 overflow-hidden rounded-[2rem] border border-line bg-surface text-left shadow-[0_30px_80px_-30px_var(--bg)]"
+                className="absolute h-[27rem] w-80 overflow-hidden rounded-[2.25rem] border border-line bg-surface text-left shadow-[0_30px_80px_-30px_var(--bg)] sm:w-96"
               >
-                <div className="flex h-40 items-center justify-center bg-linear-to-br from-accent/40 via-surface to-surface text-6xl">
+                <div className="flex h-52 items-center justify-center bg-linear-to-br from-accent/40 via-surface to-surface text-7xl sm:text-8xl">
                   {s.emoji}
                 </div>
-                <div className="flex flex-col p-6">
-                  <h2 className="text-xl font-bold tracking-tight text-fg">
+                <div className="flex flex-col p-7 sm:p-8">
+                  <h2 className="text-2xl font-bold tracking-tight text-fg sm:text-3xl">
                     {t(`${s.key}.title`)}
                   </h2>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">
+                  <p className="mt-3 text-base leading-relaxed text-muted">
                     {t(`${s.key}.tagline`)}
                   </p>
                   {isCenter && (
-                    <span className="mt-5 inline-flex items-center text-sm font-semibold text-accent">
+                    <span className="mt-6 inline-flex items-center text-base font-semibold text-accent">
                       {tc("explore")}
                       <span className="ml-1.5">→</span>
                     </span>
@@ -120,7 +120,7 @@ export function HomeCarousel() {
           })}
         </div>
 
-        <div className="mt-12 flex items-center gap-6">
+        <div className="mt-10 flex items-center gap-6">
           <button
             type="button"
             onClick={() => go(-1)}
