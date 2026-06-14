@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { useLocale } from "next-intl";
 
@@ -185,6 +186,9 @@ const CONCRETE_TEXTURE =
 export function AiVideoTours() {
   const locale = useLocale();
   const [active, setActive] = useState<VideoTour | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
 
   // Modal açıkken arka plan kaydırmasını kilitle
   useEffect(() => {
@@ -251,9 +255,11 @@ export function AiVideoTours() {
         ))}
       </div>
 
-      {/* Beton çerçeveli pop-up oynatıcı */}
-      <AnimatePresence>
-        {active && (
+      {/* Beton çerçeveli pop-up oynatıcı — portal ile body'ye (transform/fixed sorunu yok) */}
+      {mounted &&
+        createPortal(
+          <AnimatePresence>
+            {active && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -317,8 +323,10 @@ export function AiVideoTours() {
               </div>
             </motion.div>
           </motion.div>
+            )}
+          </AnimatePresence>,
+          document.body,
         )}
-      </AnimatePresence>
     </>
   );
 }

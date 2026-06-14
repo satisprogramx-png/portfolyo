@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { useLocale } from "next-intl";
 import { useSearchParams } from "next/navigation";
@@ -29,7 +30,10 @@ export function IntroSplash() {
   const [playing, setPlaying] = useState(false);
   const [started, setStarted] = useState(false);
   const [playerKey, setPlayerKey] = useState(0);
+  const [mounted, setMounted] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  useEffect(() => setMounted(true), []);
 
   useIsoLayoutEffect(() => {
     const seen = sessionStorage.getItem("introSeen");
@@ -117,7 +121,9 @@ export function IntroSplash() {
   const btn =
     "flex size-12 items-center justify-center rounded-full border border-line bg-surface/70 text-lg text-fg backdrop-blur transition-colors hover:border-accent hover:text-accent";
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <AnimatePresence>
       {show && (
         <motion.div
@@ -224,6 +230,7 @@ export function IntroSplash() {
           </motion.button>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   );
 }
