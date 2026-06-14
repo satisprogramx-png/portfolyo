@@ -71,7 +71,7 @@ export function IntroSplash() {
         return;
       }
       if (data.event === "ready") {
-        ["play", "pause", "ended"].forEach((ev) =>
+        ["play", "pause", "ended", "finish"].forEach((ev) =>
           iframeRef.current?.contentWindow?.postMessage(
             JSON.stringify({ method: "addEventListener", value: ev }),
             "*",
@@ -79,7 +79,7 @@ export function IntroSplash() {
         );
       } else if (data.event === "play") {
         setPlaying(true);
-      } else if (data.event === "ended") {
+      } else if (data.event === "ended" || data.event === "finish") {
         // Bittiğinde oynatıcıyı sıfırla → poster/önizlemede ve durdurulmuş kal
         setPlaying(false);
         setStarted(false);

@@ -18,8 +18,12 @@ function VimeoPlayer({
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [playing, setPlaying] = useState(true);
+  const [resetCount, setResetCount] = useState(0);
 
-  const src = `${embed}${embed.includes("?") ? "&" : "?"}controls=0&autoplay=1&dnt=1`;
+  // İlk açılışta otomatik oynar; bitince sıfırlanınca poster/önizlemede durur
+  const src = `${embed}${embed.includes("?") ? "&" : "?"}controls=0&autoplay=${
+    resetCount === 0 ? 1 : 0
+  }&dnt=1`;
 
   const post = (method: string, value?: string) => {
     iframeRef.current?.contentWindow?.postMessage(
@@ -51,13 +55,14 @@ function VimeoPlayer({
         post("addEventListener", "play");
         post("addEventListener", "pause");
         post("addEventListener", "ended");
+        post("addEventListener", "finish");
       } else if (data.event === "play") {
         setPlaying(true);
-      } else if (
-        data.event === "pause" ||
-        data.event === "ended" ||
-        data.event === "finish"
-      ) {
+      } else if (data.event === "ended" || data.event === "finish") {
+        // Bittiğinde sıfırla → poster/önizlemede ve durdurulmuş kal
+        setPlaying(false);
+        setResetCount((k) => k + 1);
+      } else if (data.event === "pause") {
         setPlaying(false);
       }
     };
@@ -77,6 +82,7 @@ function VimeoPlayer({
       }`}
     >
       <iframe
+        key={resetCount}
         ref={iframeRef}
         src={src}
         title={title}
