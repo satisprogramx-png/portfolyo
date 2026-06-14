@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { setRequestLocale } from "next-intl/server";
 import { HomeCarousel } from "@/components/HomeCarousel";
 import { IntroSplash } from "@/components/IntroSplash";
@@ -12,7 +13,9 @@ export default async function HomePage({
 
   return (
     <>
-      <IntroSplash />
+      <Suspense fallback={null}>
+        <IntroSplash />
+      </Suspense>
       <HomeCarousel />
     </>
   );

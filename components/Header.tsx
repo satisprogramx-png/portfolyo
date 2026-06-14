@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 
@@ -12,19 +12,30 @@ const links = [
 
 export function Header() {
   const t = useTranslations("nav");
+  const locale = useLocale();
   const pathname = usePathname();
 
   return (
     <header className="sticky top-0 z-50 border-b border-line/40 bg-bg/60 backdrop-blur-xl">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-2.5 sm:px-6 sm:py-3">
 
-        {/* Logo */}
-        <Link
-          href="/"
-          className="shrink-0 text-base font-bold tracking-tight sm:text-lg"
-        >
-          portfolyo<span className="text-accent">.</span>
-        </Link>
+        {/* Logo + Tanıtım */}
+        <div className="flex shrink-0 items-center gap-2">
+          <Link
+            href="/"
+            className="text-base font-bold tracking-tight sm:text-lg"
+          >
+            portfolyo<span className="text-accent">.</span>
+          </Link>
+          <Link
+            href={{ pathname: "/", query: { intro: "1" } }}
+            aria-label={locale === "en" ? "Intro" : "Tanıtım"}
+            title={locale === "en" ? "Intro" : "Tanıtım"}
+            className="flex size-7 items-center justify-center rounded-full border border-line/60 bg-surface/60 text-[11px] text-muted backdrop-blur transition-colors hover:border-accent hover:text-accent"
+          >
+            ▶
+          </Link>
+        </div>
 
         {/* Nav pill — ortalanmış, mobilde kompakt */}
         <nav className="absolute left-1/2 -translate-x-1/2">

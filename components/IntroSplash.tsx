@@ -3,9 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useLocale } from "next-intl";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 
 const INTRO_VIDEO =
-  "https://player.vimeo.com/video/1201168388?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&controls=0&dnt=1";
+  "https://player.vimeo.com/video/1201168388?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&controls=0&dnt=1";
 
 const SLOGAN = {
   tr: "Dijital dünyada markanıza hayat veriyoruz.",
@@ -14,16 +16,20 @@ const SLOGAN = {
 
 export function IntroSplash() {
   const locale = useLocale();
+  const router = useRouter();
+  const params = useSearchParams();
+  const forced = params.get("intro") === "1";
+
   const [show, setShow] = useState(false);
-  const [playing, setPlaying] = useState(true);
-  const [muted, setMuted] = useState(true);
+  const [playing, setPlaying] = useState(false);
+  const [started, setStarted] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     const seen = sessionStorage.getItem("introSeen");
-    if (!seen) setShow(true);
-  }, []);
+    if (!seen || forced) setShow(true);
+  }, [forced]);
 
   useEffect(() => {
     if (!show) return;
@@ -34,7 +40,7 @@ export function IntroSplash() {
     };
   }, [show]);
 
-  const post = (method: string, value?: number) => {
+  const send = (method: string, value?: number) => {
     iframeRef.current?.contentWindow?.postMessage(
       JSON.stringify(value === undefined ? { method } : { method, value }),
       "*",
@@ -52,17 +58,11 @@ export function IntroSplash() {
         return;
       }
       if (data.event === "ready") {
-        iframeRef.current?.contentWindow?.postMessage(
-          JSON.stringify({ method: "addEventListener", value: "play" }),
-          "*",
-        );
-        iframeRef.current?.contentWindow?.postMessage(
-          JSON.stringify({ method: "addEventListener", value: "pause" }),
-          "*",
-        );
-        iframeRef.current?.contentWindow?.postMessage(
-          JSON.stringify({ method: "addEventListener", value: "ended" }),
-          "*",
+        ["play", "pause", "ended"].forEach((ev) =>
+          iframeRef.current?.contentWindow?.postMessage(
+            JSON.stringify({ method: "addEventListener", value: ev }),
+            "*",
+          ),
         );
       } else if (data.event === "play") {
         setPlaying(true);
@@ -74,33 +74,30 @@ export function IntroSplash() {
     return () => window.removeEventListener("message", onMsg);
   }, [show]);
 
-  const toggle = () => (playing ? post("pause") : post("play"));
-  const restart = () => {
-    iframeRef.current?.contentWindow?.postMessage(
-      JSON.stringify({ method: "setCurrentTime", value: 0 }),
-      "*",
-    );
-    post("play");
-  };
-  const toggleSound = () => {
-    const next = !muted;
-    iframeRef.current?.contentWindow?.postMessage(
-      JSON.stringify({ method: "setMuted", value: next }),
-      "*",
-    );
-    if (!next) {
-      iframeRef.current?.contentWindow?.postMessage(
-        JSON.stringify({ method: "setVolume", value: 1 }),
-        "*",
-      );
-      post("play");
+  // Videoya tıklayınca: sesi aç ve başlat / oynuyorsa durdur
+  const onVideoClick = () => {
+    if (!playing) {
+      send("setMuted", 0);
+      send("setVolume", 1);
+      send("play");
+      setStarted(true);
+    } else {
+      send("pause");
     }
-    setMuted(next);
+  };
+
+  const restart = () => {
+    send("setCurrentTime", 0);
+    send("setMuted", 0);
+    send("setVolume", 1);
+    send("play");
+    setStarted(true);
   };
 
   const enter = () => {
     sessionStorage.setItem("introSeen", "1");
     setShow(false);
+    if (forced) router.replace("/");
   };
 
   const btn =
@@ -116,7 +113,6 @@ export function IntroSplash() {
           transition={{ duration: 0.5 }}
           className="fixed inset-0 z-[200] flex flex-col items-center justify-center gap-6 overflow-hidden bg-bg px-4 py-8 sm:gap-8 sm:px-6"
         >
-          {/* Arka plan ışıması */}
           <span
             aria-hidden
             className="pointer-events-none absolute inset-0 opacity-40"
@@ -126,7 +122,6 @@ export function IntroSplash() {
             }}
           />
 
-          {/* Slogan */}
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -136,12 +131,12 @@ export function IntroSplash() {
             {locale === "en" ? SLOGAN.en : SLOGAN.tr}
           </motion.h1>
 
-          {/* Gömülü avatar videosu */}
+          {/* Avatar videosu — tıklayınca sesli başlar */}
           <motion.div
             initial={{ opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.35, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="relative aspect-[4/3] w-full max-w-2xl overflow-hidden rounded-3xl border border-line bg-black shadow-[0_40px_120px_-30px_var(--accent)]"
+            className="group relative aspect-[4/3] w-full max-w-2xl overflow-hidden rounded-3xl border border-line bg-black shadow-[0_40px_120px_-30px_var(--accent)]"
           >
             <iframe
               ref={iframeRef}
@@ -153,9 +148,30 @@ export function IntroSplash() {
               referrerPolicy="strict-origin-when-cross-origin"
               allowFullScreen
             />
+            <button
+              type="button"
+              onClick={onVideoClick}
+              aria-label={playing ? "Durdur" : "Başlat"}
+              className="absolute inset-0 flex items-center justify-center"
+            >
+              <span
+                className={`flex size-20 items-center justify-center rounded-full border border-white/40 bg-black/45 text-3xl text-white backdrop-blur transition-all duration-300 ${
+                  playing
+                    ? "opacity-0 group-hover:opacity-100"
+                    : "opacity-100 group-hover:scale-110"
+                }`}
+              >
+                {playing ? "❚❚" : "▶"}
+              </span>
+            </button>
+            {!started && (
+              <span className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-black/55 px-3 py-1 text-xs text-white backdrop-blur">
+                {locale === "en" ? "Tap to play with sound" : "Sesli başlatmak için dokunun"}
+              </span>
+            )}
           </motion.div>
 
-          {/* Yalnızca başlat/durdur ve başa al */}
+          {/* Başlat/durdur + başa al */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -164,7 +180,7 @@ export function IntroSplash() {
           >
             <button
               type="button"
-              onClick={toggle}
+              onClick={onVideoClick}
               aria-label={playing ? "Durdur" : "Başlat"}
               className={btn}
             >
@@ -178,25 +194,8 @@ export function IntroSplash() {
             >
               ↺
             </button>
-            <button
-              type="button"
-              onClick={toggleSound}
-              aria-label={
-                muted
-                  ? locale === "en"
-                    ? "Unmute"
-                    : "Sesi aç"
-                  : locale === "en"
-                    ? "Mute"
-                    : "Sesi kapat"
-              }
-              className={muted ? `${btn} animate-pulse border-accent text-accent` : btn}
-            >
-              {muted ? "🔇" : "🔊"}
-            </button>
           </motion.div>
 
-          {/* Ana sayfaya geç */}
           <motion.button
             type="button"
             onClick={enter}
