@@ -5,19 +5,31 @@ import { motion } from "framer-motion";
 import { Link } from "@/i18n/navigation";
 import { useTheme } from "./ThemeProvider";
 
-const slideFade = {
-  initial: { opacity: 0, y: 50 },
+const reveal = {
+  initial: { opacity: 0, y: 48 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { margin: "-30% 0px -30% 0px" },
+  viewport: { once: true, margin: "-25% 0px -25% 0px" },
   transition: { duration: 0.8, ease: "easeOut" as const },
 };
 
-// Sloganlar her zaman Türkçe (dil değişse de değişmez)
-const SLOGANS = [
-  "İstediğiniz gibi, tam size özel bir web sitesi.",
-  "Tasarımdan içeriğe, her detay sizin isteğinize göre.",
-  "Modern, hızlı ve mobil uyumlu — markanızın dilinde.",
-  "İhtiyacınız ne olursa olsun, hayalinizdeki siteyi üretiriz.",
+// İçerik her zaman Türkçe (dil değişse de değişmez)
+const SECTIONS = [
+  {
+    slogan: "İstediğiniz gibi, tam size özel bir web sitesi.",
+    body: "Hazır şablon değil; markanıza, hedefinize ve müşterinize göre sıfırdan tasarlanan bir deneyim.",
+  },
+  {
+    slogan: "Tasarımdan içeriğe, her detay sizin isteğinize göre.",
+    body: "Renk, tipografi, animasyon ve akış — hepsi sizinle birlikte, sizin zevkinize göre şekillenir.",
+  },
+  {
+    slogan: "Modern, hızlı ve mobil uyumlu.",
+    body: "Her ekranda kusursuz görünen, saniyeler içinde açılan ve arama motorlarında öne çıkan siteler.",
+  },
+  {
+    slogan: "İhtiyacınız ne olursa olsun, hayalinizdeki siteyi üretiriz.",
+    body: "Kurumsal tanıtım, e-ticaret, rezervasyon ya da özel bir uygulama — fikriniz neyse hayata geçiririz.",
+  },
 ];
 
 export function WebSiteShowcase() {
@@ -29,73 +41,80 @@ export function WebSiteShowcase() {
 
   return (
     <div className="relative">
-      {/* Tam ekran sabit video arka planı */}
-      <div aria-hidden className="fixed inset-0 -z-10 overflow-hidden">
+      {/* ÖN YÜZ: tam ekran net video + tek slogan */}
+      <section className="relative h-[calc(100svh-3.5rem)] w-full overflow-hidden">
         <video
           autoPlay
           muted
           loop
           playsInline
-          className="h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover"
         >
           <source src="/video/web-sitesi-bg.mp4" type="video/mp4" />
         </video>
-        {/* Video net kalsın diye yalnızca çok hafif bir katman */}
-        <div className="absolute inset-0 bg-bg/20" />
-      </div>
+        {/* Yazı okunsun diye yalnızca alttan çok hafif degrade */}
+        <div className="absolute inset-0 bg-linear-to-t from-bg/70 via-transparent to-transparent" />
 
-      {/* Açılış: temiz video + kaydırma ipucu (ön yüzde yazı yok) */}
-      <section className="flex h-[calc(100svh-3.5rem)] items-end justify-center pb-12">
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-          className="rounded-full bg-bg/40 px-4 py-1.5 text-sm text-fg backdrop-blur"
-        >
-          Kaydırın ↓
-        </motion.p>
+        <div className="absolute inset-x-0 bottom-0 flex flex-col items-center px-4 pb-16 text-center sm:pb-20">
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.9, ease: "easeOut" }}
+            className="max-w-4xl text-3xl font-bold leading-tight tracking-tight text-white [text-shadow:0_4px_30px_rgba(0,0,0,0.6)] sm:text-6xl"
+          >
+            Hayalinizdeki web sitesi, tam size özel.
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.4, duration: 0.8 }}
+            className="mt-8 rounded-full bg-white/15 px-4 py-1.5 text-sm text-white backdrop-blur"
+          >
+            Kaydırın ↓
+          </motion.p>
+        </div>
       </section>
 
-      {/* Kaydırdıkça beliren sloganlar */}
-      {SLOGANS.map((slogan) => (
+      {/* SCROLL: video yok, sloganlar + açıklamalar */}
+      {SECTIONS.map((s) => (
         <section
-          key={slogan}
-          className="flex min-h-dvh items-center justify-center px-4 text-center sm:px-6"
+          key={s.slogan}
+          className="flex min-h-dvh flex-col items-center justify-center bg-bg px-4 text-center sm:px-6"
         >
           <motion.h2
-            {...slideFade}
-            className="max-w-4xl text-4xl font-bold leading-tight tracking-tight text-fg [text-shadow:0_2px_40px_var(--bg)] sm:text-7xl"
+            {...reveal}
+            className="max-w-4xl text-4xl font-bold leading-tight tracking-tight text-fg sm:text-7xl"
           >
-            {slogan}
+            {s.slogan}
           </motion.h2>
+          <motion.p
+            {...reveal}
+            transition={{ ...reveal.transition, delay: 0.15 }}
+            className="mt-8 max-w-2xl text-lg leading-relaxed text-muted sm:text-2xl"
+          >
+            {s.body}
+          </motion.p>
         </section>
       ))}
 
-      {/* Kapanış: iletişim vurgusu */}
-      <section className="flex min-h-dvh flex-col items-center justify-center px-4 text-center sm:px-6">
+      {/* KAPANIŞ: iletişim vurgusu */}
+      <section className="flex min-h-dvh flex-col items-center justify-center bg-bg px-4 text-center sm:px-6">
         <motion.h2
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="max-w-3xl text-4xl font-bold tracking-tight text-fg [text-shadow:0_2px_40px_var(--bg)] sm:text-7xl"
+          {...reveal}
+          className="max-w-3xl text-4xl font-bold tracking-tight text-fg sm:text-7xl"
         >
           Projenizi konuşalım.
         </motion.h2>
         <motion.p
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, delay: 0.12, ease: "easeOut" }}
-          className="mt-6 max-w-xl text-lg text-fg/90 [text-shadow:0_2px_30px_var(--bg)] sm:text-xl"
+          {...reveal}
+          transition={{ ...reveal.transition, delay: 0.12 }}
+          className="mt-6 max-w-xl text-lg text-muted sm:text-xl"
         >
           Hayalinizdeki web sitesini birlikte üretelim.
         </motion.p>
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, delay: 0.24, ease: "easeOut" }}
+          {...reveal}
+          transition={{ ...reveal.transition, delay: 0.24 }}
           className="mt-10 flex flex-col items-center gap-4 sm:flex-row"
         >
           <Link
@@ -106,7 +125,7 @@ export function WebSiteShowcase() {
           </Link>
           <Link
             href="/"
-            className="rounded-full border border-line bg-bg/40 px-9 py-4 text-lg font-semibold backdrop-blur hover:border-accent"
+            className="rounded-full border border-line bg-surface/60 px-9 py-4 text-lg font-semibold backdrop-blur hover:border-accent"
           >
             Ana sayfaya dön
           </Link>
