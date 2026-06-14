@@ -7,7 +7,6 @@ import { LanguageSwitcher } from "./LanguageSwitcher";
 
 const links = [
   { href: "/", key: "home" },
-  { href: "/work", key: "work" },
   { href: "/contact", key: "contact" },
 ] as const;
 

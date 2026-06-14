@@ -18,6 +18,7 @@ export default async function GenAiPage({
       emoji="✨"
       theme="ai"
       related={related}
+      bgVideo="/video/generative-ai-bg.mp4"
     />
   );
 }
