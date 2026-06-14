@@ -7,19 +7,28 @@ import { useRouter } from "@/i18n/navigation";
 import type { Theme } from "@/lib/themes";
 import { useTheme } from "./ThemeProvider";
 
-type Service = { key: string; theme: Theme; emoji: string; href: string };
+type Fx = "swirl" | "sparkle" | "smoke" | "blocks" | "stripes";
+type Service = {
+  key: string;
+  theme: Theme;
+  emoji: string;
+  href: string;
+  fx: Fx;
+};
 
 const SERVICES: Service[] = [
-  { key: "tour", theme: "brand", emoji: "🧭", href: "/360-sanal-tur" },
-  { key: "genai", theme: "ai", emoji: "✨", href: "/generative-ai" },
-  { key: "site", theme: "motion", emoji: "🖥️", href: "/web-sitesi" },
-  { key: "webapp", theme: "web", emoji: "💻", href: "/web-uygulamalari" },
-  { key: "mobil", theme: "mobile", emoji: "📱", href: "/cep-uygulamasi" },
+  { key: "tour", theme: "brand", emoji: "🧭", href: "/360-sanal-tur", fx: "swirl" },
+  { key: "genai", theme: "ai", emoji: "✨", href: "/generative-ai", fx: "sparkle" },
+  { key: "site", theme: "motion", emoji: "🖥️", href: "/web-sitesi", fx: "smoke" },
+  { key: "webapp", theme: "web", emoji: "💻", href: "/web-uygulamalari", fx: "blocks" },
+  { key: "mobil", theme: "mobile", emoji: "📱", href: "/cep-uygulamasi", fx: "stripes" },
 ];
 
 const N = SERVICES.length;
 
-// Duman bulutları — ekrana yayılan yumuşak puflar
+const rand = (a: number, b: number) => a + Math.random() * (b - a);
+
+// Duman (smoke) — ekrana yayılan yumuşak puflar
 const PUFFS = [
   { x: "12%", y: "62%", size: 60, delay: 0, drift: -40 },
   { x: "78%", y: "58%", size: 66, delay: 0.04, drift: 50 },
@@ -32,6 +41,180 @@ const PUFFS = [
   { x: "8%", y: "30%", size: 50, delay: 0.14, drift: -45 },
   { x: "90%", y: "28%", size: 50, delay: 0.14, drift: 45 },
 ];
+
+// Sparkle (genai) — parıldayan parçacıklar
+const SPARKS = Array.from({ length: 36 }, () => ({
+  x: rand(4, 96),
+  y: rand(8, 92),
+  size: rand(5, 14),
+  delay: rand(0, 0.45),
+}));
+
+// Blocks (webapp) — kareler halinde pikselli geçiş
+const BLOCK_COLS = 8;
+const BLOCK_ROWS = 5;
+const BLOCK_DELAYS = Array.from(
+  { length: BLOCK_COLS * BLOCK_ROWS },
+  () => rand(0, 0.5),
+);
+
+// Stripes (mobil) — dikey perde çubukları
+const STRIPE_COUNT = 12;
+
+const SMOKE_BG =
+  "radial-gradient(circle at 50% 50%, var(--surface) 0%, color-mix(in oklch, var(--accent) 30%, var(--bg)) 35%, transparent 70%)";
+
+// Her hizmet için farklı geçiş efekti katmanı
+function FxLayer({ fx }: { fx: Fx }) {
+  if (fx === "smoke") {
+    return (
+      <>
+        {PUFFS.map((p, i) => (
+          <motion.span
+            key={i}
+            aria-hidden
+            initial={{ opacity: 0, scale: 0.2, x: 0, y: 20 }}
+            animate={{
+              opacity: [0, 0.85, 0.95],
+              scale: [0.2, 1.4, 2.2],
+              x: p.drift,
+              y: [20, -10, -30],
+            }}
+            transition={{
+              duration: 0.85,
+              delay: p.delay,
+              ease: "easeOut",
+              times: [0, 0.5, 1],
+            }}
+            style={{
+              left: p.x,
+              top: p.y,
+              width: `${p.size}vmax`,
+              height: `${p.size}vmax`,
+              background: SMOKE_BG,
+              filter: "blur(40px)",
+            }}
+            className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full"
+          />
+        ))}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.7, delay: 0.25, ease: "easeIn" }}
+          className="absolute inset-0 bg-bg"
+        />
+      </>
+    );
+  }
+
+  if (fx === "swirl") {
+    // 360° — dönerek açılan panoramik geçiş
+    return (
+      <>
+        <motion.div
+          aria-hidden
+          initial={{ rotate: -200, scale: 0.3, opacity: 0 }}
+          animate={{ rotate: 0, scale: 1.6, opacity: 1 }}
+          transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+          style={{
+            background:
+              "conic-gradient(from 0deg at 50% 50%, var(--bg), var(--surface), color-mix(in oklch, var(--accent) 55%, var(--bg)), var(--surface), var(--bg))",
+          }}
+          className="absolute inset-[-25%]"
+        />
+        <motion.div
+          initial={{ clipPath: "circle(0% at 50% 50%)" }}
+          animate={{ clipPath: "circle(150% at 50% 50%)" }}
+          transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute inset-0 bg-bg"
+        />
+      </>
+    );
+  }
+
+  if (fx === "sparkle") {
+    // AI — parıldayan parçacıklar toplanır
+    return (
+      <>
+        {SPARKS.map((s, i) => (
+          <motion.span
+            key={i}
+            aria-hidden
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: [0, 1, 0.9], scale: [0, 1.3, 1] }}
+            transition={{
+              duration: 0.7,
+              delay: s.delay,
+              ease: "easeOut",
+              times: [0, 0.6, 1],
+            }}
+            style={{
+              left: `${s.x}%`,
+              top: `${s.y}%`,
+              width: s.size,
+              height: s.size,
+              background: "var(--accent)",
+              boxShadow: "0 0 18px 4px var(--accent)",
+            }}
+            className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full"
+          />
+        ))}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.35, ease: "easeIn" }}
+          className="absolute inset-0 bg-bg"
+        />
+      </>
+    );
+  }
+
+  if (fx === "blocks") {
+    // Web uygulaması — pikselli kare ızgara dolar
+    return (
+      <div
+        className="absolute inset-0 grid"
+        style={{
+          gridTemplateColumns: `repeat(${BLOCK_COLS}, 1fr)`,
+          gridTemplateRows: `repeat(${BLOCK_ROWS}, 1fr)`,
+        }}
+      >
+        {BLOCK_DELAYS.map((d, i) => (
+          <motion.div
+            key={i}
+            aria-hidden
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.35, delay: d, ease: "easeOut" }}
+            style={{ transformOrigin: "center" }}
+            className="bg-bg ring-1 ring-accent/10"
+          />
+        ))}
+      </div>
+    );
+  }
+
+  // stripes — cep uygulaması: dikey perde çubukları
+  return (
+    <div className="absolute inset-0 flex">
+      {Array.from({ length: STRIPE_COUNT }).map((_, i) => (
+        <motion.div
+          key={i}
+          aria-hidden
+          initial={{ scaleY: 0 }}
+          animate={{ scaleY: 1 }}
+          transition={{
+            duration: 0.5,
+            delay: i * 0.04,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+          style={{ transformOrigin: i % 2 === 0 ? "top" : "bottom" }}
+          className="h-full flex-1 bg-bg"
+        />
+      ))}
+    </div>
+  );
+}
 
 export function HomeCarousel() {
   const t = useTranslations("services");
@@ -177,46 +360,10 @@ export function HomeCarousel() {
             transition={{ duration: 0.35, ease: "easeOut" }}
             className="pointer-events-none fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden"
           >
-            {/* Duman bulutları */}
-            {PUFFS.map((p, i) => (
-              <motion.span
-                key={i}
-                aria-hidden
-                initial={{ opacity: 0, scale: 0.2, x: 0, y: 20 }}
-                animate={{
-                  opacity: [0, 0.85, 0.95],
-                  scale: [0.2, 1.4, 2.2],
-                  x: p.drift,
-                  y: [20, -10, -30],
-                }}
-                transition={{
-                  duration: 0.85,
-                  delay: p.delay,
-                  ease: "easeOut",
-                  times: [0, 0.5, 1],
-                }}
-                style={{
-                  left: p.x,
-                  top: p.y,
-                  width: `${p.size}vmax`,
-                  height: `${p.size}vmax`,
-                  background:
-                    "radial-gradient(circle at 50% 50%, var(--surface) 0%, color-mix(in oklch, var(--accent) 30%, var(--bg)) 35%, transparent 70%)",
-                  filter: "blur(40px)",
-                }}
-                className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full"
-              />
-            ))}
+            {/* Karta özgü geçiş efekti */}
+            <FxLayer fx={exiting.fx} />
 
-            {/* Dumanı yoğunlaştıran arka katman */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.7, delay: 0.25, ease: "easeIn" }}
-              className="absolute inset-0 bg-bg"
-            />
-
-            {/* Hizmet başlığı dumanın içinden belirir */}
+            {/* Hizmet başlığı efektin içinden belirir */}
             <motion.span
               initial={{ opacity: 0, scale: 0.8, filter: "blur(12px)" }}
               animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
