@@ -7,11 +7,12 @@ export function TourShowcase() {
     <VideoShowcase
       theme="brand"
       video="/video/360-sanal-tur-bg.mp4"
-      heroLeftVideo="/video/360-sanal-tur-bg.mp4"
       tr={{
         heroTitle: "Mekânınızı 360° keşfedilebilir kılın.",
         heroLeft: "AI ile video tour",
+        heroLeftHref: "/360-sanal-tur/ai-video",
         heroRight: "Hotpoint ile tour",
+        heroRightHref: "/360-sanal-tur/hotpoint",
         sections: [
           {
             slogan: "Gelmeden gezdirin.",
@@ -36,7 +37,9 @@ export function TourShowcase() {
       en={{
         heroTitle: "Make your space explorable in 360°.",
         heroLeft: "AI video tour",
+        heroLeftHref: "/360-sanal-tur/ai-video",
         heroRight: "Hotpoint tour",
+        heroRightHref: "/360-sanal-tur/hotpoint",
         sections: [
           {
             slogan: "Let them tour before they arrive.",
