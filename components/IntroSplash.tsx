@@ -1,10 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useLocale } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "@/i18n/navigation";
+
+// SSR'da uyarı vermeyen layout effect
+const useIsoLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 const INTRO_VIDEO =
   "https://player.vimeo.com/video/1201168388?title=0&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479&controls=0&dnt=1";
@@ -20,15 +24,15 @@ export function IntroSplash() {
   const params = useSearchParams();
   const forced = params.get("intro") === "1";
 
-  const [show, setShow] = useState(false);
+  // Baştan açık başlar; daha önce görülmüşse boyamadan önce gizlenir (site flash'ı olmaz)
+  const [show, setShow] = useState(true);
   const [playing, setPlaying] = useState(false);
   const [started, setStarted] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
-  useEffect(() => {
-    if (typeof window === "undefined") return;
+  useIsoLayoutEffect(() => {
     const seen = sessionStorage.getItem("introSeen");
-    if (!seen || forced) setShow(true);
+    if (seen && !forced) setShow(false);
   }, [forced]);
 
   useEffect(() => {
