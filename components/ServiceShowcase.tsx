@@ -122,7 +122,7 @@ export function ServiceShowcase({
                 transition={{ ...reveal.transition, delay: 0.06 * i }}
               >
                 <Link
-                  href={CASE_PAGES[p.slug] ?? "/work"}
+                  href={`${CASE_PAGES[p.slug] ?? "/work"}?from=${serviceKey}`}
                   className="group block rounded-3xl border border-line bg-surface/60 p-7 backdrop-blur hover:border-accent/60 hover:shadow-[0_8px_48px_-16px_var(--accent)]"
                 >
                   <h3 className="text-xl font-semibold tracking-tight group-hover:text-accent">

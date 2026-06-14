@@ -1,5 +1,7 @@
+import { Suspense } from "react";
 import { setRequestLocale } from "next-intl/server";
 import { MindnoteShowcase } from "@/components/MindnoteShowcase";
+import { BackBar } from "@/components/BackBar";
 
 export default async function MindnotePage({
   params,
@@ -9,5 +11,12 @@ export default async function MindnotePage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  return <MindnoteShowcase />;
+  return (
+    <>
+      <Suspense fallback={null}>
+        <BackBar />
+      </Suspense>
+      <MindnoteShowcase />
+    </>
+  );
 }

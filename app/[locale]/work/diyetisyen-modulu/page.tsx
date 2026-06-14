@@ -1,5 +1,7 @@
+import { Suspense } from "react";
 import { setRequestLocale } from "next-intl/server";
 import { DiyetisyenShowcase } from "@/components/DiyetisyenShowcase";
+import { BackBar } from "@/components/BackBar";
 
 export default async function DiyetisyenPage({
   params,
@@ -9,5 +11,12 @@ export default async function DiyetisyenPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  return <DiyetisyenShowcase />;
+  return (
+    <>
+      <Suspense fallback={null}>
+        <BackBar />
+      </Suspense>
+      <DiyetisyenShowcase />
+    </>
+  );
 }

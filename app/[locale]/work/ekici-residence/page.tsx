@@ -1,5 +1,7 @@
+import { Suspense } from "react";
 import { setRequestLocale } from "next-intl/server";
 import { EkiciShowcase } from "@/components/EkiciShowcase";
+import { BackBar } from "@/components/BackBar";
 
 export default async function EkiciPage({
   params,
@@ -9,5 +11,12 @@ export default async function EkiciPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  return <EkiciShowcase />;
+  return (
+    <>
+      <Suspense fallback={null}>
+        <BackBar />
+      </Suspense>
+      <EkiciShowcase />
+    </>
+  );
 }
