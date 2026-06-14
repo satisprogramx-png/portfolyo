@@ -58,7 +58,9 @@ function VimeoPlayer({
   return (
     <div
       className={`group relative overflow-hidden rounded-xl bg-black shadow-[inset_0_2px_12px_rgba(0,0,0,0.6)] ${
-        portrait ? "mx-auto aspect-[9/16] max-w-xs" : "aspect-video"
+        portrait
+          ? "mx-auto aspect-[9/16] h-[78svh] max-h-[78svh] w-auto max-w-full"
+          : "aspect-video w-full"
       }`}
     >
       <iframe
@@ -224,7 +226,7 @@ export function AiVideoTours() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             onClick={() => setActive(null)}
-            className="fixed inset-0 z-[120] flex items-center justify-center bg-black/85 p-4 backdrop-blur-md"
+            className="fixed inset-0 z-[120] flex items-center justify-center bg-black/85 p-2 backdrop-blur-md sm:p-4"
           >
             <button
               type="button"
@@ -241,10 +243,10 @@ export function AiVideoTours() {
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               onClick={(e) => e.stopPropagation()}
-              className={active.portrait ? "w-full max-w-sm" : "w-full max-w-4xl"}
+              className={active.portrait ? "w-auto max-w-full" : "w-full max-w-4xl"}
             >
               {/* Beton çerçeve */}
-              <div className="relative rounded-[1.75rem] bg-linear-to-br from-stone-300 via-stone-400 to-stone-600 p-3.5 shadow-[0_50px_120px_-20px_rgba(0,0,0,0.85)] ring-1 ring-stone-700/40 sm:p-5">
+              <div className="relative rounded-[1.5rem] bg-linear-to-br from-stone-300 via-stone-400 to-stone-600 p-2 shadow-[0_50px_120px_-20px_rgba(0,0,0,0.85)] ring-1 ring-stone-700/40 sm:rounded-[1.75rem] sm:p-5">
                 <span
                   aria-hidden
                   className="pointer-events-none absolute inset-0 rounded-[1.75rem] mix-blend-overlay"
@@ -264,7 +266,9 @@ export function AiVideoTours() {
                 ) : (
                   <div
                     className={`relative overflow-hidden rounded-xl bg-black shadow-[inset_0_2px_12px_rgba(0,0,0,0.6)] ${
-                      active.portrait ? "mx-auto aspect-[9/16] max-w-xs" : "aspect-video"
+                      active.portrait
+                        ? "mx-auto aspect-[9/16] h-[78svh] max-h-[78svh] w-auto max-w-full"
+                        : "aspect-video w-full"
                     }`}
                   >
                     <video
