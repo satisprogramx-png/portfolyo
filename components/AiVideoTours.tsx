@@ -59,7 +59,7 @@ function VimeoPlayer({
     <div
       className={`group relative overflow-hidden rounded-xl bg-black shadow-[inset_0_2px_12px_rgba(0,0,0,0.6)] ${
         portrait
-          ? "mx-auto aspect-[9/16] h-[84svh] max-h-[84svh] w-auto max-w-full"
+          ? "mx-auto aspect-[9/16] h-[80svh] w-auto max-w-full sm:h-[85svh]"
           : "aspect-video w-full"
       }`}
     >
@@ -162,6 +162,16 @@ export function AiVideoTours() {
   const locale = useLocale();
   const [active, setActive] = useState<VideoTour | null>(null);
 
+  // Modal açıkken arka plan kaydırmasını kilitle
+  useEffect(() => {
+    if (!active) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [active]);
+
   return (
     <>
       <div className="grid gap-7 sm:grid-cols-2">
@@ -226,7 +236,7 @@ export function AiVideoTours() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             onClick={() => setActive(null)}
-            className="fixed inset-0 z-[120] flex items-center justify-center overflow-y-auto bg-black/85 p-2 backdrop-blur-md sm:p-4"
+            className="fixed inset-0 z-[120] flex items-center justify-center overflow-hidden bg-black/85 p-2 backdrop-blur-md sm:p-4"
           >
             <button
               type="button"
@@ -267,7 +277,7 @@ export function AiVideoTours() {
                   <div
                     className={`relative overflow-hidden rounded-xl bg-black shadow-[inset_0_2px_12px_rgba(0,0,0,0.6)] ${
                       active.portrait
-                        ? "mx-auto aspect-[9/16] h-[84svh] max-h-[84svh] w-auto max-w-full"
+                        ? "mx-auto aspect-[9/16] h-[80svh] w-auto max-w-full sm:h-[85svh]"
                         : "aspect-video w-full"
                     }`}
                   >
