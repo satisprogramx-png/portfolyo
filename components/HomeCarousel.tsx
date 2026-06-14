@@ -7,7 +7,7 @@ import { useRouter } from "@/i18n/navigation";
 import type { Theme } from "@/lib/themes";
 import { useTheme } from "./ThemeProvider";
 
-type Fx = "swirl" | "sparkle" | "smoke" | "blocks" | "stripes";
+type Fx = "shatter" | "sparkle" | "smoke" | "blocks" | "stripes";
 type Service = {
   key: string;
   theme: Theme;
@@ -17,7 +17,7 @@ type Service = {
 };
 
 const SERVICES: Service[] = [
-  { key: "tour", theme: "brand", emoji: "🧭", href: "/360-sanal-tur", fx: "swirl" },
+  { key: "tour", theme: "brand", emoji: "🧭", href: "/360-sanal-tur", fx: "shatter" },
   { key: "genai", theme: "ai", emoji: "✨", href: "/generative-ai", fx: "sparkle" },
   { key: "site", theme: "motion", emoji: "🖥️", href: "/web-sitesi", fx: "smoke" },
   { key: "webapp", theme: "web", emoji: "💻", href: "/web-uygulamalari", fx: "blocks" },
@@ -60,6 +60,47 @@ const BLOCK_DELAYS = Array.from(
 
 // Stripes (mobil) — dikey perde çubukları
 const STRIPE_COUNT = 12;
+
+// Shatter (360° tur) — cam gibi kırılıp dökülen parçalar
+const SHARD_COLS = 7;
+const SHARD_ROWS = 5;
+const SHARDS = (() => {
+  const out: {
+    left: string;
+    top: string;
+    w: string;
+    h: string;
+    clip: string;
+    delay: number;
+    x: number;
+    rot: number;
+    fall: number;
+  }[] = [];
+  for (let r = 0; r < SHARD_ROWS; r++) {
+    for (let c = 0; c < SHARD_COLS; c++) {
+      const cx = (c + 0.5) / SHARD_COLS;
+      const cy = (r + 0.5) / SHARD_ROWS;
+      const dist = Math.hypot(cx - 0.5, cy - 0.5);
+      for (let tri = 0; tri < 2; tri++) {
+        out.push({
+          left: `${(c / SHARD_COLS) * 100}%`,
+          top: `${(r / SHARD_ROWS) * 100}%`,
+          w: `${100 / SHARD_COLS}%`,
+          h: `${100 / SHARD_ROWS}%`,
+          clip:
+            tri === 0
+              ? "polygon(0 0, 100% 0, 0 100%)"
+              : "polygon(100% 0, 100% 100%, 0 100%)",
+          delay: 0.25 + dist * 0.7 + rand(0, 0.12),
+          x: (cx - 0.5) * rand(160, 320),
+          rot: rand(-120, 120),
+          fall: rand(500, 1000),
+        });
+      }
+    }
+  }
+  return out;
+})();
 
 const SMOKE_BG =
   "radial-gradient(circle at 50% 50%, var(--surface) 0%, color-mix(in oklch, var(--accent) 30%, var(--bg)) 35%, transparent 70%)";
@@ -107,27 +148,58 @@ function FxLayer({ fx }: { fx: Fx }) {
     );
   }
 
-  if (fx === "swirl") {
-    // 360° — dönerek açılan panoramik geçiş
+  if (fx === "shatter") {
+    // 360° — ekran cam gibi kırılıp dökülür
     return (
       <>
+        {/* Kırılan camın ardından beliren zemin */}
+        <div className="absolute inset-0 bg-bg" />
+
+        {/* Çarpma parlaması */}
         <motion.div
           aria-hidden
-          initial={{ rotate: -320, scale: 0.2, opacity: 0 }}
-          animate={{ rotate: 0, scale: 1.7, opacity: 1 }}
-          transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+          initial={{ opacity: 0, scale: 0.4 }}
+          animate={{ opacity: [0, 0.9, 0], scale: [0.4, 1.2, 1.6] }}
+          transition={{ duration: 0.45, ease: "easeOut", times: [0, 0.3, 1] }}
           style={{
             background:
-              "conic-gradient(from 0deg at 50% 50%, var(--bg), var(--surface), color-mix(in oklch, var(--accent) 55%, var(--bg)), var(--surface), var(--bg))",
+              "radial-gradient(circle at 50% 50%, var(--fg) 0%, transparent 55%)",
           }}
-          className="absolute inset-[-25%]"
+          className="absolute inset-0"
         />
-        <motion.div
-          initial={{ clipPath: "circle(0% at 50% 50%)" }}
-          animate={{ clipPath: "circle(150% at 50% 50%)" }}
-          transition={{ duration: 1.1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute inset-0 bg-bg"
-        />
+
+        {/* Cam parçaları */}
+        {SHARDS.map((s, i) => (
+          <motion.div
+            key={i}
+            aria-hidden
+            initial={{ y: 0, x: 0, rotate: 0, opacity: 1 }}
+            animate={{
+              y: s.fall,
+              x: s.x,
+              rotate: s.rot,
+              opacity: [1, 1, 0],
+            }}
+            transition={{
+              duration: 1.0,
+              delay: s.delay,
+              ease: "easeIn",
+              times: [0, 0.7, 1],
+            }}
+            style={{
+              left: s.left,
+              top: s.top,
+              width: s.w,
+              height: s.h,
+              clipPath: s.clip,
+              background:
+                "linear-gradient(135deg, color-mix(in oklch, var(--surface) 75%, transparent), color-mix(in oklch, var(--accent) 30%, transparent))",
+              borderTop: "1px solid color-mix(in oklch, var(--fg) 35%, transparent)",
+              borderLeft: "1px solid color-mix(in oklch, var(--fg) 20%, transparent)",
+            }}
+            className="absolute"
+          />
+        ))}
       </>
     );
   }
