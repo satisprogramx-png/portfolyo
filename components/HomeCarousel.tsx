@@ -392,8 +392,16 @@ export function HomeCarousel() {
                   zIndex: 30 - abs * 10,
                 }}
                 transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                style={{ pointerEvents: visible ? "auto" : "none" }}
-                className={`absolute flex h-[27rem] w-80 flex-col overflow-hidden rounded-[2rem] border bg-linear-to-b from-surface to-bg text-left transition-shadow duration-500 sm:w-96 ${
+                transformTemplate={({ x, scale, rotateY }) =>
+                  `translateX(${x}) translateZ(0) scale(${scale}) rotateY(${rotateY})`
+                }
+                style={{
+                  pointerEvents: visible ? "auto" : "none",
+                  WebkitTapHighlightColor: "transparent",
+                  backfaceVisibility: "hidden",
+                  WebkitBackfaceVisibility: "hidden",
+                }}
+                className={`absolute flex h-[27rem] w-80 flex-col overflow-hidden rounded-[2rem] border bg-linear-to-b from-surface to-bg text-left outline-none transition-shadow duration-500 select-none sm:w-96 ${
                   isCenter
                     ? "border-accent/35 shadow-[0_50px_120px_-50px_var(--accent)] ring-1 ring-inset ring-accent/15"
                     : "border-line/70 shadow-[0_40px_90px_-50px_var(--bg)]"
