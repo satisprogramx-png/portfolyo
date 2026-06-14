@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { useLocale } from "next-intl";
 
 type VideoTour = {
@@ -57,57 +58,140 @@ const reveal = {
   transition: { duration: 0.6, ease: "easeOut" as const },
 };
 
+// Beton doku — ince grenli overlay
+const CONCRETE_TEXTURE =
+  "repeating-linear-gradient(45deg, rgba(0,0,0,0.12) 0 1px, transparent 1px 3px), repeating-linear-gradient(-45deg, rgba(255,255,255,0.10) 0 1px, transparent 1px 4px), radial-gradient(circle at 30% 20%, rgba(255,255,255,0.12), transparent 45%)";
+
 export function AiVideoTours() {
   const locale = useLocale();
+  const [active, setActive] = useState<VideoTour | null>(null);
+
+  const withAutoplay = (url: string) =>
+    url.includes("?") ? `${url}&autoplay=1` : `${url}?autoplay=1`;
 
   return (
-    <div className="grid gap-8 sm:grid-cols-2">
-      {TOURS.map((tour, i) => (
-        <motion.article
-          key={tour.id}
-          {...reveal}
-          transition={{ ...reveal.transition, delay: 0.06 * i }}
-          className="overflow-hidden rounded-3xl border border-line bg-surface/60 backdrop-blur"
-        >
-          {tour.embed ? (
-            <div
-              className={`w-full bg-black ${
-                tour.portrait
-                  ? "mx-auto aspect-[9/16] max-w-xs"
-                  : "aspect-video"
-              }`}
-            >
-              <iframe
-                src={tour.embed}
-                title={locale === "en" ? tour.title.en : tour.title.tr}
-                className="h-full w-full"
-                frameBorder={0}
-                allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
+    <>
+      <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
+        {TOURS.map((tour, i) => (
+          <motion.button
+            type="button"
+            key={tour.id}
+            {...reveal}
+            transition={{ ...reveal.transition, delay: 0.06 * i }}
+            onClick={() => setActive(tour)}
+            className="group relative overflow-hidden rounded-3xl border border-line bg-surface/60 text-left backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-[0_24px_60px_-24px_var(--accent)]"
+          >
+            {/* Önizleme görseli */}
+            <div className="relative aspect-video w-full overflow-hidden">
+              <span
+                aria-hidden
+                className="absolute inset-0 bg-linear-to-br from-accent/30 via-surface to-bg"
               />
+              <span
+                aria-hidden
+                className="absolute -inset-6 opacity-60"
+                style={{
+                  background:
+                    "radial-gradient(circle at 50% 60%, var(--accent), transparent 60%)",
+                }}
+              />
+              {/* Oynat butonu */}
+              <span className="absolute inset-0 flex items-center justify-center">
+                <span className="flex size-16 items-center justify-center rounded-full border border-white/30 bg-black/40 text-2xl text-white backdrop-blur transition-transform duration-300 group-hover:scale-110">
+                  ▶
+                </span>
+              </span>
+              {tour.portrait && (
+                <span className="absolute top-3 right-3 rounded-full bg-black/50 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur">
+                  9:16
+                </span>
+              )}
             </div>
-          ) : (
-            <video
-              src={tour.video}
-              controls
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              className="aspect-video w-full bg-black object-cover"
-            />
-          )}
-          <div className="p-6">
-            <h2 className="text-xl font-semibold tracking-tight">
-              {locale === "en" ? tour.title.en : tour.title.tr}
-            </h2>
-            <p className="mt-2 text-sm leading-relaxed text-muted">
-              {locale === "en" ? tour.desc.en : tour.desc.tr}
-            </p>
-          </div>
-        </motion.article>
-      ))}
-    </div>
+            <div className="p-5">
+              <h2 className="text-lg font-semibold tracking-tight">
+                {locale === "en" ? tour.title.en : tour.title.tr}
+              </h2>
+              <p className="mt-1.5 text-sm leading-relaxed text-muted">
+                {locale === "en" ? tour.desc.en : tour.desc.tr}
+              </p>
+            </div>
+          </motion.button>
+        ))}
+      </div>
+
+      {/* Beton çerçeveli pop-up oynatıcı */}
+      <AnimatePresence>
+        {active && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={() => setActive(null)}
+            className="fixed inset-0 z-[120] flex items-center justify-center bg-black/85 p-4 backdrop-blur-md"
+          >
+            <button
+              type="button"
+              onClick={() => setActive(null)}
+              aria-label={locale === "en" ? "Close" : "Kapat"}
+              className="absolute top-5 right-5 z-10 flex size-11 items-center justify-center rounded-full border border-white/30 text-xl text-white transition-colors hover:bg-white/15"
+            >
+              ✕
+            </button>
+
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              onClick={(e) => e.stopPropagation()}
+              className={active.portrait ? "w-full max-w-sm" : "w-full max-w-4xl"}
+            >
+              {/* Beton çerçeve */}
+              <div className="relative rounded-[1.75rem] bg-linear-to-br from-stone-300 via-stone-400 to-stone-600 p-3.5 shadow-[0_50px_120px_-20px_rgba(0,0,0,0.85)] ring-1 ring-stone-700/40 sm:p-5">
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 rounded-[1.75rem] mix-blend-overlay"
+                  style={{ backgroundImage: CONCRETE_TEXTURE }}
+                />
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 rounded-[1.75rem] shadow-[inset_0_2px_6px_rgba(255,255,255,0.35),inset_0_-3px_10px_rgba(0,0,0,0.4)]"
+                />
+                {/* Video */}
+                <div
+                  className={`relative overflow-hidden rounded-xl bg-black shadow-[inset_0_2px_12px_rgba(0,0,0,0.6)] ${
+                    active.portrait ? "mx-auto aspect-[9/16] max-w-xs" : "aspect-video"
+                  }`}
+                >
+                  {active.embed ? (
+                    <iframe
+                      src={withAutoplay(active.embed)}
+                      title={locale === "en" ? active.title.en : active.title.tr}
+                      className="h-full w-full"
+                      frameBorder={0}
+                      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <video
+                      src={active.video}
+                      autoPlay
+                      controls
+                      playsInline
+                      className="h-full w-full object-cover"
+                    />
+                  )}
+                </div>
+              </div>
+              <p className="mt-4 text-center text-base font-semibold text-white">
+                {locale === "en" ? active.title.en : active.title.tr}
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
