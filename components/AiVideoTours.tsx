@@ -1,8 +1,96 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useLocale } from "next-intl";
+
+// Vimeo'yu yalnızca başlat/durdur ile, kendi arayüzümüzle oynatan oynatıcı
+function VimeoPlayer({
+  embed,
+  portrait,
+  title,
+}: {
+  embed: string;
+  portrait?: boolean;
+  title: string;
+}) {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [playing, setPlaying] = useState(true);
+
+  const src = `${embed}${embed.includes("?") ? "&" : "?"}controls=0&autoplay=1&dnt=1`;
+
+  const post = (method: string, value?: string) => {
+    iframeRef.current?.contentWindow?.postMessage(
+      JSON.stringify(value === undefined ? { method } : { method, value }),
+      "*",
+    );
+  };
+
+  useEffect(() => {
+    const onMsg = (e: MessageEvent) => {
+      if (typeof e.origin === "string" && !e.origin.includes("vimeo")) return;
+      let data: { event?: string };
+      try {
+        data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
+      } catch {
+        return;
+      }
+      if (data.event === "ready") {
+        post("addEventListener", "play");
+        post("addEventListener", "pause");
+        post("addEventListener", "ended");
+      } else if (data.event === "play") {
+        setPlaying(true);
+      } else if (
+        data.event === "pause" ||
+        data.event === "ended" ||
+        data.event === "finish"
+      ) {
+        setPlaying(false);
+      }
+    };
+    window.addEventListener("message", onMsg);
+    return () => window.removeEventListener("message", onMsg);
+  }, []);
+
+  const toggle = () => (playing ? post("pause") : post("play"));
+
+  return (
+    <div
+      className={`group relative overflow-hidden rounded-xl bg-black shadow-[inset_0_2px_12px_rgba(0,0,0,0.6)] ${
+        portrait ? "mx-auto aspect-[9/16] max-w-xs" : "aspect-video"
+      }`}
+    >
+      <iframe
+        ref={iframeRef}
+        src={src}
+        title={title}
+        className="pointer-events-none h-full w-full"
+        frameBorder={0}
+        allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+        referrerPolicy="strict-origin-when-cross-origin"
+        allowFullScreen
+      />
+      {/* Tek başlat/durdur kontrolü */}
+      <button
+        type="button"
+        onClick={toggle}
+        aria-label={playing ? "Durdur" : "Başlat"}
+        className="absolute inset-0 flex items-center justify-center"
+      >
+        <span
+          className={`flex size-16 items-center justify-center rounded-full border border-white/40 bg-black/45 text-2xl text-white backdrop-blur transition-all duration-300 ${
+            playing
+              ? "opacity-0 group-hover:opacity-100"
+              : "opacity-100 group-hover:scale-110"
+          }`}
+        >
+          {playing ? "❚❚" : "▶"}
+        </span>
+      </button>
+    </div>
+  );
+}
 
 type VideoTour = {
   id: string;
@@ -71,9 +159,6 @@ const CONCRETE_TEXTURE =
 export function AiVideoTours() {
   const locale = useLocale();
   const [active, setActive] = useState<VideoTour | null>(null);
-
-  const withAutoplay = (url: string) =>
-    url.includes("?") ? `${url}&autoplay=1` : `${url}?autoplay=1`;
 
   return (
     <>
@@ -170,22 +255,18 @@ export function AiVideoTours() {
                   className="pointer-events-none absolute inset-0 rounded-[1.75rem] shadow-[inset_0_2px_6px_rgba(255,255,255,0.35),inset_0_-3px_10px_rgba(0,0,0,0.4)]"
                 />
                 {/* Video */}
-                <div
-                  className={`relative overflow-hidden rounded-xl bg-black shadow-[inset_0_2px_12px_rgba(0,0,0,0.6)] ${
-                    active.portrait ? "mx-auto aspect-[9/16] max-w-xs" : "aspect-video"
-                  }`}
-                >
-                  {active.embed ? (
-                    <iframe
-                      src={withAutoplay(active.embed)}
-                      title={locale === "en" ? active.title.en : active.title.tr}
-                      className="h-full w-full"
-                      frameBorder={0}
-                      allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-                      referrerPolicy="strict-origin-when-cross-origin"
-                      allowFullScreen
-                    />
-                  ) : (
+                {active.embed ? (
+                  <VimeoPlayer
+                    embed={active.embed}
+                    portrait={active.portrait}
+                    title={locale === "en" ? active.title.en : active.title.tr}
+                  />
+                ) : (
+                  <div
+                    className={`relative overflow-hidden rounded-xl bg-black shadow-[inset_0_2px_12px_rgba(0,0,0,0.6)] ${
+                      active.portrait ? "mx-auto aspect-[9/16] max-w-xs" : "aspect-video"
+                    }`}
+                  >
                     <video
                       src={active.video}
                       autoPlay
@@ -193,8 +274,8 @@ export function AiVideoTours() {
                       playsInline
                       className="h-full w-full object-cover"
                     />
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
               <p className="mt-4 text-center text-base font-semibold text-white">
                 {locale === "en" ? active.title.en : active.title.tr}
