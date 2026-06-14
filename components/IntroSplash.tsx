@@ -28,6 +28,7 @@ export function IntroSplash() {
   const [show, setShow] = useState(true);
   const [playing, setPlaying] = useState(false);
   const [started, setStarted] = useState(false);
+  const [playerKey, setPlayerKey] = useState(0);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useIsoLayoutEffect(() => {
@@ -75,16 +76,10 @@ export function IntroSplash() {
       } else if (data.event === "play") {
         setPlaying(true);
       } else if (data.event === "ended") {
-        // Bittiğinde başa sar, önizlemede ve durdurulmuş kal
+        // Bittiğinde oynatıcıyı sıfırla → poster/önizlemede ve durdurulmuş kal
         setPlaying(false);
-        iframeRef.current?.contentWindow?.postMessage(
-          JSON.stringify({ method: "setCurrentTime", value: 0 }),
-          "*",
-        );
-        iframeRef.current?.contentWindow?.postMessage(
-          JSON.stringify({ method: "pause" }),
-          "*",
-        );
+        setStarted(false);
+        setPlayerKey((k) => k + 1);
       } else if (data.event === "pause") {
         setPlaying(false);
       }
@@ -158,6 +153,7 @@ export function IntroSplash() {
             className="group relative aspect-[4/3] w-full max-w-2xl overflow-hidden rounded-3xl border border-line bg-black shadow-[0_40px_120px_-30px_var(--accent)]"
           >
             <iframe
+              key={playerKey}
               ref={iframeRef}
               src={INTRO_VIDEO}
               title="Intro"
