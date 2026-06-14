@@ -58,7 +58,7 @@ export function HomeCarousel() {
   const select = (s: Service) => {
     if (exiting) return;
     setExiting(s);
-    window.setTimeout(() => router.push(s.href), 900);
+    window.setTimeout(() => router.push(s.href), 1500);
   };
 
   useEffect(() => {
