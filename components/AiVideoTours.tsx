@@ -71,8 +71,8 @@ function VimeoPlayer({
       ref={containerRef}
       className={`group relative overflow-hidden rounded-xl bg-black shadow-[inset_0_2px_12px_rgba(0,0,0,0.6)] ${
         portrait
-          ? "mx-auto aspect-[9/16] h-[80svh] w-auto max-w-full sm:h-[85svh]"
-          : "aspect-video w-full"
+          ? "mx-auto aspect-[9/16] h-[78svh] max-h-[78svh] w-auto max-w-[88vw]"
+          : "aspect-video max-h-[78svh] w-full"
       }`}
     >
       <iframe
@@ -301,8 +301,8 @@ export function AiVideoTours() {
                   <div
                     className={`relative overflow-hidden rounded-xl bg-black shadow-[inset_0_2px_12px_rgba(0,0,0,0.6)] ${
                       active.portrait
-                        ? "mx-auto aspect-[9/16] h-[80svh] w-auto max-w-full sm:h-[85svh]"
-                        : "aspect-video w-full"
+                        ? "mx-auto aspect-[9/16] h-[78svh] max-h-[78svh] w-auto max-w-[88vw]"
+                        : "aspect-video max-h-[78svh] w-full"
                     }`}
                   >
                     <video
