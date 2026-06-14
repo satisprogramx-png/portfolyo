@@ -231,19 +231,30 @@ export function VideoShowcase({
             >
               ✕
             </button>
-            <motion.video
+            <motion.div
               key="player"
               initial={{ scale: 0.92, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.92, opacity: 0 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
               onClick={(e) => e.stopPropagation()}
-              src={heroLeftVideo}
-              autoPlay
-              controls
-              playsInline
-              className="max-h-[85vh] w-auto max-w-full rounded-2xl shadow-2xl"
-            />
+              className="w-full max-w-3xl"
+            >
+              <video
+                src={heroLeftVideo}
+                autoPlay
+                muted
+                loop
+                controls
+                playsInline
+                className="h-auto max-h-[85vh] w-full rounded-2xl bg-black shadow-2xl"
+              />
+              <p className="mt-3 text-center text-sm text-white/70">
+                {locale === "en"
+                  ? "Tap the speaker icon to unmute."
+                  : "Sesi açmak için hoparlör simgesine dokunun."}
+              </p>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
