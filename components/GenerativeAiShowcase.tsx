@@ -3,22 +3,23 @@
 import { VideoShowcase } from "./VideoShowcase";
 
 // İçerik her zaman Türkçe (dil değişse de değişmez)
+// Ana fikir: siz hayal edin, biz generative AI ile üretelim.
 const SECTIONS = [
   {
-    slogan: "Metinden görsele, fikirden videoya.",
-    body: "Yapay zekâ ile hayalinizdeki içeriği saniyeler içinde üretin; markanıza özel görseller, metinler ve videolar.",
+    slogan: "Siz hayal edin, biz üretelim.",
+    body: "Aklınızdaki fikri anlatın; biz generative AI ile onu görsele, metne ve videoya dönüştürelim.",
   },
   {
-    slogan: "Markanıza özel, akıllı içerik.",
-    body: "Tonunuzu öğrenen, hedef kitlenize göre konuşan yapay zekâ destekli içerik akışları.",
+    slogan: "Düşlediğiniz her şey, üretilebilir.",
+    body: "Markanıza özel görseller, tanıtım videoları ve içerikler — hayal gücünüzün sınırı kadar geniş.",
   },
   {
-    slogan: "Otomatikleştirin, hızlanın, ölçeklenin.",
-    body: "Tekrarlayan işleri yapay zekâya devredin; ekibiniz yaratıcı işe odaklansın.",
+    slogan: "Bir cümlelik hayal, eksiksiz bir içerik dünyası.",
+    body: "Firma olarak en güncel yapay zekâ araçlarıyla fikrinizi dakikalar içinde hayata geçiriyoruz.",
   },
   {
-    slogan: "Fikriniz ne olursa olsun, AI ile hayata geçirelim.",
-    body: "Sohbet botundan görsel üretime, özel modellerden otomasyona — uçtan uca yapay zekâ çözümleri.",
+    slogan: "Hayal kurmak size, üretmek bize ait.",
+    body: "Siz vizyonu koyun; biz generative AI ile o vizyonu gerçeğe çevirelim.",
   },
 ];
 
@@ -27,9 +28,9 @@ export function GenerativeAiShowcase() {
     <VideoShowcase
       theme="ai"
       video="/video/generative-ai-bg.mp4"
-      heroTitle="Yapay zekâ ile hayal edin, anında üretin."
+      heroTitle="Siz hayal edin, biz yapay zekâ ile üretelim."
       sections={SECTIONS}
-      closingBody="Yapay zekâ destekli projenizi birlikte hayata geçirelim."
+      closingBody="Hayalinizi anlatın, generative AI ile birlikte üretelim."
     />
   );
 }
