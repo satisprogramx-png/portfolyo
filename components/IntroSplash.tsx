@@ -32,7 +32,11 @@ export function IntroSplash() {
 
   useIsoLayoutEffect(() => {
     const seen = sessionStorage.getItem("introSeen");
-    if (seen && !forced) setShow(false);
+    if (forced) {
+      setShow(true);
+    } else if (seen) {
+      setShow(false);
+    }
   }, [forced]);
 
   useEffect(() => {
