@@ -1,5 +1,5 @@
 import { setRequestLocale } from "next-intl/server";
-import { HomeScroll } from "@/components/HomeScroll";
+import { HomeCarousel } from "@/components/HomeCarousel";
 
 export default async function HomePage({
   params,
@@ -9,5 +9,5 @@ export default async function HomePage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  return <HomeScroll />;
+  return <HomeCarousel />;
 }

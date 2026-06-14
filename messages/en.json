@@ -95,6 +95,82 @@
     "year": "Year",
     "viewCase": "View case"
   },
+  "carousel": {
+    "kicker": "What we build",
+    "explore": "Explore"
+  },
+  "services": {
+    "common": {
+      "related": "Related projects",
+      "ctaButton": "Get in touch",
+      "backHome": "Back to home"
+    },
+    "tour": {
+      "title": "360° Virtual Tour",
+      "tagline": "Let people walk the space as if they're there.",
+      "subtitle": "Panoramic 360° virtual tours that let visitors explore your space remotely and interactively.",
+      "f1Title": "Interactive navigation",
+      "f1Body": "Visitors move point to point and look anywhere, exploring at their own pace.",
+      "f2Title": "Fits every sector",
+      "f2Body": "Real estate, hotels, showrooms, factories, museums — any walkable space.",
+      "f3Title": "No app needed",
+      "f3Body": "Opens with a single link in the browser, on phones and in VR headsets.",
+      "ctaTitle": "Let's tour your space.",
+      "ctaBody": "Let's produce a 360° virtual tour for your project."
+    },
+    "genai": {
+      "title": "Generative AI",
+      "tagline": "Content created with AI.",
+      "subtitle": "From image to video, audio to text — original, on-brand AI content creation.",
+      "f1Title": "Video & image generation",
+      "f1Body": "Cinematic scenes, product visuals and promo films with no camera needed.",
+      "f2Title": "Dubbing & lip-sync",
+      "f2Body": "Translate a video into multiple languages and re-voice it with lip-sync.",
+      "f3Title": "On-brand",
+      "f3Body": "Production is shaped around your brand's voice and visual language.",
+      "ctaTitle": "Let's create your content with AI.",
+      "ctaBody": "Let's talk about the content on your mind."
+    },
+    "site": {
+      "title": "Website",
+      "tagline": "Fast, modern showcase sites.",
+      "subtitle": "Sub-second, mobile-friendly websites built around your brand.",
+      "f1Title": "At light speed",
+      "f1Body": "Static generation and edge delivery make it open instantly worldwide.",
+      "f2Title": "Mobile first",
+      "f2Body": "Flawless from phone to widescreen at every size.",
+      "f3Title": "Content management",
+      "f3Body": "Blog, products, pages — update your content with ease.",
+      "ctaTitle": "Let's build your site.",
+      "ctaBody": "Let's design a modern showcase for your brand."
+    },
+    "webapp": {
+      "title": "Web Applications",
+      "tagline": "Intelligent products that live in the browser.",
+      "subtitle": "Dashboards, SaaS, internal tools — production-ready web apps in the browser.",
+      "f1Title": "Real-time",
+      "f1Body": "Live data, instant updates and fluid interaction.",
+      "f2Title": "Secure & scalable",
+      "f2Body": "Authentication, authorization and row-level security.",
+      "f3Title": "AI built in",
+      "f3Body": "Summarisation, suggestions and natural-language interfaces inside your app.",
+      "ctaTitle": "Let's build your app.",
+      "ctaBody": "Let's take your idea to production."
+    },
+    "mobil": {
+      "title": "Mobile App",
+      "tagline": "Fluid mobile products that fit in your pocket.",
+      "subtitle": "Fast, useful mobile apps running on iOS and Android.",
+      "f1Title": "One codebase, two platforms",
+      "f1Body": "iOS and Android from a single build — faster and more consistent.",
+      "f2Title": "Device-integrated",
+      "f2Body": "Notifications, camera, location, health data — the full power of the device.",
+      "f3Title": "Fluid experience",
+      "f3Body": "Smooth animations, offline support and fast startup.",
+      "ctaTitle": "Let's make your app.",
+      "ctaBody": "Let's bring your mobile idea to life."
+    }
+  },
   "mindnote": {
     "eyebrow": "MindNote",
     "heroTitle": "A new surface for thinking.",

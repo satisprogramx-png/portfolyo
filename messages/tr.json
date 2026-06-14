@@ -95,6 +95,82 @@
     "year": "Yıl",
     "viewCase": "Tanıtımı gör"
   },
+  "carousel": {
+    "kicker": "Ne üretiyoruz?",
+    "explore": "Keşfet"
+  },
+  "services": {
+    "common": {
+      "related": "İlgili projeler",
+      "ctaButton": "İletişime geç",
+      "backHome": "Ana sayfaya dön"
+    },
+    "tour": {
+      "title": "360° Sanal Tur",
+      "tagline": "Mekânı, yerinde gibi gezdirin.",
+      "subtitle": "Panoramik 360° sanal turlarla mekânınızı uzaktan, etkileşimli deneyimletin.",
+      "f1Title": "Etkileşimli gezinme",
+      "f1Body": "Ziyaretçi noktadan noktaya geçer, dilediği yöne bakar; mekânı kendi temposunda keşfeder.",
+      "f2Title": "Her sektöre uygun",
+      "f2Body": "Emlak, otel, showroom, fabrika, müze — gezilebilir her mekân için.",
+      "f3Title": "Uygulama gerekmez",
+      "f3Body": "Tarayıcıda, telefonda ve VR gözlükte tek bağlantıyla açılır.",
+      "ctaTitle": "Mekânınızı turlatalım.",
+      "ctaBody": "Projeniz için 360° sanal tur üretelim."
+    },
+    "genai": {
+      "title": "Generative AI",
+      "tagline": "Yapay zekâ ile üretilen içerik.",
+      "subtitle": "Görselden videoya, sesten metne — markanıza özel, özgün AI içerik üretimi.",
+      "f1Title": "Video & görsel üretimi",
+      "f1Body": "Kameraya gerek kalmadan sinematik sahneler, ürün görselleri ve tanıtım filmleri.",
+      "f2Title": "Dublaj & lip-sync",
+      "f2Body": "Videoyu çoklu dile çevirip dudak senkronuyla yeniden seslendirme.",
+      "f3Title": "Markaya özel",
+      "f3Body": "Üretim, markanızın sesine ve görsel diline göre kurgulanır.",
+      "ctaTitle": "İçeriğinizi yapay zekâ ile üretelim.",
+      "ctaBody": "Aklınızdaki içeriği konuşalım."
+    },
+    "site": {
+      "title": "Web Sitesi",
+      "tagline": "Hızlı, modern vitrin siteleri.",
+      "subtitle": "Saniyenin altında açılan, mobil uyumlu, markanıza özel web siteleri.",
+      "f1Title": "Işık hızında",
+      "f1Body": "Statik üretim ve edge dağıtımıyla dünyanın her yerinde anında açılır.",
+      "f2Title": "Mobil öncelikli",
+      "f2Body": "Telefondan geniş ekrana her boyutta kusursuz görünüm.",
+      "f3Title": "İçerik yönetimi",
+      "f3Body": "Blog, ürün, sayfa — içeriğinizi kolayca güncelleyin.",
+      "ctaTitle": "Sitenizi kuralım.",
+      "ctaBody": "Markanız için modern bir vitrin tasarlayalım."
+    },
+    "webapp": {
+      "title": "Web Uygulamaları",
+      "tagline": "Tarayıcıda çalışan akıllı ürünler.",
+      "subtitle": "Panel, SaaS, dahili araç — tarayıcıda çalışan, üretime hazır web uygulamaları.",
+      "f1Title": "Gerçek zamanlı",
+      "f1Body": "Canlı veri, anlık güncelleme ve akıcı etkileşim.",
+      "f2Title": "Güvenli ve ölçeklenebilir",
+      "f2Body": "Kimlik doğrulama, yetkilendirme ve satır düzeyinde güvenlik.",
+      "f3Title": "Yapay zekâ entegre",
+      "f3Body": "Özetleme, öneri ve doğal dil arayüzleri uygulamanızın içinde.",
+      "ctaTitle": "Uygulamanızı geliştirelim.",
+      "ctaBody": "Fikrinizi üretime taşıyalım."
+    },
+    "mobil": {
+      "title": "Cep Uygulaması",
+      "tagline": "Cebe sığan, akıcı mobil ürünler.",
+      "subtitle": "iOS ve Android'de çalışan, hızlı ve kullanışlı mobil uygulamalar.",
+      "f1Title": "Tek kod, iki platform",
+      "f1Body": "iOS ve Android tek geliştirmeyle; daha hızlı, daha tutarlı.",
+      "f2Title": "Cihazla bütünleşik",
+      "f2Body": "Bildirim, kamera, konum, sağlık verisi — cihazın tüm gücü.",
+      "f3Title": "Akıcı deneyim",
+      "f3Body": "Akıcı animasyonlar, çevrimdışı çalışma ve hızlı açılış.",
+      "ctaTitle": "Uygulamanızı yapalım.",
+      "ctaBody": "Mobil fikrinizi hayata geçirelim."
+    }
+  },
   "mindnote": {
     "eyebrow": "MindNote",
     "heroTitle": "Düşünmenin yeni yüzeyi.",
