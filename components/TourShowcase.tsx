@@ -7,6 +7,7 @@ export function TourShowcase() {
     <VideoShowcase
       theme="brand"
       video="/video/360-sanal-tur-bg.mp4"
+      heroLeftVideo="/video/360-sanal-tur-bg.mp4"
       tr={{
         heroTitle: "Mekânınızı 360° keşfedilebilir kılın.",
         heroLeft: "AI ile video tour",

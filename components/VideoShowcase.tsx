@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { Theme } from "@/lib/themes";
@@ -28,14 +28,23 @@ export type LocalizedContent = {
 export type VideoShowcaseProps = {
   theme: Theme;
   video: string;
+  /** Sol etiketine basınca tam ekran oynatılacak video (verilirse etiket tıklanabilir olur) */
+  heroLeftVideo?: string;
   tr: LocalizedContent;
   en: LocalizedContent;
 };
 
-export function VideoShowcase({ theme, video, tr, en }: VideoShowcaseProps) {
+export function VideoShowcase({
+  theme,
+  video,
+  heroLeftVideo,
+  tr,
+  en,
+}: VideoShowcaseProps) {
   const { setTheme } = useTheme();
   const locale = useLocale();
   const c = locale === "en" ? en : tr;
+  const [playerOpen, setPlayerOpen] = useState(false);
 
   useEffect(() => {
     setTheme(theme);
@@ -62,11 +71,16 @@ export function VideoShowcase({ theme, video, tr, en }: VideoShowcaseProps) {
         {(c.heroLeft || c.heroRight) && (
           <div className="pointer-events-none absolute inset-x-0 top-1/2 flex -translate-y-1/2 items-center justify-between px-4 sm:px-10">
             {c.heroLeft ? (
-              <motion.div
+              <motion.button
+                type="button"
+                disabled={!heroLeftVideo}
+                onClick={() => heroLeftVideo && setPlayerOpen(true)}
                 initial={{ opacity: 0, x: -24 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.7, duration: 0.8, ease: "easeOut" }}
-                className="max-w-[42%] rounded-2xl border border-white/20 bg-black/30 px-3 py-2.5 text-left backdrop-blur-md sm:px-5 sm:py-4"
+                className={`pointer-events-auto max-w-[42%] rounded-2xl border border-white/20 bg-black/30 px-3 py-2.5 text-left backdrop-blur-md transition-colors sm:px-5 sm:py-4 ${
+                  heroLeftVideo ? "cursor-pointer hover:border-white/60 hover:bg-black/45" : ""
+                }`}
               >
                 <span className="block text-[10px] font-semibold tracking-[0.25em] text-white/60 uppercase sm:text-xs">
                   01
@@ -74,7 +88,13 @@ export function VideoShowcase({ theme, video, tr, en }: VideoShowcaseProps) {
                 <span className="mt-1 block text-base font-bold leading-tight text-white sm:text-2xl">
                   {c.heroLeft}
                 </span>
-              </motion.div>
+                {heroLeftVideo && (
+                  <span className="mt-1.5 inline-flex items-center gap-1.5 text-xs font-medium text-white/80 sm:text-sm">
+                    <span className="flex size-5 items-center justify-center rounded-full bg-white/20">▶</span>
+                    {locale === "en" ? "Watch" : "İzle"}
+                  </span>
+                )}
+              </motion.button>
             ) : (
               <span />
             )}
@@ -191,6 +211,42 @@ export function VideoShowcase({ theme, video, tr, en }: VideoShowcaseProps) {
           </Link>
         </motion.div>
       </section>
+
+      {/* AI video tour — tam ekran oynatıcı */}
+      <AnimatePresence>
+        {playerOpen && heroLeftVideo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={() => setPlayerOpen(false)}
+            className="fixed inset-0 z-[120] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm"
+          >
+            <button
+              type="button"
+              onClick={() => setPlayerOpen(false)}
+              aria-label={locale === "en" ? "Close" : "Kapat"}
+              className="absolute top-5 right-5 flex size-11 items-center justify-center rounded-full border border-white/30 text-xl text-white transition-colors hover:bg-white/15"
+            >
+              ✕
+            </button>
+            <motion.video
+              key="player"
+              initial={{ scale: 0.92, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.92, opacity: 0 }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              onClick={(e) => e.stopPropagation()}
+              src={heroLeftVideo}
+              autoPlay
+              controls
+              playsInline
+              className="max-h-[85vh] w-auto max-w-full rounded-2xl shadow-2xl"
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
