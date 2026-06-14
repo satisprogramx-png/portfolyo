@@ -16,6 +16,7 @@ export function IntroSplash() {
   const locale = useLocale();
   const [show, setShow] = useState(false);
   const [playing, setPlaying] = useState(true);
+  const [muted, setMuted] = useState(true);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
@@ -80,6 +81,21 @@ export function IntroSplash() {
       "*",
     );
     post("play");
+  };
+  const toggleSound = () => {
+    const next = !muted;
+    iframeRef.current?.contentWindow?.postMessage(
+      JSON.stringify({ method: "setMuted", value: next }),
+      "*",
+    );
+    if (!next) {
+      iframeRef.current?.contentWindow?.postMessage(
+        JSON.stringify({ method: "setVolume", value: 1 }),
+        "*",
+      );
+      post("play");
+    }
+    setMuted(next);
   };
 
   const enter = () => {
@@ -161,6 +177,22 @@ export function IntroSplash() {
               className={btn}
             >
               ↺
+            </button>
+            <button
+              type="button"
+              onClick={toggleSound}
+              aria-label={
+                muted
+                  ? locale === "en"
+                    ? "Unmute"
+                    : "Sesi aç"
+                  : locale === "en"
+                    ? "Mute"
+                    : "Sesi kapat"
+              }
+              className={muted ? `${btn} animate-pulse border-accent text-accent` : btn}
+            >
+              {muted ? "🔇" : "🔊"}
             </button>
           </motion.div>
 
