@@ -2,34 +2,57 @@
 
 import { VideoShowcase } from "./VideoShowcase";
 
-// İçerik her zaman Türkçe (dil değişse de değişmez)
-const SECTIONS = [
-  {
-    slogan: "Gelmeden gezdirin.",
-    body: "Müşterileriniz mekânınızı 360° olarak, istediği an ve istediği yerden adım adım gezsin.",
-  },
-  {
-    slogan: "Her köşe, gerçeğin aynısı.",
-    body: "Yüksek çözünürlüklü panoramalarla mekânınızı en ince ayrıntısına kadar yansıtın.",
-  },
-  {
-    slogan: "Otel, emlak, restoran, mağaza — hepsi için.",
-    body: "Hangi sektörde olursanız olun, sanal turla mekânınızı unutulmaz bir deneyime dönüştürün.",
-  },
-  {
-    slogan: "Tek bir bağlantı, sınırsız ziyaretçi.",
-    body: "Web sitenize, sosyal medyaya veya Google'a ekleyin; turunuz her yerde, her cihazda çalışsın.",
-  },
-];
-
 export function TourShowcase() {
   return (
     <VideoShowcase
       theme="brand"
       video="/video/360-sanal-tur-bg.mp4"
-      heroTitle="Mekânınızı 360° keşfedilebilir kılın."
-      sections={SECTIONS}
-      closingBody="Mekânınızı 360° sanal turla hayata geçirelim."
+      tr={{
+        heroTitle: "Mekânınızı 360° keşfedilebilir kılın.",
+        sections: [
+          {
+            slogan: "Gelmeden gezdirin.",
+            body: "Müşterileriniz mekânınızı 360° olarak, istediği an ve istediği yerden adım adım gezsin.",
+          },
+          {
+            slogan: "AI ile üretilmiş, gerçekçi iç mekan turları.",
+            body: "Gerçek çekim yapmadan bile yapay zekâ ile fotorealistik iç mekan görselleri ve gezinti deneyimi oluşturuyoruz.",
+          },
+          {
+            slogan: "Hotpoint'lere tıklayarak keşfet.",
+            body: "Ziyaretçiler odadan odaya geçerken etiketlere tıklayarak detaylı bilgi, fiyat veya ürün görüntüleyebilir.",
+          },
+          {
+            slogan: "Tek bir bağlantı, sınırsız ziyaretçi.",
+            body: "Web sitenize, sosyal medyaya veya Google'a ekleyin; turunuz her yerde, her cihazda çalışsın.",
+          },
+        ],
+        closingTitle: "Mekânınızı sanal dünyaya taşıyalım.",
+        closingBody: "AI destekli veya gerçek çekimle — mekânınız için en etkileyici 360° turu birlikte üretelim.",
+      }}
+      en={{
+        heroTitle: "Make your space explorable in 360°.",
+        sections: [
+          {
+            slogan: "Let them tour before they arrive.",
+            body: "Your customers can walk through your space in 360° anytime, from anywhere, step by step.",
+          },
+          {
+            slogan: "AI-generated, photorealistic interior tours.",
+            body: "Without a single photo shoot — we create stunningly realistic interior visuals and walkthrough experiences powered by AI.",
+          },
+          {
+            slogan: "Explore by clicking interactive hotpoints.",
+            body: "As visitors move from room to room, they can tap hotpoints to reveal details, prices or product info.",
+          },
+          {
+            slogan: "One link, unlimited visitors.",
+            body: "Embed it on your website, social media or Google Maps — your tour works everywhere, on every device.",
+          },
+        ],
+        closingTitle: "Let's bring your space into the virtual world.",
+        closingBody: "AI-generated or real photography — let's create the most compelling 360° tour for your space together.",
+      }}
     />
   );
 }

@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { motion } from "framer-motion";
+import { useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { Theme } from "@/lib/themes";
 import { useTheme } from "./ThemeProvider";
@@ -15,32 +16,34 @@ const reveal = {
 
 export type ShowcaseSection = { slogan: string; body: string };
 
-export type VideoShowcaseProps = {
-  theme: Theme;
-  video: string;
+export type LocalizedContent = {
   heroTitle: string;
   sections: ShowcaseSection[];
   closingTitle?: string;
   closingBody?: string;
 };
 
-export function VideoShowcase({
-  theme,
-  video,
-  heroTitle,
-  sections,
-  closingTitle = "Projenizi konuşalım.",
-  closingBody = "Hayalinizdeki projeyi birlikte hayata geçirelim.",
-}: VideoShowcaseProps) {
+export type VideoShowcaseProps = {
+  theme: Theme;
+  video: string;
+  tr: LocalizedContent;
+  en: LocalizedContent;
+};
+
+export function VideoShowcase({ theme, video, tr, en }: VideoShowcaseProps) {
   const { setTheme } = useTheme();
+  const locale = useLocale();
+  const c = locale === "en" ? en : tr;
 
   useEffect(() => {
     setTheme(theme);
   }, [theme, setTheme]);
 
+  const scrollLabel = locale === "en" ? "Scroll ↓" : "Kaydırın ↓";
+
   return (
     <div className="relative">
-      {/* ÖN YÜZ: tam ekran net video + tek slogan */}
+      {/* Hero: full-screen video + single headline */}
       <section className="relative h-[calc(100svh-3.5rem)] w-full overflow-hidden">
         <video
           autoPlay
@@ -51,7 +54,6 @@ export function VideoShowcase({
         >
           <source src={video} type="video/mp4" />
         </video>
-        {/* Yazı okunsun diye yalnızca alttan çok hafif degrade */}
         <div className="absolute inset-0 bg-linear-to-t from-bg/70 via-transparent to-transparent" />
 
         <div className="absolute inset-x-0 bottom-0 flex flex-col items-center px-4 pb-16 text-center sm:pb-20">
@@ -61,7 +63,7 @@ export function VideoShowcase({
             transition={{ delay: 0.4, duration: 0.9, ease: "easeOut" }}
             className="max-w-4xl text-3xl font-bold leading-tight tracking-tight text-white [text-shadow:0_4px_30px_rgba(0,0,0,0.6)] sm:text-6xl"
           >
-            {heroTitle}
+            {c.heroTitle}
           </motion.h1>
           <motion.button
             type="button"
@@ -69,20 +71,17 @@ export function VideoShowcase({
             animate={{ opacity: 1 }}
             transition={{ delay: 1.4, duration: 0.8 }}
             onClick={() =>
-              window.scrollTo({
-                top: window.innerHeight - 56,
-                behavior: "smooth",
-              })
+              window.scrollTo({ top: window.innerHeight - 56, behavior: "smooth" })
             }
             className="mt-8 rounded-full bg-white/15 px-4 py-1.5 text-sm text-white backdrop-blur transition-colors hover:bg-white/25"
           >
-            Kaydırın ↓
+            {scrollLabel}
           </motion.button>
         </div>
       </section>
 
-      {/* SCROLL: video yok, sloganlar + açıklamalar */}
-      {sections.map((s) => (
+      {/* Scroll sections */}
+      {c.sections.map((s) => (
         <section
           key={s.slogan}
           className="relative flex min-h-dvh flex-col items-center justify-center bg-bg px-4 text-center sm:px-6"
@@ -100,8 +99,6 @@ export function VideoShowcase({
           >
             {s.body}
           </motion.p>
-
-          {/* Her bölümün altında kaydırma ipucu */}
           <motion.button
             type="button"
             initial={{ opacity: 0, y: 8 }}
@@ -113,25 +110,25 @@ export function VideoShowcase({
             }
             className="absolute bottom-8 left-1/2 -translate-x-1/2 rounded-full border border-line bg-surface/60 px-4 py-1.5 text-sm text-muted backdrop-blur transition-colors hover:border-accent hover:text-accent"
           >
-            Kaydırın ↓
+            {scrollLabel}
           </motion.button>
         </section>
       ))}
 
-      {/* KAPANIŞ: iletişim vurgusu */}
+      {/* CTA closing */}
       <section className="flex min-h-dvh flex-col items-center justify-center bg-bg px-4 text-center sm:px-6">
         <motion.h2
           {...reveal}
           className="max-w-3xl text-4xl font-bold tracking-tight text-fg sm:text-7xl"
         >
-          {closingTitle}
+          {c.closingTitle ?? (locale === "en" ? "Let's talk about your project." : "Projenizi konuşalım.")}
         </motion.h2>
         <motion.p
           {...reveal}
           transition={{ ...reveal.transition, delay: 0.12 }}
           className="mt-6 max-w-xl text-lg text-muted sm:text-xl"
         >
-          {closingBody}
+          {c.closingBody ?? (locale === "en" ? "Let's bring your vision to life together." : "Hayalinizdeki projeyi birlikte hayata geçirelim.")}
         </motion.p>
         <motion.div
           {...reveal}
@@ -142,13 +139,13 @@ export function VideoShowcase({
             href="/contact"
             className="rounded-full bg-accent px-9 py-4 text-lg font-semibold text-accent-fg shadow-[0_0_50px_-10px_var(--accent)] hover:shadow-[0_0_70px_-8px_var(--accent)]"
           >
-            İletişime geç →
+            {locale === "en" ? "Get in touch →" : "İletişime geç →"}
           </Link>
           <Link
             href="/"
             className="rounded-full border border-line bg-surface/60 px-9 py-4 text-lg font-semibold backdrop-blur hover:border-accent"
           >
-            Ana sayfaya dön
+            {locale === "en" ? "Back to home" : "Ana sayfaya dön"}
           </Link>
         </motion.div>
       </section>
