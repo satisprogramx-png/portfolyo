@@ -14,7 +14,7 @@ export function LanguageSwitcher() {
     <div
       role="group"
       aria-label={t("switch")}
-      className="flex items-center gap-1 rounded-full border border-line p-1"
+      className="flex shrink-0 items-center gap-0.5 rounded-full border border-line/50 bg-surface/60 p-1 shadow-sm backdrop-blur"
     >
       {routing.locales.map((l) => (
         <button
@@ -22,7 +22,7 @@ export function LanguageSwitcher() {
           type="button"
           onClick={() => router.replace(pathname, { locale: l })}
           aria-pressed={l === locale}
-          className={`rounded-full px-3 py-1 text-sm font-medium uppercase ${
+          className={`rounded-full px-2.5 py-1 text-xs font-semibold uppercase tracking-wide transition-colors sm:px-3 ${
             l === locale
               ? "bg-accent text-accent-fg"
               : "text-muted hover:text-fg"
