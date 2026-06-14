@@ -391,7 +391,7 @@ export function HomeCarousel() {
                   rotateY: off * -8,
                   zIndex: 30 - abs * 10,
                 }}
-                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                 style={{ pointerEvents: visible ? "auto" : "none" }}
                 className={`absolute flex h-[27rem] w-80 flex-col overflow-hidden rounded-[2rem] border bg-linear-to-b from-surface to-bg text-left transition-shadow duration-500 sm:w-96 ${
                   isCenter
