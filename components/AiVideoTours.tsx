@@ -58,6 +58,12 @@ const reveal = {
   transition: { duration: 0.6, ease: "easeOut" as const },
 };
 
+// Vimeo embed URL'inden video id'sini çıkar → önizleme görseli
+const posterFor = (embed?: string) => {
+  const id = embed?.match(/video\/(\d+)/)?.[1];
+  return id ? `https://vumbnail.com/${id}.jpg` : undefined;
+};
+
 // Beton doku — ince grenli overlay
 const CONCRETE_TEXTURE =
   "repeating-linear-gradient(45deg, rgba(0,0,0,0.12) 0 1px, transparent 1px 3px), repeating-linear-gradient(-45deg, rgba(255,255,255,0.10) 0 1px, transparent 1px 4px), radial-gradient(circle at 30% 20%, rgba(255,255,255,0.12), transparent 45%)";
@@ -82,22 +88,27 @@ export function AiVideoTours() {
             className="group relative overflow-hidden rounded-3xl border border-line bg-surface/60 text-left backdrop-blur transition-all duration-300 hover:-translate-y-1 hover:border-accent/60 hover:shadow-[0_24px_60px_-24px_var(--accent)]"
           >
             {/* Önizleme görseli */}
-            <div className="relative aspect-video w-full overflow-hidden">
+            <div className="relative aspect-video w-full overflow-hidden bg-bg">
               <span
                 aria-hidden
                 className="absolute inset-0 bg-linear-to-br from-accent/30 via-surface to-bg"
               />
+              {posterFor(tour.embed) && (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  src={posterFor(tour.embed)}
+                  alt=""
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              )}
               <span
                 aria-hidden
-                className="absolute -inset-6 opacity-60"
-                style={{
-                  background:
-                    "radial-gradient(circle at 50% 60%, var(--accent), transparent 60%)",
-                }}
+                className="absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-transparent"
               />
               {/* Oynat butonu */}
               <span className="absolute inset-0 flex items-center justify-center">
-                <span className="flex size-16 items-center justify-center rounded-full border border-white/30 bg-black/40 text-2xl text-white backdrop-blur transition-transform duration-300 group-hover:scale-110">
+                <span className="flex size-16 items-center justify-center rounded-full border border-white/40 bg-black/40 text-2xl text-white backdrop-blur transition-transform duration-300 group-hover:scale-110">
                   ▶
                 </span>
               </span>
