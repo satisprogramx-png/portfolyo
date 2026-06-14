@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
@@ -310,6 +310,23 @@ export function HomeCarousel() {
 
   const go = (dir: number) => setActive((a) => (a + dir + N) % N);
 
+  // Parmakla / fareyle sağa-sola kaydırma
+  const swipeStart = useRef<number | null>(null);
+  const didSwipe = useRef(false);
+  const onSwipeStart = (x: number) => {
+    swipeStart.current = x;
+    didSwipe.current = false;
+  };
+  const onSwipeEnd = (x: number) => {
+    if (swipeStart.current === null) return;
+    const dx = x - swipeStart.current;
+    swipeStart.current = null;
+    if (Math.abs(dx) > 40) {
+      didSwipe.current = true;
+      go(dx < 0 ? 1 : -1);
+    }
+  };
+
   const select = (s: Service) => {
     if (exiting) return;
     setExiting(s);
@@ -338,8 +355,16 @@ export function HomeCarousel() {
         </motion.p>
 
         <div
-          className="relative mt-8 flex h-[28rem] w-full max-w-6xl items-center justify-center"
+          className="relative mt-8 flex h-[28rem] w-full max-w-6xl touch-pan-y items-center justify-center"
           style={{ perspective: 1800 }}
+          onTouchStart={(e) => onSwipeStart(e.touches[0].clientX)}
+          onTouchEnd={(e) => onSwipeEnd(e.changedTouches[0].clientX)}
+          onPointerDown={(e) => {
+            if (e.pointerType !== "touch") onSwipeStart(e.clientX);
+          }}
+          onPointerUp={(e) => {
+            if (e.pointerType !== "touch") onSwipeEnd(e.clientX);
+          }}
         >
           {SERVICES.map((s, i) => {
             let off = i - active;
@@ -354,7 +379,10 @@ export function HomeCarousel() {
                 key={s.key}
                 type="button"
                 data-theme={s.theme}
-                onClick={() => (isCenter ? select(s) : setActive(i))}
+                onClick={() => {
+                  if (didSwipe.current) return;
+                  isCenter ? select(s) : setActive(i);
+                }}
                 aria-label={t(`${s.key}.title`)}
                 animate={{
                   x: off * spread,
