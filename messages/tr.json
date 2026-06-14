@@ -135,14 +135,19 @@
       "title": "Web Sitesi",
       "tagline": "Hızlı, modern vitrin siteleri.",
       "subtitle": "Saniyenin altında açılan, mobil uyumlu, markanıza özel web siteleri.",
+      "scrollHint": "Kaydırın",
+      "s1": "İstediğiniz gibi, tam size özel bir web sitesi.",
+      "s2": "Tasarımdan içeriğe, her detay sizin isteğinize göre.",
+      "s3": "Modern, hızlı ve mobil uyumlu — markanızın dilinde.",
+      "s4": "İhtiyacınız ne olursa olsun, hayalinizdeki siteyi üretiriz.",
       "f1Title": "Işık hızında",
       "f1Body": "Statik üretim ve edge dağıtımıyla dünyanın her yerinde anında açılır.",
       "f2Title": "Mobil öncelikli",
       "f2Body": "Telefondan geniş ekrana her boyutta kusursuz görünüm.",
       "f3Title": "İçerik yönetimi",
       "f3Body": "Blog, ürün, sayfa — içeriğinizi kolayca güncelleyin.",
-      "ctaTitle": "Sitenizi kuralım.",
-      "ctaBody": "Markanız için modern bir vitrin tasarlayalım."
+      "ctaTitle": "Projenizi konuşalım.",
+      "ctaBody": "Hayalinizdeki web sitesini birlikte üretelim."
     },
     "webapp": {
       "title": "Web Uygulamaları",

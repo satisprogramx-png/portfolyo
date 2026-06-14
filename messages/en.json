@@ -135,14 +135,19 @@
       "title": "Website",
       "tagline": "Fast, modern showcase sites.",
       "subtitle": "Sub-second, mobile-friendly websites built around your brand.",
+      "scrollHint": "Scroll",
+      "s1": "A website exactly the way you want it.",
+      "s2": "From design to content, every detail to your wishes.",
+      "s3": "Modern, fast and mobile-friendly — in your brand's voice.",
+      "s4": "Whatever you need, we build the site you dream of.",
       "f1Title": "At light speed",
       "f1Body": "Static generation and edge delivery make it open instantly worldwide.",
       "f2Title": "Mobile first",
       "f2Body": "Flawless from phone to widescreen at every size.",
       "f3Title": "Content management",
       "f3Body": "Blog, products, pages — update your content with ease.",
-      "ctaTitle": "Let's build your site.",
-      "ctaBody": "Let's design a modern showcase for your brand."
+      "ctaTitle": "Let's talk about your project.",
+      "ctaBody": "Let's build the website you dream of, together."
     },
     "webapp": {
       "title": "Web Applications",
