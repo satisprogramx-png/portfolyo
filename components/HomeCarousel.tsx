@@ -114,28 +114,27 @@ function FxLayer({ fx }: { fx: Fx }) {
           <motion.span
             key={i}
             aria-hidden
-            initial={{ opacity: 0, scale: 0.2, x: 0, y: 20 }}
-            animate={{
-              opacity: [0, 0.85, 0.95],
-              scale: [0.2, 1.4, 2.2],
-              x: p.drift,
-              y: [20, -10, -30],
-            }}
+            initial={{ opacity: 0, x: 0, y: 40 }}
+            animate={{ opacity: [0, 0.9, 0.95], x: p.drift, y: -30 }}
             transition={{
               duration: 1.4,
               delay: p.delay * 1.6,
               ease: "easeOut",
-              times: [0, 0.5, 1],
+              times: [0, 0.6, 1],
             }}
+            transformTemplate={({ x, y }) =>
+              `translate(-50%, -50%) translateZ(0) translateX(${x}) translateY(${y})`
+            }
             style={{
               left: p.x,
               top: p.y,
-              width: `${p.size}vmax`,
-              height: `${p.size}vmax`,
+              width: `${p.size * 1.7}vmax`,
+              height: `${p.size * 1.7}vmax`,
               background: SMOKE_BG,
               filter: "blur(40px)",
+              willChange: "transform, opacity",
             }}
-            className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full"
+            className="absolute rounded-full"
           />
         ))}
         <motion.div

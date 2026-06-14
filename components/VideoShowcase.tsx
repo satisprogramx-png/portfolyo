@@ -85,7 +85,7 @@ export function VideoShowcase({
       {sections.map((s) => (
         <section
           key={s.slogan}
-          className="flex min-h-dvh flex-col items-center justify-center bg-bg px-4 text-center sm:px-6"
+          className="relative flex min-h-dvh flex-col items-center justify-center bg-bg px-4 text-center sm:px-6"
         >
           <motion.h2
             {...reveal}
@@ -100,6 +100,21 @@ export function VideoShowcase({
           >
             {s.body}
           </motion.p>
+
+          {/* Her bölümün altında kaydırma ipucu */}
+          <motion.button
+            type="button"
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            onClick={() =>
+              window.scrollBy({ top: window.innerHeight, behavior: "smooth" })
+            }
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 rounded-full border border-line bg-surface/60 px-4 py-1.5 text-sm text-muted backdrop-blur transition-colors hover:border-accent hover:text-accent"
+          >
+            Kaydırın ↓
+          </motion.button>
         </section>
       ))}
 
