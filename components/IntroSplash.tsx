@@ -66,7 +66,18 @@ export function IntroSplash() {
         );
       } else if (data.event === "play") {
         setPlaying(true);
-      } else if (data.event === "pause" || data.event === "ended") {
+      } else if (data.event === "ended") {
+        // Bittiğinde başa sar, önizlemede ve durdurulmuş kal
+        setPlaying(false);
+        iframeRef.current?.contentWindow?.postMessage(
+          JSON.stringify({ method: "setCurrentTime", value: 0 }),
+          "*",
+        );
+        iframeRef.current?.contentWindow?.postMessage(
+          JSON.stringify({ method: "pause" }),
+          "*",
+        );
+      } else if (data.event === "pause") {
         setPlaying(false);
       }
     };
