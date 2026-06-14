@@ -28,11 +28,13 @@ export function ServiceShowcase({
   emoji,
   theme,
   related,
+  bgVideo,
 }: {
   serviceKey: string;
   emoji: string;
   theme: Theme;
   related: Project[];
+  bgVideo?: string;
 }) {
   const t = useTranslations("services");
   const locale = useLocale();
@@ -50,7 +52,21 @@ export function ServiceShowcase({
   ];
 
   return (
-    <article className="mx-auto max-w-5xl px-4 py-20 sm:px-6 sm:py-28">
+    <article className="relative mx-auto max-w-5xl px-4 py-20 sm:px-6 sm:py-28">
+      {bgVideo && (
+        <div aria-hidden className="fixed inset-0 -z-10 overflow-hidden">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="h-full w-full object-cover"
+          >
+            <source src={bgVideo} type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-bg/70 backdrop-blur-[2px]" />
+        </div>
+      )}
       <motion.span
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}

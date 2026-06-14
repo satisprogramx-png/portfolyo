@@ -18,6 +18,7 @@ export default async function SitePage({
       emoji="🖥️"
       theme="motion"
       related={related}
+      bgVideo="/video/web-sitesi-bg.mp4"
     />
   );
 }
