@@ -393,22 +393,51 @@ export function HomeCarousel() {
                 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                 style={{ pointerEvents: visible ? "auto" : "none" }}
-                className="absolute h-[27rem] w-80 overflow-hidden rounded-[2.25rem] border border-line bg-surface text-left shadow-[0_30px_80px_-30px_var(--bg)] sm:w-96"
+                className={`absolute flex h-[27rem] w-80 flex-col overflow-hidden rounded-[2rem] border bg-linear-to-b from-surface to-bg text-left transition-shadow duration-500 sm:w-96 ${
+                  isCenter
+                    ? "border-accent/35 shadow-[0_50px_120px_-50px_var(--accent)] ring-1 ring-inset ring-accent/15"
+                    : "border-line/70 shadow-[0_40px_90px_-50px_var(--bg)]"
+                }`}
               >
-                <div className="flex h-52 items-center justify-center bg-linear-to-br from-accent/40 via-surface to-surface text-7xl sm:text-8xl">
-                  {s.emoji}
+                {/* Üst hairline parlaması */}
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-x-6 top-0 h-px bg-linear-to-r from-transparent via-fg/25 to-transparent"
+                />
+
+                {/* Görsel başlık + yumuşak accent ışıması */}
+                <div className="relative flex h-48 items-center justify-center overflow-hidden">
+                  <span
+                    aria-hidden
+                    className="absolute inset-0 bg-linear-to-br from-accent/20 via-surface to-surface"
+                  />
+                  <span
+                    aria-hidden
+                    className="absolute -inset-10 opacity-50"
+                    style={{
+                      background:
+                        "radial-gradient(circle at 50% 115%, var(--accent), transparent 60%)",
+                    }}
+                  />
+                  <span
+                    className="relative text-7xl sm:text-8xl"
+                    style={{ filter: "drop-shadow(0 10px 28px var(--accent))" }}
+                  >
+                    {s.emoji}
+                  </span>
                 </div>
-                <div className="flex flex-col p-7 sm:p-8">
-                  <h2 className="text-2xl font-bold tracking-tight text-fg sm:text-3xl">
+
+                <div className="flex flex-1 flex-col p-7 sm:p-8">
+                  <h2 className="text-2xl font-semibold tracking-tight text-fg sm:text-3xl">
                     {t(`${s.key}.title`)}
                   </h2>
                   <p className="mt-3 text-base leading-relaxed text-muted">
                     {t(`${s.key}.tagline`)}
                   </p>
                   {isCenter && (
-                    <span className="mt-6 inline-flex items-center text-base font-semibold text-accent">
+                    <span className="mt-auto inline-flex items-center pt-6 text-base font-medium text-accent">
                       {tc("explore")}
-                      <span className="ml-1.5">→</span>
+                      <span className="ml-1.5 transition-transform">→</span>
                     </span>
                   )}
                 </div>

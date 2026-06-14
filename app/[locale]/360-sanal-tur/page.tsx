@@ -1,5 +1,5 @@
 import { setRequestLocale } from "next-intl/server";
-import { ServiceShowcase } from "@/components/ServiceShowcase";
+import { TourShowcase } from "@/components/TourShowcase";
 
 export default async function TourPage({
   params,
@@ -9,5 +9,5 @@ export default async function TourPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  return <ServiceShowcase serviceKey="tour" emoji="🧭" theme="brand" related={[]} />;
+  return <TourShowcase />;
 }
