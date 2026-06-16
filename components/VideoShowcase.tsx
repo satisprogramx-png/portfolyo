@@ -144,6 +144,9 @@ export function VideoShowcase({
         </div>
       </section>
 
+      {/* Hero'nun hemen altındaki ek bölüm (örn. örnek siteler) */}
+      {extra}
+
       {/* Scroll sections */}
       {c.sections.map((s) => (
         <section
@@ -178,8 +181,6 @@ export function VideoShowcase({
           </motion.button>
         </section>
       ))}
-
-      {extra}
 
       {/* CTA closing */}
       <section className="flex min-h-dvh flex-col items-center justify-center bg-bg px-4 text-center sm:px-6">
