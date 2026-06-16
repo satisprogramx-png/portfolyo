@@ -21,6 +21,11 @@ const EXAMPLES: Example[] = [
     name: "Corticelli",
     url: "https://pink-gnat-437671.hostingersite.com/",
   },
+  {
+    id: "sandybrown-rat",
+    name: "Prometheus",
+    url: "https://sandybrown-rat-290024.hostingersite.com/",
+  },
 ];
 
 const screenshotOf = (url: string) =>
