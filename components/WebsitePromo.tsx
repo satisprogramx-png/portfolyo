@@ -29,7 +29,7 @@ const EXAMPLES: Example[] = [
 ];
 
 const screenshotOf = (url: string) =>
-  `https://image.thum.io/get/width/1280/crop/800/noanimate/${url}`;
+  `https://image.thum.io/get/width/1280/crop/800/wait/8/noanimate/${url}`;
 
 const reveal = {
   initial: { opacity: 0, y: 40 },
