@@ -7,6 +7,8 @@ type Example = {
   id: string;
   name: string;
   url: string;
+  /** Statik önizleme görseli (verilirse canlı ekran görüntüsü yerine kullanılır) */
+  image?: string;
 };
 
 // Örnek web siteleri buraya eklenir
@@ -20,6 +22,7 @@ const EXAMPLES: Example[] = [
     id: "pink-gnat",
     name: "Corticelli",
     url: "https://pink-gnat-437671.hostingersite.com/",
+    // image: "/img/corticelli.jpg", // dosya public/img/ altına eklenince aç
   },
   {
     id: "sandybrown-rat",
@@ -95,7 +98,7 @@ export function WebsitePromo() {
                 </span>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={screenshotOf(ex.url)}
+                  src={ex.image ?? screenshotOf(ex.url)}
                   alt={ex.name}
                   loading="lazy"
                   className="relative h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
