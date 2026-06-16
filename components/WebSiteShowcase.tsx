@@ -1,12 +1,14 @@
 "use client";
 
 import { VideoShowcase } from "./VideoShowcase";
+import { WebsitePromo } from "./WebsitePromo";
 
 export function WebSiteShowcase() {
   return (
     <VideoShowcase
       theme="motion"
       video="/video/web-sitesi-bg.mp4"
+      extra={<WebsitePromo />}
       tr={{
         heroTitle: "Hayalinizdeki web sitesi, tam size özel.",
         sections: [

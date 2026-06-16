@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import { useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
@@ -34,9 +34,17 @@ export type VideoShowcaseProps = {
   video: string;
   tr: LocalizedContent;
   en: LocalizedContent;
+  /** Sloganlardan sonra, kapanış CTA'sından önce gösterilecek ek bölüm */
+  extra?: ReactNode;
 };
 
-export function VideoShowcase({ theme, video, tr, en }: VideoShowcaseProps) {
+export function VideoShowcase({
+  theme,
+  video,
+  tr,
+  en,
+  extra,
+}: VideoShowcaseProps) {
   const { setTheme } = useTheme();
   const locale = useLocale();
   const c = locale === "en" ? en : tr;
@@ -170,6 +178,8 @@ export function VideoShowcase({ theme, video, tr, en }: VideoShowcaseProps) {
           </motion.button>
         </section>
       ))}
+
+      {extra}
 
       {/* CTA closing */}
       <section className="flex min-h-dvh flex-col items-center justify-center bg-bg px-4 text-center sm:px-6">
