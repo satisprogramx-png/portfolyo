@@ -22,7 +22,8 @@ const EXAMPLES: Example[] = [
     id: "pink-gnat",
     name: "Corticelli",
     url: "https://pink-gnat-437671.hostingersite.com/",
-    // image: "/img/corticelli.jpg", // dosya public/img/ altına eklenince aç
+    image:
+      "https://res.cloudinary.com/dxkxjftjj/image/upload/q_auto/f_auto/v1781618546/Ekran_Resmi_2026-06-16_17.02.05_g7hb1p.png",
   },
   {
     id: "sandybrown-rat",
