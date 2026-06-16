@@ -7,7 +7,6 @@ type Example = {
   id: string;
   name: string;
   url: string;
-  label: string;
 };
 
 // Örnek web siteleri buraya eklenir
@@ -16,7 +15,6 @@ const EXAMPLES: Example[] = [
     id: "elite-estates",
     name: "Elite Estates",
     url: "https://deepskyblue-starling-655484.hostingersite.com/",
-    label: "deepskyblue-starling-655484.hostingersite.com",
   },
 ];
 
@@ -76,9 +74,6 @@ export function WebsitePromo() {
                 <span className="size-3 rounded-full bg-line" />
                 <span className="size-3 rounded-full bg-line" />
                 <span className="size-3 rounded-full bg-line" />
-                <span className="ml-3 truncate text-xs text-muted">
-                  {ex.label}
-                </span>
               </div>
               {/* Ekran görüntüsü */}
               <div className="relative aspect-[16/10] w-full overflow-hidden bg-bg">
