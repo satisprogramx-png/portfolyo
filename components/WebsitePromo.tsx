@@ -18,7 +18,7 @@ const EXAMPLES: Example[] = [
   },
   {
     id: "pink-gnat",
-    name: "Demo Web Sitesi",
+    name: "Corticelli",
     url: "https://pink-gnat-437671.hostingersite.com/",
   },
 ];
