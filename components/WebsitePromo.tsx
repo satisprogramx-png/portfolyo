@@ -16,6 +16,11 @@ const EXAMPLES: Example[] = [
     name: "Elite Estates",
     url: "https://deepskyblue-starling-655484.hostingersite.com/",
   },
+  {
+    id: "pink-gnat",
+    name: "Demo Web Sitesi",
+    url: "https://pink-gnat-437671.hostingersite.com/",
+  },
 ];
 
 const screenshotOf = (url: string) =>
